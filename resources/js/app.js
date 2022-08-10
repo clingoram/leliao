@@ -1,17 +1,22 @@
+// main file to run vue 3.
 import './bootstrap';
 
+import '../sass/app.scss';
+
+// vue
 import { createApp } from 'vue';
-import app from './components/app.vue';
+import router from './router.js';
+import App from './components/App.vue';
+// import HeaderComponent from './components/HeaderComponent.vue';
 
-createApp(app).mount("#app");
+// createApp(App).mount("#app");
 
-// const createMyApp = options => {
-//   const app = createApp(options);
+// for header(login and register)
+// const app2 = createApp(HeaderComponent);
+// app2.use(router);
+// app2.mount('#headerarea');
 
-//   // 加上全域設定
-//   // app.component('my-btn', MyBtn);
-//   return app;
-// }
-
-// createMyApp(app).mount("#app");
-// // createMyApp(Bar).mount('#bar')
+// for whole files except header.
+const app = createApp(App);
+app.use(router);
+app.mount('#app');

@@ -1,8 +1,8 @@
-import _ from 'lodash';
-window._ = _;
+// import _ from 'lodash';
+// window._ = _;
 
-// import loadash from 'lodash'
-// window._ = loadash
+import loadash from 'lodash'
+window._ = loadash
 
 import * as Popper from '@popperjs/core'
 window.Popper = Popper

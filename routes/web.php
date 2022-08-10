@@ -13,11 +13,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    // return view('welcome');
+// Route::get('/', function () {
+Route::get('/{any}', function () {
+    // 引導至views/index.blade
     return view('index');
-});
+})->where('any', '^((?!api).)*$'); // '.*'
 
-Auth::routes();
+// Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
