@@ -1,0 +1,27 @@
+* {
+  color: #000;
+  font-size: 14pt;
+  text-align: left;
+  text-decoration: none;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.navbar {
+  background-color: rgb(44, 106, 148);
+}
+
+.mainarea {
+  padding-top: 10pt;
+}
+
+/* 論壇分類 */
+.forums {
+  list-style: none;
+  width: 20%
+}
+
+/* 文章區塊 */
+.card {
+  width: 100%;
+  background-color: #fff;
+}
