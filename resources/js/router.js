@@ -1,53 +1,52 @@
-
 import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router';
 
 import App from './components/App.vue';
 import LoginComponent from "./components/LoginComponent.vue";
 import RegisterComponent from "./components/RegisterComponent.vue";
-import UserComponent from "./components/UserComponent.vue";
+// import UserMenu from './components/UserMenu.vue';
 
 // Route 設定
 export const routes = [
   // home
   { path: '/', component: App },
   // {
-  //   path: '/user',
-  //   component: UserComponent,
+  //   path: '/user/',
+  //   component: UserMenu,
   //   children: [
   //     {
-  //       // UserProfile will be rendered inside User's <router-view>
-  //       // when /user/:id/profile is matched
-  //       path: '/register',
+  //       path: 'register',
   //       component: RegisterComponent,
   //       name: "register-page"
   //     },
   //     {
-  //       // UserPosts will be rendered inside User's <router-view>
-  //       // when /user/:id/posts is matched
-  //       path: '/login',
+  //       path: 'login',
   //       component: LoginComponent,
   //       name: "login-page",
+  //       helper: LoginComponent
   //     },
   //   ],
   // },
   {
-    path: '/register',
+    path: '/user/register',
+    name: "register-page",
     component: RegisterComponent,
-    name: "register-page"
   },
   {
-    path: '/login',
-    component: LoginComponent,
+    path: '/user/login',
     name: "login-page",
+    component: LoginComponent,
+    // component: () => import('../js/components/LoginComponent.vue'),
     meta: { requiresAuth: true },
   },
-  { path: "/*", redirect: "/" }
+  {
+    path: "/*",
+    redirect: "/"
+  }
 ];
+
 const router = createRouter({
   mode: 'history',
-  // url有hash tag
-  // history: createWebHashHistory(),
-  // url沒有hash tag
+  // history: createWebHistory(),
   history: createWebHistory(),
   routes,
 });

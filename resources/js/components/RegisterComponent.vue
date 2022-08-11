@@ -2,64 +2,45 @@
   <!-- 註冊頁面 -->
   <div class="container">
     <h1>註冊</h1>
-    <b-form @submit="onSubmit" @reset="onReset" v-if="show">
-      <b-form-group
-        id="registerAccount"
-        label="帳號名稱"
-        label-for="registerAccount"
-        description="請輸入數字0-9及大小寫字母，長度在5 - 20之間。"
-      >
-        <b-form-input
-          id="register_account"
-          v-model.trim="form.name"
-          placeholder="帳號"
-          required
-          v-bind:max="max"
-          v-bind:min="min"
-        ></b-form-input>
-      </b-form-group>
+    <form>
+      <div class="input-group mb-3">
+        <span class="input-group-text" id="inputGroup-sizing-default"
+          >Account</span
+        >
+        <input
+          type="text"
+          class="form-control"
+          aria-label="Sizing example input"
+          aria-describedby="inputGroup-sizing-default"
+        />
+      </div>
 
-      <b-form-group
-        id="registerEmail"
-        label="Email:"
-        label-for="registerEmail"
-        description="We'll never share your email with anyone else."
-      >
-        <b-form-input
-          id="register_email"
-          v-model="form.email"
+      <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Email address</label>
+        <input
           type="email"
-          placeholder="Email"
-          required
-        ></b-form-input>
-      </b-form-group>
-
-      <b-form-group
-        id="registerPassword"
-        label="密碼"
-        label-for="registerPassword"
-        description="請輸入數字0-9及大小寫字母。"
-      >
-        <b-form-input
-          id="register_password"
-          v-model="form.password"
-          placeholder="密碼"
+          class="form-control"
+          id="exampleInputEmail1"
+          aria-describedby="emailHelp"
+        />
+        <div id="emailHelp" class="form-text">
+          We'll never share your email with anyone else.
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="exampleInputPassword1" class="form-label">Password</label>
+        <input
           type="password"
-          required
-          v-bind:max="max"
-          v-bind:min="min"
-          autocomplete="on"
-        ></b-form-input>
-      </b-form-group>
-      <b-button
-        type="submit"
-        variant="outline-primary"
-        v-on:click="checkInputsValue"
-        >送出</b-button
-      >
-      <b-button type="reset" variant="danger">重設</b-button>
-      <p>已有帳號?到<router-link to="/login">登入</router-link></p>
-    </b-form>
+          class="form-control"
+          id="exampleInputPassword1"
+        />
+      </div>
+      <div class="mb-3 form-check">
+        <input type="checkbox" class="form-check-input" id="exampleCheck1" />
+        <label class="form-check-label" for="exampleCheck1">Check me out</label>
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
   </div>
 </template>
 <script>
