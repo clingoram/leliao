@@ -28,4 +28,8 @@ class Forum extends Model
      * @var string
      */
     protected $keyType = 'string';
+
+    protected $fillable = [
+        'name'
+    ];
 }

@@ -12,12 +12,16 @@
         </li>
       </ul>
     </div>
-    <!-- <router-view /> -->
   </nav>
+  <!-- 註冊/登入頁面會出現在上面，分類和文章之上 -->
+  <router-view />
 </template>
 <script>
 // import UserMenu from "./UserMenu.vue";
 export default {
+  mounted() {
+    console.log("Header");
+  },
   components: {
     // UserMenu,
   },

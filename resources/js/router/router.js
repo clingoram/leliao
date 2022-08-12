@@ -1,14 +1,11 @@
 import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router';
 
-import App from './components/App.vue';
-import LoginComponent from "./components/LoginComponent.vue";
-import RegisterComponent from "./components/RegisterComponent.vue";
-// import UserMenu from './components/UserMenu.vue';
+import LoginComponent from "../components/users/LoginComponent.vue";
+import RegisterComponent from "../components/users/RegisterComponent.vue";
+// import UserMenu from '../components/UserMenu.vue';
 
 // Route 設定
 export const routes = [
-  // home
-  { path: '/', component: App },
   // {
   //   path: '/user/',
   //   component: UserMenu,
@@ -27,21 +24,20 @@ export const routes = [
   //   ],
   // },
   {
-    path: '/user/register',
+    path: '/register',
     name: "register-page",
     component: RegisterComponent,
   },
   {
-    path: '/user/login',
+    path: '/login',
     name: "login-page",
     component: LoginComponent,
-    // component: () => import('../js/components/LoginComponent.vue'),
     meta: { requiresAuth: true },
   },
   {
     path: "/*",
     redirect: "/"
-  }
+  },
 ];
 
 const router = createRouter({

@@ -11,10 +11,9 @@
 </head>
 
 <body>
-  <!-- 中間看板、文章區塊 -->
-  <div id="app">
-  </div>
+  <div id="app"></div>
   <router-view />
+
 </body>
 
 </html>

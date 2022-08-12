@@ -13,11 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/', function () {
 Route::get('/{any}', function () {
     // 引導至views/index.blade
     return view('index');
-})->where('any', '^((?!api).)*$'); // '.*'
+})->where('any', '^((?!api).)*$');
 
 // Auth::routes();
 

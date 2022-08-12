@@ -1,21 +1,23 @@
 <template>
-  <!-- main file-->
+  <!-- main Vue file -->
+
   <!-- 最上方navbar -->
   <header-component />
 
   <div class="container text-center mainarea">
     <div class="row">
-      <!-- 左邊論壇看板 -->
       <div class="col">
+        <!-- 左邊論壇看板 -->
         <forum-component />
       </div>
-      <!-- 中間文章區塊 -->
       <div class="col-6">
+        <!-- 中間內容 -->
         <content-component />
       </div>
       <div class="col"></div>
     </div>
   </div>
+  <!-- 註冊/登入頁面會出現在最下面 -->
   <!-- <router-view /> -->
 </template>
 <script>
