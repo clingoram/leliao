@@ -32,11 +32,10 @@ export default {
     // 所有分類看板
     getAllForums() {
       axios
-        .get("api/leliao/f/all")
+        .get("api/lel/f/all")
         .then((response) => {
           this.forumOptions = response.data;
           this.showForum = true;
-          // console.log(this.forumOptions.length);
         })
         .catch((error) => {
           console.log(error);
@@ -45,7 +44,7 @@ export default {
     // 取得特定看板的文章
     getSpecificForum() {
       axios
-        .get("api/leliao/f", {
+        .get("api/lel/f", {
           params: {
             ID: category.id,
           },

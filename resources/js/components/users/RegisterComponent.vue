@@ -10,25 +10,40 @@
           class="form-control"
           aria-label="Sizing example input"
           aria-describedby="inputAccount"
+          required
+          v-bind:max="max"
+          v-bind:min="min"
         />
       </div>
 
       <div class="input-group mb-3">
         <span class="input-group-text" id="inputEmail">Email</span>
-        <input type="email" class="form-control" aria-describedby="emailHelp" />
+        <input
+          type="email"
+          class="form-control"
+          aria-describedby="inputEmail"
+          required
+        />
         <!-- <div id="emailHelp" class="form-text">
           We'll never share your email with anyone else.
         </div> -->
       </div>
       <div class="input-group mb-3">
         <span class="input-group-text" id="inputPwd">密碼</span>
-        <input type="password" class="form-control" id="inputPwd" />
+        <input
+          type="password"
+          class="form-control"
+          aria-describedby="inputPwd"
+          required
+        />
       </div>
       <div class="mb-3 form-check">
         <input type="checkbox" class="form-check-input" id="exampleCheck1" />
         <label class="form-check-label" for="exampleCheck1">Check me out</label>
       </div>
-      <button type="submit" class="btn btn-primary">Submit</button>
+      <button type="submit" class="btn btn-primary" v-on:click="onSubmit()">
+        Submit
+      </button>
     </form>
   </div>
 </template>
@@ -45,9 +60,8 @@ export default {
         name: this.name ? this.name : "",
         email: this.email ? this.email : "",
         password: this.password ? this.password : "",
-        role: "A" ? "A" : "M",
       },
-      show: true,
+      // show: true,
     };
   },
   methods: {
@@ -56,9 +70,9 @@ export default {
      * 若檢查通過，則true
      * */
     checkInputsValue() {
-      const name = document.getElementById("register_account").value;
-      const email = document.getElementById("register_email").value;
-      const pwd = document.getElementById("register_password").value;
+      const name = document.getElementById("inputAccount").value;
+      const email = document.getElementById("inputEmail").value;
+      const pwd = document.getElementById("inputPwd").value;
 
       let accountPattern = /^[0-9A-Za-z]+$/;
       let passwordPattern = /^[0-9A-Za-z]\w{7,14}$/;
@@ -88,7 +102,7 @@ export default {
       this.form.name = "";
       this.form.email = "";
       this.form.password = "";
-      // Trick to reset/clear native browser form validation state
+
       this.show = false;
       this.$nextTick(() => {
         this.show = true;
@@ -99,10 +113,9 @@ export default {
      * 把接收到的值傳到後端處理
      * */
     register() {
-      // let getValue = this.checkInputsValue();
-      // console.log(getValue);
+      console.log(this.form);
       axios
-        .post("api/leliao/register", {
+        .post("api/lel/register", {
           form: this.form,
         })
         .then((response) => {

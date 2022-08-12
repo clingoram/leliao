@@ -7,11 +7,9 @@
   <div class="container text-center mainarea">
     <div class="row">
       <div class="col">
-        <!-- 左邊論壇看板 -->
         <forum-component />
       </div>
       <div class="col-6">
-        <!-- 中間內容 -->
         <content-component />
       </div>
       <div class="col"></div>

@@ -2,6 +2,7 @@ import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router
 
 import LoginComponent from "../components/users/LoginComponent.vue";
 import RegisterComponent from "../components/users/RegisterComponent.vue";
+import ContentComponent from "../components/ContentComponent.vue";
 // import UserMenu from '../components/UserMenu.vue';
 
 // Route 設定
@@ -35,6 +36,12 @@ export const routes = [
     meta: { requiresAuth: true },
   },
   {
+    // 特定類別
+    path: '/f/:id',
+    name: "forum",
+    component: ContentComponent
+  },
+  {
     path: "/*",
     redirect: "/"
   },
@@ -42,7 +49,7 @@ export const routes = [
 
 const router = createRouter({
   mode: 'history',
-  // history: createWebHistory(),
+  // history: createWebHashHistory(),
   history: createWebHistory(),
   routes,
 });
