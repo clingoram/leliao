@@ -113,7 +113,7 @@ export default {
      * 把接收到的值傳到後端處理
      * */
     register() {
-      console.log(this.form);
+      // console.log(this.form);
       axios
         .post("api/lel/register", {
           form: this.form,

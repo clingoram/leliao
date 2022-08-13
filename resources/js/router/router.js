@@ -41,10 +41,10 @@ export const routes = [
     name: "forum",
     component: ContentComponent
   },
-  {
-    path: "/*",
-    redirect: "/"
-  },
+  // {
+  //   path: "/*",
+  //   redirect: "/"
+  // },
 ];
 
 const router = createRouter({
