@@ -17,14 +17,15 @@ abstract class UserController extends Controller
     public function __construct(Request $data)
     {
         $this->name = $data->form['name'];
-        $this->email = isset($data->form['email']) and !empty($data->form['email']) ? $data->form['email'] : null;
+        $this->email = $data->form['email'];
         $this->password = $data->form['password'];
     }
+
 
     /**
      * 檢查資料庫內是否有該筆資料存在
      */
-    public function checkUserExist(): bool
+    public function checkUserExist()
     {
         $sqlName = Auth::where('name', $this->name)->get();
         $sqlEmail = Auth::where('email', $this->email)->get();
@@ -50,10 +51,10 @@ abstract class UserController extends Controller
         ]);
     }
 
-    public function loginValidator(Request $request)
+    protected function loginValidator(array $data)
     {
-        return Validator::make($request, [
-            'name' => 'required|string',
+        return Validator::make($data, [
+            'email' => 'required|string',
             'password' => 'required|string',
         ]);
     }

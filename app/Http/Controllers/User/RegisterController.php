@@ -24,6 +24,9 @@ class RegisterController extends UserController
     public function create()
     {
         $now = new DateTime();
+
+        parent::registerValidator([$this->name, $this->email, $this->password]);
+
         if (parent::checkUserExist()) {
             $user = new Auth();
             $user->name = $this->name;
