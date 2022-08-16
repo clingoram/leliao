@@ -1,13 +1,16 @@
-## About Leliao
+## 關於 Leliao
 
-[Leliao]「了聊」是一個使用Laravel+PostgreSQL做成的社群網站。
-會想取名為「了聊」，是因為希望這個社群網站的文章可以讓人解到一些事情也能跟其他會員聊天
+[Leliao]「了聊」是一個使用Laravel+PostgreSQL+Vue做成的社群網站，由Vite進行打包，計畫用Heroku做網站佈署。
+
+本質上「了聊」是一個個人作品，靈感來自網路PTT上的文章。
+會取名為「了聊」，是因為希望這個社群網站的文章可以讓人解到一些事情也能跟其他會員聊天。
 
 計畫:
-除了註冊登入外，內建數個討論版，點進討論版可看見文章，可以發文推文，針對特定文章發送表情符號
+除了基本註冊和登入外，內建數個討論版，點進討論版可看見相關文章，已登入的使用者可以對文章進行回覆、發送表情符號。
 
 
 - [Laravel](https://laravel.com/docs/9.x).
 - [PostgreSQL](https://www.postgresql.org/).
-
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- [Vue](https://vuejs.org/).
+- [Vite](https://vitejs.dev/).
+- [Heroku](https://www.heroku.com/).

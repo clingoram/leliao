@@ -1,8 +1,20 @@
 <template>
   <!-- 左邊論壇分類看板 -->
-  <div class="forums" v-for="category in forumOptions" v-bind:key="category.id">
-    <router-link :to="`/f/${category.id}`">{{ category.name }}</router-link>
+  <div v-if="forumOptions.length !== 0">
+    <div
+      class="forums"
+      v-for="category in forumOptions"
+      v-bind:key="category.id"
+    >
+      <router-link :to="`/f/${category.id}`">{{ category.name }}</router-link>
+    </div>
   </div>
+  <div v-else>
+    <div v-show="(showForum = false)">
+      <p>目前沒有可用看板喔!</p>
+    </div>
+  </div>
+  <!-- <router-view /> -->
 </template>
 <script>
 export default {
@@ -10,6 +22,7 @@ export default {
   data() {
     return {
       forumOptions: [],
+      showForum: false,
     };
   },
   created() {
@@ -19,10 +32,10 @@ export default {
     // 所有分類看板
     getAllForums() {
       axios
-        .get("api/leliao/f/all")
+        .get("api/lel/f/all")
         .then((response) => {
           this.forumOptions = response.data;
-          // console.log(response.data);
+          this.showForum = true;
         })
         .catch((error) => {
           console.log(error);
@@ -31,7 +44,7 @@ export default {
     // 取得特定看板的文章
     getSpecificForum() {
       axios
-        .get("api/leliao/f", {
+        .get("api/lel/f", {
           params: {
             ID: category.id,
           },
