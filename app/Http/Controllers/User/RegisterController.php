@@ -20,6 +20,10 @@ class RegisterController extends UserController
     private string $specialCharacters;
     private int $len;
 
+    // public function __construct()
+    // {
+    //     $this->middleware('guest');
+    // }
     /**
      * 使用封裝，隨機產生的數字+英文字母+特殊符號，送到HashController組成salt
      * 把從HashController得到的salt+使用者打上的密碼用sha1組合在一起

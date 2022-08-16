@@ -7,16 +7,34 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use DateTime;
 use Illuminate\Support\Facades\Hash;
+use App\Providers\RouteServiceProvider;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class LoginController extends UserController
 {
     protected $email;
     protected $pwd;
 
-    public function __construct(Request $data)
+    use AuthenticatesUsers;
+
+    /**
+     * Where to redirect users after login.
+     *
+     * @var string
+     */
+    protected $redirectTo = RouteServiceProvider::HOME;
+
+    // public function __construct(Request $data)
+    // {
+    //     $this->email = $data->form['email'];
+    //     $this->pwd = $data->form['password'];
+
+    //     $this->middleware('guest')->except('logout');
+    // }
+
+    public function __construct()
     {
-        $this->email = $data->form['email'];
-        $this->pwd = $data->form['password'];
+        $this->middleware('guest')->except('logout');
     }
 
     public function index(): void
