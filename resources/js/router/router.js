@@ -61,25 +61,25 @@ export const routes = [
       auth: undefined
     }
   },
-  {
-    // for user
-    path: '/dashboard',
-    name: 'dashboard',
-    component: Dashboard,
-    meta: {
-      // for connected users
-      auth: true
-    }
-  },
-  {
-    // for admin
-    // path: '/admin',
-    // name: 'admin.dashboard',
-    // component: AdminDashboard,
-    // meta: {
-    //   auth: { roles: 2, redirect: { name: 'login' }, forbiddenRedirect: '/403' }
-    // }
-  }
+  // {
+  //   // for user
+  //   path: '/dashboard',
+  //   name: 'dashboard',
+  //   component: Dashboard,
+  //   meta: {
+  //     // for connected users
+  //     auth: true
+  //   }
+  // },
+  // {
+  //   // for admin
+  //   path: '/admin',
+  //   name: 'admin.dashboard',
+  //   component: AdminDashboard,
+  //   meta: {
+  //     auth: { roles: 2, redirect: { name: 'login' }, forbiddenRedirect: '/403' }
+  //   }
+  // }
   // {
   //   path: "/*",
   //   redirect: "/"
