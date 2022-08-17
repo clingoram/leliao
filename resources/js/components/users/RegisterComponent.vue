@@ -56,9 +56,10 @@ export default {
       max: 20,
       min: 5,
       form: {
-        name: this.name,
-        email: this.email,
-        password: this.password,
+        name: "",
+        email: "",
+        password: "",
+        role: "",
       },
     };
   },
@@ -70,6 +71,7 @@ export default {
       const name = document.getElementById("inputAccount").value;
       const email = document.getElementById("inputEmail").value;
       const pwd = document.getElementById("inputPwd").value;
+      console.log(name);
 
       // regex
       let accountPattern = /^[0-9A-Za-z]+$/;

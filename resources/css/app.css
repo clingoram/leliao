@@ -6,10 +6,12 @@
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
+/* header */
 .navbar {
   background-color: rgb(44, 106, 148);
 }
 
+/* main vue file*/
 .mainarea {
   padding-top: 10pt;
 }
@@ -24,4 +26,10 @@
 .card {
   width: 100%;
   background-color: #fff;
+}
+
+/* 註冊、登入 下拉式選單*/
+.dropdown {
+  right: 128px;
+  width: 50px;
 }
