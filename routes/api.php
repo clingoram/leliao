@@ -2,6 +2,9 @@
 
 use App\Http\Controllers\Forum\ForumController;
 use App\Http\Controllers\User\RegisterController;
+use App\Http\Controllers\User\LoginController;
+use App\Http\Controllers\User\UserController;
+use App\Http\Controllers\User\LogoutController;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -23,15 +26,30 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::prefix('/lel')->group(function () {
-    // index
-    // Route::get('/home', [HomeController::class, 'index']);
-
     // 分類看板
     Route::get('/f/all', [ForumController::class, 'index']);
     Route::get('/f/{id}', [ForumController::class, 'show']);
 
     // register
-    Route::post('/register', [RegisterController::class, 'create']);
+    Route::post('auth/register', [RegisterController::class, 'create']);
     // login
-    // Route::post('/login', [LoginController::class, 'login']);
+    Route::post('auth/login', [LoginController::class, 'login']);
+    Route::get('auth/refresh', [UserController::class, 'refresh']);
+
+    Route::group(['middleware' => 'auth:api'], function () {
+        Route::get('user', [UserController::class, 'checkUser']);
+        // logout
+        Route::post('logout', [LogoutController::class, 'logout']);
+    });
 });
+
+// Route::prefix('auth')->group(function () {
+//     Route::post('register', [RegisterController::class, 'create']);
+//     Route::post('login', [LoginController::class, 'login']);
+//     Route::get('refresh', [UserController::class, 'refresh']);
+
+//     Route::group(['middleware' => 'auth:api'], function () {
+//         Route::get('user', [UserController::class, 'checkUser']);
+//         Route::post('logout', [LogoutController::class, 'logout']);
+//     });
+// });

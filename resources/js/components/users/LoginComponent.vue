@@ -1,42 +1,40 @@
 <template>
   <!-- 登入 -->
   <div class="container">
-    <form>
-      <div class="mb-3">
-        <label for="email_address" class="form-label">Email</label>
-        <input
-          type="email"
-          class="form-control"
-          id="email_address"
-          v-model="loginForm.email"
-          aria-describedby="emailHelp"
-        />
-        <div id="emailHelp" class="form-text">
-          We'll never share your email with anyone else.
-        </div>
+    <div class="mb-3">
+      <label for="email_address" class="form-label">Email</label>
+      <input
+        type="email"
+        class="form-control"
+        id="email_address"
+        v-model="loginForm.email"
+        aria-describedby="emailHelp"
+      />
+      <div id="emailHelp" class="form-text">
+        We'll never share your email with anyone else.
       </div>
-      <div class="mb-3">
-        <label for="input_pwd" class="form-label">密碼</label>
-        <input
-          type="password"
-          class="form-control"
-          id="input_pwd"
-          v-model="loginForm.password"
-        />
-      </div>
-      <!-- <div class="mb-3 form-check">
+    </div>
+    <div class="mb-3">
+      <label for="input_pwd" class="form-label">密碼</label>
+      <input
+        type="password"
+        class="form-control"
+        id="input_pwd"
+        v-model="loginForm.password"
+      />
+    </div>
+    <!-- <div class="mb-3 form-check">
         <input type="checkbox" class="form-check-input" id="exampleCheck1" />
         <label class="form-check-label" for="exampleCheck1">Check me out</label>
       </div> -->
-      <button
-        type="submit"
-        class="btn btn-primary"
-        v-on:click="checkInputsValue()"
-      >
-        Submit
-      </button>
-      <!-- <button v-on:click="removeToken()">Clear</button> -->
-    </form>
+    <button
+      type="submit"
+      class="btn btn-primary"
+      v-on:click="checkInputsValue()"
+    >
+      Submit
+    </button>
+    <!-- <button v-on:click="removeToken()">Clear</button> -->
   </div>
 </template>
 <script>
@@ -80,17 +78,10 @@ export default {
       return this.login();
     },
     login() {
-      // Cookies.set("login", JSON.stringify(this.loginForm), { expires: 1 });
-      // console.log(this.loginForm);
-
-      // if (Cookies.get("login") && this.loginForm.token) {
-      //   this.$router.push({ name: "Dashboard" });
-      // }
-
-      // console.log(typeof this.form);
+      console.log(this.loginForm);
       axios
-        .post("api/lel/login", {
-          form: this.form,
+        .post("api/lel/auth/login", {
+          loginForm: this.loginForm,
         })
         .then((response) => {
           console.log(response);

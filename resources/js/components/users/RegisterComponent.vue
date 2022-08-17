@@ -71,7 +71,7 @@ export default {
       const name = document.getElementById("inputAccount").value;
       const email = document.getElementById("inputEmail").value;
       const pwd = document.getElementById("inputPwd").value;
-      console.log(name);
+      // console.log(name);
 
       // regex
       let accountPattern = /^[0-9A-Za-z]+$/;
@@ -100,7 +100,7 @@ export default {
     register() {
       // console.log(this.form);
       axios
-        .post("api/lel/register", {
+        .post("api/lel/auth/register", {
           form: this.form,
         })
         .then((response) => {

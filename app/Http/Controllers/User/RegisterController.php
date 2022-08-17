@@ -3,27 +3,29 @@
 namespace App\Http\Controllers\User;
 
 use App\Models\Auth;
-// use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Hash\HashController;
 use DateTime;
 use HashContext;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
 class RegisterController extends UserController
 {
-    // public $name;
-    // protected $email;
-    // private $password;
+    public $name;
+    protected $email;
+    protected $password;
 
     private string $numbersAndAlphabets;
     private string $specialCharacters;
     private int $len;
 
-    // public function __construct()
-    // {
-    //     $this->middleware('guest');
-    // }
+    public function __construct(Request $request)
+    {
+        $this->name = $request->form['name'];
+        $this->email = $request->form['email'];
+        $this->password = $request->form['password'];
+    }
     /**
      * 使用封裝，隨機產生的數字+英文字母+特殊符號，送到HashController組成salt
      * 把從HashController得到的salt+使用者打上的密碼用sha1組合在一起
@@ -44,12 +46,13 @@ class RegisterController extends UserController
     {
         $now = new DateTime();
 
-        parent::registerValidator([$this->name, $this->email, $this->password]);
+        // parent::registerValidator([$this->name, $this->email, $this->password]);
+        parent::validatorData([$this->name, $this->email, $this->password]);
 
         $salt = $this->generateHash();
         $pwdwithHash = sha1($this->password . $salt);
 
-        if (parent::checkUserExist()) {
+        if (parent::checkUser()) {
             $user = new Auth();
             $user->name = $this->name;
             $user->email = $this->email;
@@ -61,5 +64,6 @@ class RegisterController extends UserController
         } else {
             echo $this->name . '無法註冊。';
         }
+        return response()->json(['status' => 'success'], 200);
     }
 }

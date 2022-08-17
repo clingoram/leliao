@@ -10,37 +10,34 @@ use Illuminate\Support\Facades\Hash;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
+use Illuminate\Support\Facades\Auth as defaultAuth;
+use Illuminate\Support\Facades\Validator;
+
 class LoginController extends UserController
 {
     protected $email;
     protected $pwd;
 
-    use AuthenticatesUsers;
-
-    /**
-     * Where to redirect users after login.
-     *
-     * @var string
-     */
-    protected $redirectTo = RouteServiceProvider::HOME;
-
-    // public function __construct(Request $data)
-    // {
-    //     $this->email = $data->form['email'];
-    //     $this->pwd = $data->form['password'];
-
-    //     $this->middleware('guest')->except('logout');
-    // }
-
-    public function __construct()
+    public function __construct(Request $data)
     {
-        $this->middleware('guest')->except('logout');
+        $this->email = $data->loginForm['email'];
+        $this->pwd = $data->loginForm['password'];
     }
 
-    public function index(): void
+    public function login(Request $request)
     {
-        parent::loginValidator([$this->email, $this->pwd]);
+        $credentials = $request->only(['email', 'password']);
+        dd($request->all());
 
-        parent::checkUserExist();
+        if ($token = defaultAuth::attempt($credentials)) {
+            return response()->json(
+                ['status' => 'success'],
+                200
+            )->header('Authorization', $token);
+        }
+        return response()->json(
+            ['error' => 'login_error'],
+            401
+        );
     }
 }
