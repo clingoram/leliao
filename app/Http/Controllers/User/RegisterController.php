@@ -9,6 +9,7 @@ use DateTime;
 use HashContext;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends UserController
 {
@@ -42,17 +43,17 @@ class RegisterController extends UserController
         return $salt;
     }
 
-    public function create()
+    public function create(Request $request)
     {
         $now = new DateTime();
 
-        // parent::registerValidator([$this->name, $this->email, $this->password]);
-        parent::validatorData([$this->name, $this->email, $this->password]);
+        // // parent::registerValidator([$this->name, $this->email, $this->password]);
+        $check = parent::validatorData([$this->name, $this->email, $this->password]);
 
         $salt = $this->generateHash();
         $pwdwithHash = sha1($this->password . $salt);
 
-        if (parent::checkUser()) {
+        if (parent::checkUserIsset() === false and $check['status'] === true) {
             $user = new Auth();
             $user->name = $this->name;
             $user->email = $this->email;
@@ -61,9 +62,11 @@ class RegisterController extends UserController
             $user->salt = $salt;
             $user->created_at = $now;
             $user->save();
+
+            return response()->json(['status' => 'success'], 200);
         } else {
-            echo $this->name . '無法註冊。';
+            // echo $this->name . '無法註冊。';
+            return $check;
         }
-        return response()->json(['status' => 'success'], 200);
     }
 }

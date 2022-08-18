@@ -26,18 +26,26 @@ class UserController extends Controller
     /**
      * 檢查資料庫內是否有該筆資料存在
      */
-    public function checkUser()
+    public function checkUserIsset()
     {
         $sql = Auth::where('name', $this->name)->get();
-        // $sqlEmail = Auth::where('email', $this->email)->dd();
+        // $sql = Auth::find(1)->get();
 
-        $checkStatus = !empty($sq) and count($sql) !== 0 ? 'success' : 'fail';
-        $data = $checkStatus === 'success' ? $sql : null;
+        // $checkStatus = !empty($sq) and count($sql) !== 0 ? 'success' : 'fail';
+        // $data = $checkStatus === 'success' ? $sql : null;
 
-        return response()->json([
-            'status' => $checkStatus,
-            'data' => $data
-        ]);
+        // return response()->json([
+        //     'status' => $checkStatus
+        // ]);
+
+        // isset
+        if ($sql) {
+            // return false;
+            return response()->json([
+                'status' => 'error'
+            ]);
+        }
+        return false;
     }
 
     /**
@@ -45,62 +53,43 @@ class UserController extends Controller
      */
     public function refresh()
     {
-        if ($token = defaultAuth::refresh()) {
-            return response()
-                ->json(
-                    ['status' => 'successs'],
-                    200
-                )
-                ->header('Authorization', $token);
-        }
-        return response()->json(
-            ['error' => 'refresh_token_error'],
-            401
-        );
-    }
-
-
-    protected function guard()
-    {
-        return defaultAuth::guard();
+        return $this->respondWithToken(defaultAuth::refresh());
     }
 
     /**
-     * Get a validator for an incoming registration request.
+     * Get the token array structure.
      *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
+     * @param  string $token
+     *
+     * @return \Illuminate\Http\JsonResponse
      */
-    // protected function registerValidator(array $data)
-    // {
-    //     return Validator::make($data, [
-    //         'name' => ['required', 'string', 'max:30'],
-    //         'email' => ['required', 'string', 'email', 'max:30', 'unique:users'],
-    //         'password' => ['required', 'string', 'min:8', 'confirmed']
-    //     ]);
-    // }
-
-    // protected function loginValidator(array $data)
-    // {
-    //     return Validator::make($data, [
-    //         'email' => 'required|string',
-    //         'password' => 'required|string',
-    //     ]);
-    // }
+    protected function respondWithToken($token)
+    {
+        return response()->json([
+            'access_token' => $token,
+            'token_type' => 'bearer',
+            'expires_in' => defaultAuth::factory()->getTTL() * 60
+        ]);
+    }
 
     protected function validatorData(array $data)
     {
-        $v = Validator::make($data, [
+        $result = Validator::make($data, [
             'name' => ['required', 'string', 'max:30'],
             'email' => ['required', 'string', 'email', 'max:30', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed']
         ]);
 
-        if ($v->fails()) {
+        if ($result->fails()) {
             return response()->json([
-                'status' => 'error',
-                'errors' => $v->errors()
+                'status' => false,
+                'errors' => $result->errors()
             ], 422);
+        } else {
+            return response()->json(
+                ['status' => true],
+                200
+            );
         }
     }
 }

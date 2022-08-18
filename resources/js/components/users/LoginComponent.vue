@@ -78,7 +78,7 @@ export default {
       return this.login();
     },
     login() {
-      console.log(this.loginForm);
+      // console.log(this.loginForm);
       axios
         .post("api/lel/auth/login", {
           loginForm: this.loginForm,
