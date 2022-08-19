@@ -14,25 +14,38 @@ use Illuminate\Support\Facades\Auth as defaultAuth;
 use Illuminate\Support\Facades\Validator;
 // use PHPOpenSourceSaver\JWTAuth\JWTAuth;
 
+use Illuminate\Support\Facades\DB;
+
+
 class LoginController extends UserController
 {
     protected $email;
     protected $pwd;
+    // private $secret;
+    // private $tokenPWD;
 
-    public function __construct(Request $data)
-    {
-        $this->email = $data->loginForm['email'];
-        $this->pwd = $data->loginForm['password'];
-    }
+    // public function __construct(Request $data)
+    // {
+    //     $this->email = $data->loginForm['email'];
+    //     $this->pwd = $data->loginForm['password'];
+    // }
 
     public function login(Request $request)
     {
-        $credentials = $request->only('email', 'password');
-        // dd(json_encode($request->all));
-        // $fake = ["email" => "jj.test@gmail.com", "password" => "js3tre3"];
-        // $c = JWTAuth::attempt($credentials);
-        // var_dump($c);
-        // die();
+        // $data = Auth::where('email', $request->email)
+        //     ->get();
+        // foreach (json_decode(json_encode($data), true) as $key => $value) {
+        //     var_dump($value);
+        //     $this->secret = $value['salt'];
+        // }
+        // if (sha1($request->password . $this->secret)) {
+        //     return true;
+        // } else {
+        //     return false;
+        // }
+
+        $credentials = $request->only(['email', 'password']);
+        // dd($credentials);
 
         // if ($token = defaultAuth::attempt($fake)) {
         //     return response()->json(

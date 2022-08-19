@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 use Illuminate\Support\Facades\Auth as defaultAuth;
+use Exception;
 
 class UserController extends Controller
 {
@@ -28,7 +29,14 @@ class UserController extends Controller
      */
     public function checkUserIsset()
     {
-        $sql = Auth::where('name', $this->name)->get();
+        // $sql = Auth::where('name', $this->name)->get();
+        try {
+            return Auth::select(['*'])
+                ->where('name', $this->name)
+                ->first();
+        } catch (Exception $e) {
+            dd($e);
+        }
         // $sql = Auth::find(1)->get();
 
         // $checkStatus = !empty($sq) and count($sql) !== 0 ? 'success' : 'fail';
@@ -39,13 +47,13 @@ class UserController extends Controller
         // ]);
 
         // isset
-        if ($sql) {
-            // return false;
-            return response()->json([
-                'status' => 'error'
-            ]);
-        }
-        return false;
+        // if (!empty($sql)) {
+        //     // return false;
+        //     return response()->json([
+        //         'status' => 'error'
+        //     ]);
+        // }
+        // return false;
     }
 
     /**

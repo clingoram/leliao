@@ -43,17 +43,19 @@ class RegisterController extends UserController
         return $salt;
     }
 
-    public function create(Request $request)
+    public function create()
     {
         $now = new DateTime();
 
         // // parent::registerValidator([$this->name, $this->email, $this->password]);
         $check = parent::validatorData([$this->name, $this->email, $this->password]);
+        parent::checkUserIsset();
 
         $salt = $this->generateHash();
         $pwdwithHash = sha1($this->password . $salt);
+        // if ($check['status'] === true) {
+        if ($check) {
 
-        if (parent::checkUserIsset() === false and $check['status'] === true) {
             $user = new Auth();
             $user->name = $this->name;
             $user->email = $this->email;
