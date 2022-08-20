@@ -63,6 +63,7 @@ class RegisterController extends UserController
             $user->password = $pwdwithHash;
             $user->salt = $salt;
             $user->created_at = $now;
+            $user->role = 2 ? 2 : 1;
             $user->save();
 
             return response()->json(['status' => 'success'], 200);

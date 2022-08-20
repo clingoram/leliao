@@ -10,19 +10,26 @@ use Illuminate\Support\Facades\Validator;
 
 use Illuminate\Support\Facades\Auth as defaultAuth;
 use Exception;
+use PHPOpenSourceSaver\JWTAuth\JWT;
+// use PHPOpenSourceSaver\JWTAuth\JWTAuth;
+use PHPOpenSourceSaver\JWTAuth\JWTGuard;
 
 class UserController extends Controller
 {
     // public $name;
     // protected $email;
     // protected $password;
+    protected $guard;
+    // protected $jwtAuth;
 
-    // public function __construct(Request $data)
-    // {
-    //     $this->name = $data->form['name'];
-    //     // $this->email = $data->form['email'];
-    //     // $this->password = $data->form['password'];
-    // }
+    public function __construct(JWTGuard $guard)
+    {
+        $this->guard = $guard;
+        // $this->jwtAuth = $jwtAuth;
+        // $this->name = $data->form['name'];
+        // $this->email = $data->form['email'];
+        // $this->password = $data->form['password'];
+    }
 
     /**
      * 檢查資料庫內是否有該筆資料存在
@@ -61,7 +68,7 @@ class UserController extends Controller
      */
     public function refresh()
     {
-        return $this->respondWithToken(defaultAuth::refresh());
+        return $this->respondWithToken($this->guard->refresh());
     }
 
     /**

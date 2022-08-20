@@ -41,8 +41,7 @@ Route::prefix('/lel')->group(function () {
         Route::post('register', [RegisterController::class, 'create']);
         // login
         Route::post('login', [LoginController::class, 'login']);
-
-        Route::get('refresh', [UserController::class, 'refresh']);
+        Route::post('refresh', [UserController::class, 'refresh']);
     });
 
     Route::group(['middleware' => 'api'], function () {
