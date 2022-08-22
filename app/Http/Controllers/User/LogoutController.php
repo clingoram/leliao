@@ -16,10 +16,16 @@ class LogoutController extends UserController
 {
     public function logout()
     {
-        defaultAuth::logout();
+        // defaultAuth::logout();
+        // return response()->json([
+        //     'status' => 'success',
+        //     'msg' => 'Logged out Successfully.'
+        // ], 200);
+
+        Auth::logout();
         return response()->json([
             'status' => 'success',
-            'msg' => 'Logged out Successfully.'
-        ], 200);
+            'message' => 'Successfully logged out',
+        ]);
     }
 }

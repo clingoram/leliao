@@ -2,48 +2,62 @@
 
 namespace App\Http\Controllers\User;
 
-use App\Models\Auth;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Hash;
+use App\Models\Auth as TableUser;
 use Illuminate\Support\Facades\Validator;
 
-use Illuminate\Support\Facades\Auth as defaultAuth;
+// use Illuminate\Support\Facades\Auth as defaultAuth;
 use Exception;
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use App\Http\Controllers\Controller;
+use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
+use PHPOpenSourceSaver\JWTAuth\JWTAuth as JWTAuthJWTAuth;
 use PHPOpenSourceSaver\JWTAuth\JWT;
-// use PHPOpenSourceSaver\JWTAuth\JWTAuth;
 use PHPOpenSourceSaver\JWTAuth\JWTGuard;
 
 class UserController extends Controller
 {
-    // public $name;
-    // protected $email;
-    // protected $password;
+    // // public $name;
+    // // protected $email;
+    // // protected $password;
     protected $guard;
-    // protected $jwtAuth;
+    protected $jwtAuth;
 
-    public function __construct(JWTGuard $guard)
+    public function __construct(JWT $tt, JWTAuthJWTAuth $auth)
     {
-        $this->guard = $guard;
-        // $this->jwtAuth = $jwtAuth;
-        // $this->name = $data->form['name'];
-        // $this->email = $data->form['email'];
-        // $this->password = $data->form['password'];
+        $this->jwtAuth = $tt;
+        $this->guard = $auth;
+        $this->middleware('auth:api', ['except' => ['login', 'register']]);
     }
 
-    /**
-     * 檢查資料庫內是否有該筆資料存在
-     */
+    // public function __construct()
+    // {
+    //     // $this->guard = $guard;
+    //     // $this->jwtAuth = $jwtAuth;
+    //     // $this->name = $data->form['name'];
+    //     // $this->email = $data->form['email'];
+    //     // $this->password = $data->form['password'];
+    // }
+
+    // /**
+    //  * 檢查資料庫內是否有該筆資料存在
+    //  */
     public function checkUserIsset()
     {
         // $sql = Auth::where('name', $this->name)->get();
         try {
             return Auth::select(['*'])
-                ->where('name', $this->name)
+                ->where('id', 1)
                 ->first();
         } catch (Exception $e) {
             dd($e);
         }
+
+
+        // return response()->json(auth()->user());
+
         // $sql = Auth::find(1)->get();
 
         // $checkStatus = !empty($sq) and count($sql) !== 0 ? 'success' : 'fail';
@@ -68,7 +82,18 @@ class UserController extends Controller
      */
     public function refresh()
     {
-        return $this->respondWithToken($this->guard->refresh());
+        // return $this->respondWithToken($this->guard->refresh());
+        return $this->respondWithToken($this->jwtAuth->refresh());
+
+
+        // return response()->json([
+        //     'status' => 'success',
+        //     'user' => Auth::user(),
+        //     'authorisation' => [
+        //         'token' => Auth::refresh(),
+        //         'type' => 'bearer',
+        //     ]
+        // ]);
     }
 
     /**
@@ -83,7 +108,8 @@ class UserController extends Controller
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => defaultAuth::factory()->getTTL() * 60
+            // getTTL in factory.php
+            'expires_in' =>  $this->jwtAuth->factory()->getTTL() * 60 //auth()->factory()->getTTL() * 60
         ]);
     }
 

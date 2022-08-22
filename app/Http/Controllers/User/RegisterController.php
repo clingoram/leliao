@@ -49,7 +49,9 @@ class RegisterController extends UserController
 
         // // parent::registerValidator([$this->name, $this->email, $this->password]);
         $check = parent::validatorData([$this->name, $this->email, $this->password]);
-        parent::checkUserIsset();
+        // $check = parent::validatorData($request);
+
+        // parent::checkUserIsset();
 
         $salt = $this->generateHash();
         $pwdwithHash = sha1($this->password . $salt);
@@ -63,13 +65,58 @@ class RegisterController extends UserController
             $user->password = $pwdwithHash;
             $user->salt = $salt;
             $user->created_at = $now;
-            $user->role = 2 ? 2 : 1;
+            $user->role = null ? 1 : 2;
             $user->save();
 
-            return response()->json(['status' => 'success'], 200);
-        } else {
+            // $user = new Auth();
+            // $user->name = $request->name;
+            // $user->email = $request->email;
+            // // $user->password = Hash::make($this->password);
+            // $user->password = $pwdwithHash;
+            // $user->salt = $salt;
+            // $user->created_at = $now;
+            // $user->role = 2 ? 2 : 1;
+            // $user->save();
+
+            return response()->json(
+                [
+                    'status' => 'success',
+                    'message' => 'User created successfully',
+                    'user' => $user
+                ],
+            );
+
+            // $user = $this->user_repository->registerAccount($this->name, $this->email, $this->password);
+
+            // return response()->json(
+            //     [
+            //         'status' => 'success',
+            //         'message' => 'User created successfully',
+            //         'user' => $user,
+            //         'authorisation' => [
+            //             'token' => $token,
+            //             'type' => 'bearer',
+            //         ]
+            //     ],
+            //     200
+            // );
+
+            // $login = new LoginController();
+            // // $token = $login->login(json_decode(json_encode($user), FALSE));
+            // $token = $login->login($this->email, $this->password);
+
+            // return response()->json([
+            //     'status' => 'success',
+            //     'message' => 'User created successfully',
+            //     'user' => $user,
+            //     'authorisation' => [
+            //         'token' => $token,
+            //         'type' => 'bearer',
+            //     ]
+            // ]);
+        } /*else {
             // echo $this->name . '無法註冊。';
             return $check;
-        }
+        }*/
     }
 }

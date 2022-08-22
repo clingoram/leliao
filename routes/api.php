@@ -30,7 +30,7 @@ Route::prefix('/lel')->group(function () {
     Route::get('/f/all', [ForumController::class, 'index']);
     Route::get('/f/{id}', [ForumController::class, 'show']);
 
-    // register
+    // // register
     // Route::post('auth/register', [RegisterController::class, 'create']);
     // // login
     // Route::post('auth/login', [LoginController::class, 'login']);
@@ -39,15 +39,18 @@ Route::prefix('/lel')->group(function () {
 
     Route::group(['prefix' => 'auth'], function () {
         Route::post('register', [RegisterController::class, 'create']);
+
         // login
         Route::post('login', [LoginController::class, 'login']);
+
         Route::post('refresh', [UserController::class, 'refresh']);
     });
 
     Route::group(['middleware' => 'api'], function () {
         // http://leliao/api/lel/users
-        Route::get('user', [UserController::class, 'checkUserIsset']);
+        // Route::get('user', [UserController::class, 'checkUserIsset']);
         // logout
-        Route::post('logout', [LogoutController::class, 'logout']);
+        // Route::post('logout', [LogoutController::class, 'logout']);
+        Route::post('logout', [UserController::class, 'logout']);
     });
 });
