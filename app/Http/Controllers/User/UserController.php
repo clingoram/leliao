@@ -12,44 +12,29 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
-use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
-use PHPOpenSourceSaver\JWTAuth\JWTAuth as JWTAuthJWTAuth;
-use PHPOpenSourceSaver\JWTAuth\JWT;
-use PHPOpenSourceSaver\JWTAuth\JWTGuard;
 
 class UserController extends Controller
 {
     // // public $name;
     // // protected $email;
     // // protected $password;
-    protected $guard;
-    protected $jwtAuth;
 
-    public function __construct(JWT $tt, JWTAuthJWTAuth $auth)
+    public function __construct()
     {
-        $this->jwtAuth = $tt;
-        $this->guard = $auth;
-        $this->middleware('auth:api', ['except' => ['login', 'register']]);
+        // $this->name = $data->form['name'];
+        // $this->email = $data->form['email'];
+        // $this->password = $data->form['password'];
     }
 
-    // public function __construct()
-    // {
-    //     // $this->guard = $guard;
-    //     // $this->jwtAuth = $jwtAuth;
-    //     // $this->name = $data->form['name'];
-    //     // $this->email = $data->form['email'];
-    //     // $this->password = $data->form['password'];
-    // }
-
-    // /**
-    //  * 檢查資料庫內是否有該筆資料存在
-    //  */
+    /**
+     * 檢查資料庫內是否有該筆資料存在
+     */
     public function checkUserIsset()
     {
         // $sql = Auth::where('name', $this->name)->get();
         try {
             return Auth::select(['*'])
-                ->where('id', 1)
+                ->where('name', $this->name)
                 ->first();
         } catch (Exception $e) {
             dd($e);
@@ -75,42 +60,6 @@ class UserController extends Controller
         //     ]);
         // }
         // return false;
-    }
-
-    /**
-     * 若過期則refresh token
-     */
-    public function refresh()
-    {
-        // return $this->respondWithToken($this->guard->refresh());
-        return $this->respondWithToken($this->jwtAuth->refresh());
-
-
-        // return response()->json([
-        //     'status' => 'success',
-        //     'user' => Auth::user(),
-        //     'authorisation' => [
-        //         'token' => Auth::refresh(),
-        //         'type' => 'bearer',
-        //     ]
-        // ]);
-    }
-
-    /**
-     * Get the token array structure.
-     *
-     * @param  string $token
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    protected function respondWithToken($token)
-    {
-        return response()->json([
-            'access_token' => $token,
-            'token_type' => 'bearer',
-            // getTTL in factory.php
-            'expires_in' =>  $this->jwtAuth->factory()->getTTL() * 60 //auth()->factory()->getTTL() * 60
-        ]);
     }
 
     protected function validatorData(array $data)

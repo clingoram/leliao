@@ -58,15 +58,15 @@ class RegisterController extends UserController
         // if ($check['status'] === true) {
         if ($check) {
 
-            $user = new Auth();
-            $user->name = $this->name;
-            $user->email = $this->email;
-            // $user->password = Hash::make($this->password);
-            $user->password = $pwdwithHash;
-            $user->salt = $salt;
-            $user->created_at = $now;
-            $user->role = null ? 1 : 2;
-            $user->save();
+            // $user = new Auth();
+            // $user->name = $this->name;
+            // $user->email = $this->email;
+            // // $user->password = Hash::make($this->password);
+            // $user->password = $pwdwithHash;
+            // $user->salt = $salt;
+            // $user->created_at = $now;
+            // $user->role = null ? 1 : 2;
+            // $user->save();
 
             // $user = new Auth();
             // $user->name = $request->name;
@@ -77,6 +77,17 @@ class RegisterController extends UserController
             // $user->created_at = $now;
             // $user->role = 2 ? 2 : 1;
             // $user->save();
+
+            $user = Auth::create([
+                'name' => $this->name,
+                'email' => $this->email,
+                'password' => $pwdwithHash,
+                'salt' => $salt,
+                'created_at' => $now,
+                'role' => null ? 1 : 2
+            ]);
+
+            $token = $user->createToken('token')->plainTextToken;
 
             return response()->json(
                 [

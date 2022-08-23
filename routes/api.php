@@ -30,27 +30,26 @@ Route::prefix('/lel')->group(function () {
     Route::get('/f/all', [ForumController::class, 'index']);
     Route::get('/f/{id}', [ForumController::class, 'show']);
 
-    // // register
-    // Route::post('auth/register', [RegisterController::class, 'create']);
+    // register
+    // Route::post('register', [RegisterController::class, 'create']);
     // // login
-    // Route::post('auth/login', [LoginController::class, 'login']);
+    // Route::post('login', [LoginController::class, 'login']);
 
-    // Route::get('auth/refresh', [UserController::class, 'refresh']);
+    // Route::get('refresh', [UserController::class, 'refresh']);
 
-    Route::group(['prefix' => 'auth'], function () {
+    // Route::group(['prefix' => 'auth'], function () {
+    Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::post('register', [RegisterController::class, 'create']);
-
         // login
         Route::post('login', [LoginController::class, 'login']);
-
         Route::post('refresh', [UserController::class, 'refresh']);
+        Route::post('logout', [LogoutController::class, 'logout']);
     });
 
-    Route::group(['middleware' => 'api'], function () {
-        // http://leliao/api/lel/users
-        // Route::get('user', [UserController::class, 'checkUserIsset']);
-        // logout
-        // Route::post('logout', [LogoutController::class, 'logout']);
-        Route::post('logout', [UserController::class, 'logout']);
-    });
+    // Route::group(['middleware' => 'api'], function () {
+    // http://leliao/api/lel/users
+    // Route::get('user', [UserController::class, 'checkUserIsset']);
+    // logout
+    // Route::post('logout', [LogoutController::class, 'logout']);
+    // });
 });

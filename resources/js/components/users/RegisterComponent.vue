@@ -100,7 +100,7 @@ export default {
     register() {
       // console.log(this.form);
       axios
-        .post("api/lel/auth/register", {
+        .post("api/lel/register", {
           form: this.form,
         })
         .then((response) => {
