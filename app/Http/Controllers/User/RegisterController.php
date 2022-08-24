@@ -51,22 +51,24 @@ class RegisterController extends UserController
         $check = parent::validatorData([$this->name, $this->email, $this->password]);
         // $check = parent::validatorData($request);
 
-        // parent::checkUserIsset();
+        parent::checkUserIsset();
 
         $salt = $this->generateHash();
         $pwdwithHash = sha1($this->password . $salt);
+        // $pwdwithHash = sha1($request->password . $salt);
+
         // if ($check['status'] === true) {
         if ($check) {
 
-            // $user = new Auth();
-            // $user->name = $this->name;
-            // $user->email = $this->email;
-            // // $user->password = Hash::make($this->password);
-            // $user->password = $pwdwithHash;
-            // $user->salt = $salt;
-            // $user->created_at = $now;
-            // $user->role = null ? 1 : 2;
-            // $user->save();
+            $user = new Auth();
+            $user->name = $this->name;
+            $user->email = $this->email;
+            // $user->password = Hash::make($this->password);
+            $user->password = $pwdwithHash;
+            $user->salt = $salt;
+            $user->created_at = $now;
+            $user->role = null ? 1 : 2;
+            $user->save();
 
             // $user = new Auth();
             // $user->name = $request->name;
@@ -78,14 +80,14 @@ class RegisterController extends UserController
             // $user->role = 2 ? 2 : 1;
             // $user->save();
 
-            $user = Auth::create([
-                'name' => $this->name,
-                'email' => $this->email,
-                'password' => $pwdwithHash,
-                'salt' => $salt,
-                'created_at' => $now,
-                'role' => null ? 1 : 2
-            ]);
+            // $user = Auth::create([
+            //     'name' => $this->name,
+            //     'email' => $this->email,
+            //     'password' => $pwdwithHash,
+            //     'salt' => $salt,
+            //     'created_at' => $now,
+            //     'role' => null ? 1 : 2
+            // ]);
 
             $token = $user->createToken('token')->plainTextToken;
 
@@ -93,7 +95,8 @@ class RegisterController extends UserController
                 [
                     'status' => 'success',
                     'message' => 'User created successfully',
-                    'user' => $user
+                    'user' => $user,
+                    'token' => $token
                 ],
             );
 
@@ -112,22 +115,6 @@ class RegisterController extends UserController
             //     200
             // );
 
-            // $login = new LoginController();
-            // // $token = $login->login(json_decode(json_encode($user), FALSE));
-            // $token = $login->login($this->email, $this->password);
-
-            // return response()->json([
-            //     'status' => 'success',
-            //     'message' => 'User created successfully',
-            //     'user' => $user,
-            //     'authorisation' => [
-            //         'token' => $token,
-            //         'type' => 'bearer',
-            //     ]
-            // ]);
-        } /*else {
-            // echo $this->name . '無法註冊。';
-            return $check;
-        }*/
+        }
     }
 }

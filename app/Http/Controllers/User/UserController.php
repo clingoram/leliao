@@ -19,12 +19,12 @@ class UserController extends Controller
     // // protected $email;
     // // protected $password;
 
-    public function __construct()
-    {
-        // $this->name = $data->form['name'];
-        // $this->email = $data->form['email'];
-        // $this->password = $data->form['password'];
-    }
+    // public function __construct()
+    // {
+    // $this->name = $data->form['name'];
+    // $this->email = $data->form['email'];
+    // $this->password = $data->form['password'];
+    // }
 
     /**
      * 檢查資料庫內是否有該筆資料存在
@@ -33,9 +33,7 @@ class UserController extends Controller
     {
         // $sql = Auth::where('name', $this->name)->get();
         try {
-            return Auth::select(['*'])
-                ->where('name', $this->name)
-                ->first();
+            return TableUser::where('email', $this->email)->first();
         } catch (Exception $e) {
             dd($e);
         }
