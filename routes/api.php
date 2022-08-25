@@ -45,7 +45,9 @@ Route::prefix('/lel')->group(function () {
     //     Route::post('/login', [LoginController::class, 'login']);
 
     //     Route::get('/refresh', [UserController::class, 'refresh']);
-    //     Route::post('/logout', [LogoutController::class, 'logout']);
+    Route::group(['middleware' => ['auth:sanctum']], function () {
+        Route::post('/logout', [LogoutController::class, 'logout']);
+    });
     // });
 
     // Route::group(['middleware' => 'api'], function () {

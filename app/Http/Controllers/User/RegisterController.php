@@ -51,7 +51,7 @@ class RegisterController extends UserController
         $check = parent::validatorData([$this->name, $this->email, $this->password]);
         // $check = parent::validatorData($request);
 
-        parent::checkUserIsset();
+        parent::checkUserIsset($this->email);
 
         $salt = $this->generateHash();
         $pwdwithHash = sha1($this->password . $salt);
@@ -64,6 +64,7 @@ class RegisterController extends UserController
             $user->name = $this->name;
             $user->email = $this->email;
             // $user->password = Hash::make($this->password);
+            // $user->remember_token = $token;
             $user->password = $pwdwithHash;
             $user->salt = $salt;
             $user->created_at = $now;
@@ -89,16 +90,17 @@ class RegisterController extends UserController
             //     'role' => null ? 1 : 2
             // ]);
 
-            $token = $user->createToken('token')->plainTextToken;
+            return parent::createToken($user, 201);
 
-            return response()->json(
-                [
-                    'status' => 'success',
-                    'message' => 'User created successfully',
-                    'user' => $user,
-                    'token' => $token
-                ],
-            );
+            // $token = $user->createToken('token')->plainTextToken;
+            // return response()->json(
+            //     [
+            //         'status' => 'success',
+            //         'message' => 'User created successfully',
+            //         'user' => $user,
+            //         'token' => $token
+            //     ],
+            // );
 
             // $user = $this->user_repository->registerAccount($this->name, $this->email, $this->password);
 
@@ -115,6 +117,11 @@ class RegisterController extends UserController
             //     200
             // );
 
+        } else {
+            return response()->json([
+                'status' => 'error',
+                'errors' => $check->errors()
+            ], 422);
         }
     }
 }

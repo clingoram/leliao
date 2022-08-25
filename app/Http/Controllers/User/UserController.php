@@ -12,52 +12,82 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
     // // public $name;
     // // protected $email;
     // // protected $password;
+    // protected $check;
+    // protected $combineString;
+    // protected $secret;
 
-    // public function __construct()
+    // public function __construct(Request $data)
     // {
-    // $this->name = $data->form['name'];
-    // $this->email = $data->form['email'];
-    // $this->password = $data->form['password'];
+    //     $this->name = $data->form['name'];
+    //     $this->email = $data->form['email'];
+    //     $this->password = $data->form['password'];
+    // }
+
+
+    // private function setAttempt(string $pwd1, string $pwd2): void
+    // {
+    //     $this->combineString = sha1($pwd1 . $pwd2);
+    //     $this->check = DB::table('users')->where('password', '=', $this->combineString)->exists();
+    // }
+
+    // private function getAttempt(): bool
+    // {
+    //     return $this->check;
     // }
 
     /**
      * 檢查資料庫內是否有該筆資料存在
      */
-    public function checkUserIsset()
+    public function checkUserIsset(string $mail)
     {
-        // $sql = Auth::where('name', $this->name)->get();
         try {
-            return TableUser::where('email', $this->email)->first();
+            $user = TableUser::where('email', $mail)->first();
+            $this->secret = $user;
+            return $this->secret;
+
+            // return response()->json([
+            //     'status' => true,
+            //     'data' => [
+            //         'id' => $user->id,
+            //         'name' => $user->name,
+            //         'email' => $user->email,
+            //         'salt' => $user->salt,
+            //         'role' => $user->role,
+            //         'created_at' => $user->created_at,
+            //         'updated_at' => $user->updated_at,
+            //     ]
+            // ]);
+            // return [
+            //     'id' => $user->id,
+            //     'name' => $user->name,
+            //     'email' => $user->email,
+            //     'salt' => $user->salt,
+            //     'role' => $user->role
+            // ];
         } catch (Exception $e) {
             dd($e);
         }
+    }
 
-
-        // return response()->json(auth()->user());
-
-        // $sql = Auth::find(1)->get();
-
-        // $checkStatus = !empty($sq) and count($sql) !== 0 ? 'success' : 'fail';
-        // $data = $checkStatus === 'success' ? $sql : null;
-
-        // return response()->json([
-        //     'status' => $checkStatus
-        // ]);
-
-        // isset
-        // if (!empty($sql)) {
-        //     // return false;
-        //     return response()->json([
-        //         'status' => 'error'
-        //     ]);
-        // }
-        // return false;
+    protected function createToken(object $user, int $status)
+    {
+        $token = $user->createToken('apiToken');
+        return response()->json(
+            [
+                'user' => $user,
+                'accessToken' => $token->plainTextToken,
+                'expires_in' => date('Y/m/d H:i:s', time() + 10 * 60),
+                'type' => 'Bearer'
+            ],
+            $status
+        );
     }
 
     protected function validatorData(array $data)
