@@ -61,6 +61,8 @@ export default {
         password: "",
         role: "",
       },
+      // store token in storage or session.
+      token: "",
     };
   },
   methods: {
@@ -107,6 +109,12 @@ export default {
           // console.log(response);
           if (response.status === 200) {
             confirm("註冊成功");
+            history.go(0);
+
+            // add
+            // axios.get("/api/lel/csrf-cookie").then((response) => {
+            //   this.$router.go("/dashboard");
+            // });
           }
         })
         .catch((error) => {
@@ -114,5 +122,6 @@ export default {
         });
     },
   },
+  // add
 };
 </script>

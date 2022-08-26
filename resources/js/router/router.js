@@ -3,6 +3,7 @@ import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router
 import App from '../components/App.vue';
 import LoginComponent from "../components/users/LoginComponent.vue";
 import RegisterComponent from "../components/users/RegisterComponent.vue";
+import LogoutComponent from "../components/users/LogoutComponent.vue";
 import ContentComponent from "../components/ContentComponent.vue";
 // import UserMenu from '../components/UserMenu.vue';
 
@@ -37,6 +38,15 @@ export const routes = [
     path: '/login',
     name: "login-page",
     component: LoginComponent,
+    // meta: { requiresAuth: true },
+    meta: {
+      auth: false
+    }
+  },
+  {
+    path: '/logout',
+    name: "logout",
+    component: LogoutComponent,
     // meta: { requiresAuth: true },
     meta: {
       auth: false

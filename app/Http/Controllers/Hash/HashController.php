@@ -14,6 +14,9 @@ class HashController
 {
     private string $serial = '';
 
+    /**
+     * 建立salt
+     */
     public function setRandomSalt(string $letters, string $specialLetters, int $length): void
     {
         for ($i = 0; $i <= 15; $i++) {

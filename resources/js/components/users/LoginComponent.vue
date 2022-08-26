@@ -47,8 +47,9 @@ export default {
       loginForm: {
         email: "",
         password: "",
-        // token: "",
       },
+      token: "",
+      // processing: false,
     };
   },
   methods: {
@@ -84,15 +85,17 @@ export default {
           loginForm: this.loginForm,
         })
         .then((response) => {
+          // TODO: get token and save it.
           console.log(response);
         })
         .catch((error) => {
           console.log(error);
         });
     },
-    removeToken() {
-      Cookies.remove("login");
-    },
+    // removeToken() {
+    //   Cookies.remove("login");
+    // },
   },
+  // add
 };
 </script>

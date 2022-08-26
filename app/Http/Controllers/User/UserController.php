@@ -16,12 +16,7 @@ use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
-    // // public $name;
-    // // protected $email;
-    // // protected $password;
-    // protected $check;
-    // protected $combineString;
-    // protected $secret;
+    protected $secret;
 
     // public function __construct(Request $data)
     // {
@@ -30,20 +25,34 @@ class UserController extends Controller
     //     $this->password = $data->form['password'];
     // }
 
-
-    // private function setAttempt(string $pwd1, string $pwd2): void
+    // public function index()
     // {
-    //     $this->combineString = sha1($pwd1 . $pwd2);
-    //     $this->check = DB::table('users')->where('password', '=', $this->combineString)->exists();
+    //     $users = TableUser::all();
+    //     return response()->json(
+    //         [
+    //             'status' => 'success',
+    //             'users' => $users->toArray()
+    //         ],
+    //         200
+    //     );
     // }
 
-    // private function getAttempt(): bool
+    // public function show(Request $request, int $id)
     // {
-    //     return $this->check;
+    //     $user = TableUser::find($id);
+    //     return response()->json(
+    //         [
+    //             'status' => 'success',
+    //             'user' => $user->toArray()
+    //         ],
+    //         200
+    //     );
     // }
+
 
     /**
-     * 檢查資料庫內是否有該筆資料存在
+     * 檢查table內是否有該筆資料存在
+     * 
      */
     public function checkUserIsset(string $mail)
     {
@@ -76,20 +85,41 @@ class UserController extends Controller
         }
     }
 
-    protected function createToken(object $user, int $status)
+    /**
+     * 建立token
+     * 
+     * @return json
+     */
+    protected function createToken(object $user, int $statusCode)
     {
-        $token = $user->createToken('apiToken');
-        return response()->json(
-            [
-                'user' => $user,
-                'accessToken' => $token->plainTextToken,
-                'expires_in' => date('Y/m/d H:i:s', time() + 10 * 60),
-                'type' => 'Bearer'
-            ],
-            $status
-        );
+        if (isset($user) and !empty($user)) {
+            $token = $user->createToken('apiToken');
+            return response()->json(
+                [
+                    // 'user' => $user,
+                    'accessToken' => $token->plainTextToken,
+                    'expires_in' => date('Y/m/d H:i:s', time() + 10 * 60),
+                    'type' => 'Bearer',
+                    'Accept' => 'application/json'
+                ],
+                $statusCode
+            );
+        } else {
+            return response()->json(
+                [
+                    'error' => 'token_error'
+                ],
+                401
+            );
+        }
     }
 
+    /**
+     * 過濾檢查
+     * 
+     * @param array $data
+     * @return json
+     */
     protected function validatorData(array $data)
     {
         $result = Validator::make($data, [

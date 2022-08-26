@@ -11,47 +11,44 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 use Illuminate\Support\Facades\Validator;
-// use Illuminate\Support\Facades\Auth as dAuth;
 use Illuminate\Support\Facades\DB;
 
 
 class LoginController extends UserController
 {
-    // protected $email;
-    // protected $pwd;
+    private $check;
+    private $combineString;
 
-    protected $check;
-    protected $combineString;
-    protected $secret;
-
-
-    // public function __construct(Request $request)
-    // {
-    //     $this->email = $request->loginForm['email'];
-    //     $this->pwd = $request->loginForm['password'];
-    // }
-
+    /**
+     * setter
+     * 登入檢查
+     */
     private function setAttempt(string $pwd1, string $pwd2): void
     {
         $this->combineString = sha1($pwd1 . $pwd2);
         $this->check = DB::table('users')->where('password', '=', $this->combineString)->exists();
     }
 
+    /**
+     * getter
+     * 登入檢查結果
+     */
     private function getAttempt(): bool
     {
         return $this->check;
     }
 
-
+    /**
+     * 登入
+     * 
+     * @return json
+     */
     public function login(Request $request)
     {
-        $checkUser = parent::checkUserIsset($request->email);
+        $checkUser = parent::checkUserIsset($request->loginForm['email']);
         // $user = Auth::where('email', $request->email)->first();
 
-        // parent::setAttempt($request->password, $checkUser['salt']);
-        // $attempt = parent::getAttempt();
-
-        $this->setAttempt($request->password, $checkUser['salt']);
+        $this->setAttempt($request->loginForm['password'], $checkUser['salt']);
         $attempt = $this->getAttempt();
         // var_dump($attempt);
         // var_dump($checkUser['salt']);

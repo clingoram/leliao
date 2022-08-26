@@ -43,11 +43,15 @@ class RegisterController extends UserController
         return $salt;
     }
 
+    /**
+     * 建立新的使用者
+     * 
+     * @return json
+     */
     public function create()
     {
         $now = new DateTime();
 
-        // // parent::registerValidator([$this->name, $this->email, $this->password]);
         $check = parent::validatorData([$this->name, $this->email, $this->password]);
         // $check = parent::validatorData($request);
 

@@ -12,16 +12,29 @@
     </button>
     <ul class="dropdown-menu">
       <!-- <div v-if="isGuest" class="navbar-guest"> -->
+      <!-- <li v-if="(isLoggedIn = true)">
+        <p>{{ this.name }}</p>
+      </li> -->
+      <!-- <li>
+        <button v-on:click="checkLoginOrNot">Test API</button>
+      </li> -->
       <li>
-        <router-link v-bind:to="{ name: 'login-page' }">登入</router-link>
+        <router-link
+          v-bind:to="{ name: 'login-page' }"
+          v-if="(isLoggedIn = true)"
+          >登入</router-link
+        >
       </li>
       <li>
-        <router-link v-bind:to="{ name: 'register-page' }">註冊</router-link>
+        <router-link
+          v-bind:to="{ name: 'register-page' }"
+          v-if="(isLoggedIn = true)"
+          >註冊</router-link
+        >
       </li>
-      <!-- </div>
-      <div v-else class="navbar-auth">
-        <li>登出</li>
-      </div> -->
+      <!-- <li v-if="(isLoggedIn = true)">
+        <a class="nav-link" v-on:click="logout">登出</a>
+      </li> -->
     </ul>
   </div>
   <!-- <router-view /> -->
@@ -29,6 +42,43 @@
 <script>
 export default {
   // props: ["isGuest"],
-  data() {},
+  data() {
+    return {
+      isLoggedIn: true,
+      email: "",
+      password: "",
+      token: "",
+      // login: {
+      //   email: "",
+      //   password: "",
+      //   token: "",
+      // },
+    };
+  },
+  methods: {
+    // add
+    async checkLoginOrNot() {
+      // const userdata = await $api.get("http://leliao/api/lel/");
+      // console.log(userdata.data);
+      // axios.get("api/lel/csrf-cookie").then((response) => {
+      //   axios
+      //     .post("api/lel/login", {
+      //       email: this.email,
+      //       password: this.password,
+      //     })
+      //     .then((response) => {
+      //       this.$router.go("/dashboard");
+      //     })
+      //     .catch(function (error) {
+      //       console.error(error);
+      //     });
+      // });
+    },
+    logout() {
+      if (this.token !== null) {
+        axios.get("api/lel/logout");
+      }
+    },
+  },
 };
 </script>
