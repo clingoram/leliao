@@ -12,71 +12,118 @@
     </button>
     <ul class="dropdown-menu">
       <!-- <div v-if="isGuest" class="navbar-guest"> -->
-      <!-- <li v-if="(isLoggedIn = true)">
+      <li v-if="isLoggedIn">
         <p>{{ this.name }}</p>
-      </li> -->
-      <!-- <li>
-        <button v-on:click="checkLoginOrNot">Test API</button>
-      </li> -->
+      </li>
       <li>
-        <router-link
-          v-bind:to="{ name: 'login-page' }"
-          v-if="(isLoggedIn = true)"
+        <router-link v-bind:to="{ name: 'login-page' }" v-if="!isLoggedIn"
           >登入</router-link
         >
       </li>
       <li>
-        <router-link
-          v-bind:to="{ name: 'register-page' }"
-          v-if="(isLoggedIn = true)"
+        <router-link v-bind:to="{ name: 'register-page' }" v-if="!isLoggedIn"
           >註冊</router-link
         >
       </li>
-      <!-- <li v-if="(isLoggedIn = true)">
+      <li v-if="isLoggedIn">
         <a class="nav-link" v-on:click="logout">登出</a>
-      </li> -->
+      </li>
     </ul>
   </div>
   <!-- <router-view /> -->
 </template>
 <script>
+// import $api from "../../api";
+
 export default {
-  // props: ["isGuest"],
   data() {
     return {
-      isLoggedIn: true,
-      email: "",
-      password: "",
-      token: "",
-      // login: {
-      //   email: "",
-      //   password: "",
-      //   token: "",
-      // },
+      isLoggedIn: false,
+      name: "",
+      accessToken: "",
     };
   },
+  // created() {
+  //   this.beforeMount();
+  // },
+  async beforeMount() {
+    // let res = await $api.get("/login");
+    // this.isLoggedIn = true;
+
+    if (sessionStorage.getItem("token") !== null) {
+      // this.accessToken = localStorage.getItem("token");
+      // this.name = localStorage.getItem("name");
+
+      this.accessToken = sessionStorage.getItem("token");
+      this.name = sessionStorage.getItem("name");
+      // console.log(this.name);
+      // console.log(this.accessToken);
+      this.isLoggedIn = true;
+    } else {
+      console.log("no token");
+      this.isLoggedIn = false;
+    }
+  },
+  // async beforeMount() {
+  //   axios.get("/sanctum/csrf-cookie").then((response) => {
+  //     console.log(response);
+
+  //     axios
+  //       .post("api/lel/login", {
+  //         loginForm: this.loginForm,
+  //       })
+  //       .then((response) => {
+  //         console.log(response);
+  //         this.isLoggedIn = true;
+  //         localStorage.setItem("token", response.data.accessToken);
+  //       })
+  //       .catch(function (error) {
+  //         console.error(error);
+  //       });
+  //   });
+  // },
   methods: {
-    // add
-    async checkLoginOrNot() {
-      // const userdata = await $api.get("http://leliao/api/lel/");
-      // console.log(userdata.data);
-      // axios.get("api/lel/csrf-cookie").then((response) => {
-      //   axios
-      //     .post("api/lel/login", {
-      //       email: this.email,
-      //       password: this.password,
-      //     })
-      //     .then((response) => {
-      //       this.$router.go("/dashboard");
-      //     })
-      //     .catch(function (error) {
-      //       console.error(error);
-      //     });
-      // });
-    },
+    // beforeMount() {
+    //   // let res = await $api.get("/login");
+    //   // this.isLoggedIn = true;
+
+    //   if (sessionStorage.getItem("token") !== null) {
+    //     // this.accessToken = localStorage.getItem("token");
+    //     // this.name = localStorage.getItem("name");
+
+    //     this.accessToken = sessionStorage.getItem("token");
+    //     this.name = sessionStorage.getItem("name");
+    //     console.log(this.name);
+    //     console.log(this.accessToken);
+    //     this.isLoggedIn = true;
+    //   } else {
+    //     console.log("no token");
+    //     this.isLoggedIn = false;
+    //   }
+    // },
     logout() {
-      if (this.token !== null) {
-        axios.get("api/lel/logout");
+      if (sessionStorage.getItem("token") !== null) {
+        this.isLoggedIn = false;
+        sessionStorage.removeItem("token");
+        sessionStorage.removeItem("name");
+        // axios.get("api/lel/logout");
+        document.location.href = "/";
+
+        // axios
+        //   .post("api/lel/logout", {
+        //     name: this.name,
+        //     accessToken: this.accessToken,
+        //   })
+        //   .then((response) => {
+        //     console.log(response);
+        //     this.isLoggedIn = false;
+        //     sessionStorage.removeItem("token");
+        //     sessionStorage.removeItem("name");
+        //     document.location.href = "/";
+        //   })
+        //   .catch((error) => {
+        //     console.log(error);
+        //   });
       }
     },
   },

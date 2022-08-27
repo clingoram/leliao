@@ -39,14 +39,15 @@ class UserController extends Controller
 
     // public function show(Request $request, int $id)
     // {
-    //     $user = TableUser::find($id);
-    //     return response()->json(
-    //         [
-    //             'status' => 'success',
-    //             'user' => $user->toArray()
-    //         ],
-    //         200
-    //     );
+
+    // $user = TableUser::find($id);
+    // return response()->json(
+    //     [
+    //         'status' => 'success',
+    //         'user' => $user->toArray()
+    //     ],
+    //     200
+    // );
     // }
 
 
@@ -60,26 +61,6 @@ class UserController extends Controller
             $user = TableUser::where('email', $mail)->first();
             $this->secret = $user;
             return $this->secret;
-
-            // return response()->json([
-            //     'status' => true,
-            //     'data' => [
-            //         'id' => $user->id,
-            //         'name' => $user->name,
-            //         'email' => $user->email,
-            //         'salt' => $user->salt,
-            //         'role' => $user->role,
-            //         'created_at' => $user->created_at,
-            //         'updated_at' => $user->updated_at,
-            //     ]
-            // ]);
-            // return [
-            //     'id' => $user->id,
-            //     'name' => $user->name,
-            //     'email' => $user->email,
-            //     'salt' => $user->salt,
-            //     'role' => $user->role
-            // ];
         } catch (Exception $e) {
             dd($e);
         }
@@ -93,11 +74,11 @@ class UserController extends Controller
     protected function createToken(object $user, int $statusCode)
     {
         if (isset($user) and !empty($user)) {
-            $token = $user->createToken('apiToken');
+            $token = $user->createToken($user->email)->plainTextToken;
             return response()->json(
                 [
-                    // 'user' => $user,
-                    'accessToken' => $token->plainTextToken,
+                    'user' => $user,
+                    'accessToken' => $token,
                     'expires_in' => date('Y/m/d H:i:s', time() + 10 * 60),
                     'type' => 'Bearer',
                     'Accept' => 'application/json'

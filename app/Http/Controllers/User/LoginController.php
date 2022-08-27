@@ -45,35 +45,19 @@ class LoginController extends UserController
      */
     public function login(Request $request)
     {
+
         $checkUser = parent::checkUserIsset($request->loginForm['email']);
         // $user = Auth::where('email', $request->email)->first();
 
         $this->setAttempt($request->loginForm['password'], $checkUser['salt']);
         $attempt = $this->getAttempt();
-        // var_dump($attempt);
-        // var_dump($checkUser['salt']);
+
+        $filterData = [
+            $checkUser->name,
+            $checkUser->email
+        ];
 
         if ($attempt === true) {
-            // $token = $checkUser->createToken('apiToken')->plainTextToken;
-            // $token_expire_time = date('Y/m/d H:i:s', time() + 10 * 60);
-
-            // return response()->json(
-            //     [
-            //         'status' => 'success',
-            //         'user' => $checkUser,
-            //     ],
-            //     200
-            // )->header('Authorization', $token);
-
-            // return response()->json(
-            //     [
-            //         'status' => 'success',
-            //         'user' => $checkUser,
-            //         // 'token' => $token
-            //     ],
-            //     200
-            // );
-
             return parent::createToken($checkUser, 200);
         }
         return response()->json(

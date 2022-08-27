@@ -53,7 +53,6 @@ class RegisterController extends UserController
         $now = new DateTime();
 
         $check = parent::validatorData([$this->name, $this->email, $this->password]);
-        // $check = parent::validatorData($request);
 
         parent::checkUserIsset($this->email);
 
@@ -75,52 +74,7 @@ class RegisterController extends UserController
             $user->role = null ? 1 : 2;
             $user->save();
 
-            // $user = new Auth();
-            // $user->name = $request->name;
-            // $user->email = $request->email;
-            // // $user->password = Hash::make($this->password);
-            // $user->password = $pwdwithHash;
-            // $user->salt = $salt;
-            // $user->created_at = $now;
-            // $user->role = 2 ? 2 : 1;
-            // $user->save();
-
-            // $user = Auth::create([
-            //     'name' => $this->name,
-            //     'email' => $this->email,
-            //     'password' => $pwdwithHash,
-            //     'salt' => $salt,
-            //     'created_at' => $now,
-            //     'role' => null ? 1 : 2
-            // ]);
-
             return parent::createToken($user, 201);
-
-            // $token = $user->createToken('token')->plainTextToken;
-            // return response()->json(
-            //     [
-            //         'status' => 'success',
-            //         'message' => 'User created successfully',
-            //         'user' => $user,
-            //         'token' => $token
-            //     ],
-            // );
-
-            // $user = $this->user_repository->registerAccount($this->name, $this->email, $this->password);
-
-            // return response()->json(
-            //     [
-            //         'status' => 'success',
-            //         'message' => 'User created successfully',
-            //         'user' => $user,
-            //         'authorisation' => [
-            //             'token' => $token,
-            //             'type' => 'bearer',
-            //         ]
-            //     ],
-            //     200
-            // );
-
         } else {
             return response()->json([
                 'status' => 'error',

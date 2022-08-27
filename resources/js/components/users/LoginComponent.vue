@@ -38,6 +38,7 @@
   </div>
 </template>
 <script>
+// import $api from "../../api";
 export default {
   mounted() {
     console.log("login");
@@ -48,18 +49,24 @@ export default {
         email: "",
         password: "",
       },
-      token: "",
-      // processing: false,
+      accessToken: "",
+      name: "",
     };
   },
+  // async beforeMount() {
+  //   let resUser = await $api.get("/f/all");
+  //   this.userData = resUser.data;
+
+  //   let res = await $api.get("/login");
+  //   this.isLoggedIn = true;
+  //   localStorage.setItem("token", res.data.accessToken);
+  // },
   methods: {
     /**
      * 檢查inputs值。
      * 若檢查通過，則把值傳給function
      * */
     checkInputsValue() {
-      // const token = "asdsadsafASFadfsaf";
-
       const email = document.getElementById("email_address").value;
       const pwd = document.getElementById("input_pwd").value;
 
@@ -77,25 +84,47 @@ export default {
       // this.loginForm.token = token;
 
       return this.login();
+      // return this.checkLoginOrNot();
     },
+
+    // checkLoginOrNot() {
+    //   axios.get("/sanctum/csrf-cookie").then((response) => {
+    //     console.log(response);
+
+    //     axios
+    //       .post("api/lel/login", {
+    //         loginForm: this.loginForm,
+    //       })
+    //       .then((response) => {
+    //         console.log(response);
+    //         // this.isLoggedIn = true;
+    //         localStorage.setItem("token", response.data.accessToken);
+    //       })
+    //       .catch(function (error) {
+    //         console.error(error);
+    //       });
+    //   });
+    // },
     login() {
-      // console.log(this.loginForm);
       axios
         .post("api/lel/login", {
           loginForm: this.loginForm,
         })
         .then((response) => {
-          // TODO: get token and save it.
-          console.log(response);
+          // console.log(response.data.accessToken);
+          // console.log(response.data.user.name);
+          // localStorage.setItem("token", response.data.accessToken);
+          // localStorage.setItem("name", response.data.user.name);
+          sessionStorage.setItem("token", response.data.accessToken);
+          sessionStorage.setItem("name", response.data.user.name);
+
+          // redirect to home page.
+          document.location.href = "/";
         })
         .catch((error) => {
           console.log(error);
         });
     },
-    // removeToken() {
-    //   Cookies.remove("login");
-    // },
   },
-  // add
 };
 </script>

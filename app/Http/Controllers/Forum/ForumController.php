@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 
+session_start();
+session_destroy();
 /**
  * 分類看板
  */
@@ -17,7 +19,7 @@ class ForumController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $array = [];
         foreach (Forum::all() as $category) {
