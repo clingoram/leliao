@@ -12,4 +12,5 @@
       <a href="#" class="card-link">Another link</a>
     </div>
   </div>
+  <!-- <router-view /> -->
 </template>

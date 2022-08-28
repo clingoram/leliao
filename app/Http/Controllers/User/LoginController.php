@@ -45,7 +45,6 @@ class LoginController extends UserController
      */
     public function login(Request $request)
     {
-
         $checkUser = parent::checkUserIsset($request->loginForm['email']);
         // $user = Auth::where('email', $request->email)->first();
 

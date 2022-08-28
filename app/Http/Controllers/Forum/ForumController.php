@@ -30,6 +30,13 @@ class ForumController extends Controller
     }
 
     /**
+     * 取得特定分類文章
+     */
+    public function getSpecificForumPost()
+    {
+    }
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response

@@ -50,6 +50,8 @@ Route::prefix('/lel')->group(function () {
     });
     // });
 
+    Route::post('/add_post', [PostController::class, 'create']);
+
     // Route::group(['middleware' => 'api'], function () {
     // http://leliao/api/lel/users
     // Route::get('user', [UserController::class, 'checkUserIsset']);

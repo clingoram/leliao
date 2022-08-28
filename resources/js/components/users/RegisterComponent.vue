@@ -107,15 +107,20 @@ export default {
         })
         .then((response) => {
           // console.log(response);
-          if (response.status === 200) {
-            confirm("註冊成功");
-            history.go(0);
+          // if (response.status === 201) {
+          confirm("註冊成功");
 
-            // add
-            // axios.get("/api/lel/csrf-cookie").then((response) => {
-            //   this.$router.go("/dashboard");
-            // });
-          }
+          sessionStorage.setItem("token", response.data.accessToken);
+          sessionStorage.setItem("name", response.data.user.name);
+
+          // history.go(0);
+          document.location.href = "/";
+
+          // add
+          // axios.get("/api/lel/csrf-cookie").then((response) => {
+          //   this.$router.go("/dashboard");
+          // });
+          // }
         })
         .catch((error) => {
           console.log(error);

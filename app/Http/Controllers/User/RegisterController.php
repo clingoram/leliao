@@ -5,11 +5,10 @@ namespace App\Http\Controllers\User;
 use App\Models\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Hash\HashController;
-use DateTime;
 use HashContext;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
+// use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends UserController
 {
@@ -50,8 +49,6 @@ class RegisterController extends UserController
      */
     public function create()
     {
-        $now = new DateTime();
-
         $check = parent::validatorData([$this->name, $this->email, $this->password]);
 
         parent::checkUserIsset($this->email);
@@ -59,10 +56,7 @@ class RegisterController extends UserController
         $salt = $this->generateHash();
         $pwdwithHash = sha1($this->password . $salt);
         // $pwdwithHash = sha1($request->password . $salt);
-
-        // if ($check['status'] === true) {
         if ($check) {
-
             $user = new Auth();
             $user->name = $this->name;
             $user->email = $this->email;
@@ -70,10 +64,16 @@ class RegisterController extends UserController
             // $user->remember_token = $token;
             $user->password = $pwdwithHash;
             $user->salt = $salt;
-            $user->created_at = $now;
+            $user->created_at = date('Y/m/d H:i:s', time());
             $user->role = null ? 1 : 2;
             $user->save();
 
+            // var_dump(gettype($user));
+
+            // $filterData = [
+            //     $user->name,
+            //     $user->email
+            // ];
             return parent::createToken($user, 201);
         } else {
             return response()->json([

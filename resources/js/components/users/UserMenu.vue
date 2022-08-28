@@ -15,18 +15,17 @@
       <li v-if="isLoggedIn">
         <p>{{ this.name }}</p>
       </li>
-      <li>
-        <router-link v-bind:to="{ name: 'login-page' }" v-if="!isLoggedIn"
-          >登入</router-link
-        >
-      </li>
-      <li>
-        <router-link v-bind:to="{ name: 'register-page' }" v-if="!isLoggedIn"
-          >註冊</router-link
-        >
+      <li v-if="isLoggedIn">
+        <router-link v-bind:to="{ name: 'add' }">新增文章</router-link>
       </li>
       <li v-if="isLoggedIn">
         <a class="nav-link" v-on:click="logout">登出</a>
+      </li>
+      <li v-if="!isLoggedIn">
+        <router-link v-bind:to="{ name: 'login-page' }">登入</router-link>
+      </li>
+      <li v-if="!isLoggedIn">
+        <router-link v-bind:to="{ name: 'register-page' }">註冊</router-link>
       </li>
     </ul>
   </div>
@@ -40,6 +39,7 @@ export default {
     return {
       isLoggedIn: false,
       name: "",
+      id: "",
       accessToken: "",
     };
   },
@@ -56,8 +56,9 @@ export default {
 
       this.accessToken = sessionStorage.getItem("token");
       this.name = sessionStorage.getItem("name");
-      // console.log(this.name);
-      // console.log(this.accessToken);
+      this.id = sessionStorage.getItem("id");
+      // console.log(this.id);
+      console.log(this.accessToken);
       this.isLoggedIn = true;
     } else {
       console.log("no token");
@@ -106,6 +107,7 @@ export default {
         this.isLoggedIn = false;
         sessionStorage.removeItem("token");
         sessionStorage.removeItem("name");
+        sessionStorage.removeItem("id");
         // axios.get("api/lel/logout");
         document.location.href = "/";
 

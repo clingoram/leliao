@@ -1,28 +1,36 @@
 import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router';
 
-import App from '../components/App.vue';
+// import App from '../components/App.vue';
+
+// import UserMenu from '../components/UserMenu.vue';
 import LoginComponent from "../components/users/LoginComponent.vue";
 import RegisterComponent from "../components/users/RegisterComponent.vue";
 import LogoutComponent from "../components/users/LogoutComponent.vue";
+
 import ContentComponent from "../components/ContentComponent.vue";
-// import UserMenu from '../components/UserMenu.vue';
+import AddArticleComponent from "../components/AddArticleComponent.vue";
+import ForumComponent from "../components/ForumComponent.vue";
 
 // Route 設定
 export const routes = [
   // {
-  //   path: '/user/',
+  //   path: '/users/',
   //   component: UserMenu,
   //   children: [
   //     {
-  //       path: 'register',
+  //       path: '/users/register',
+  //       name: "register-page",
   //       component: RegisterComponent,
-  //       name: "register-page"
   //     },
   //     {
-  //       path: 'login',
-  //       component: LoginComponent,
+  //       path: '/users/login',
   //       name: "login-page",
-  //       helper: LoginComponent
+  //       component: LoginComponent,
+  //     },
+  //     {
+  //       path: '/users//logout',
+  //       name: "logout",
+  //       component: LogoutComponent,
   //     },
   //   ],
   // },
@@ -38,7 +46,6 @@ export const routes = [
     path: '/login',
     name: "login-page",
     component: LoginComponent,
-    // meta: { requiresAuth: true },
     meta: {
       auth: false
     }
@@ -47,28 +54,51 @@ export const routes = [
     path: '/logout',
     name: "logout",
     component: LogoutComponent,
-    // meta: { requiresAuth: true },
     meta: {
       auth: false
     }
   },
+  // {
+  //   // 特定類別
+  //   path: '/f/:id',
+  //   name: "forum",
+  //   component: ContentComponent,
+  //   meta: {
+  //     // public routes
+  //     auth: undefined
+  //   }
+  // },
+  // {
+  //   path: '/home',
+  //   name: 'home',
+  //   component: App,
+  //   meta: {
+  //     // public routes
+  //     auth: undefined
+  //   }
+  // },
+
+  // {
+  //   path: '/',
+  //   // name: 'home',
+  //   component: {
+  //     default: App,
+  //     a: ForumComponent,
+  //     b: ContentComponent
+  //   },
+  //   meta: {
+  //     // public routes
+  //     auth: undefined
+  //   }
+  // },
   {
-    // 特定類別
-    path: '/f/:id',
-    name: "forum",
-    component: ContentComponent,
+    // 新增文章
+    path: '/add_article',
+    name: "add",
+    component: AddArticleComponent,
+    // meta: { requiresAuth: true },
     meta: {
-      // public routes
-      auth: undefined
-    }
-  },
-  {
-    path: '/home',
-    name: 'home',
-    component: App,
-    meta: {
-      // public routes
-      auth: undefined
+      auth: false
     }
   },
   // {

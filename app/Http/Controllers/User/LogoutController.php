@@ -17,7 +17,7 @@ class LogoutController extends UserController
         $request->user()->currentAccessToken()->delete();
         return response()->json([
             'status' => 'success',
-            'message' => $request->user()->name . ' logged Out. At' . date('Y/m/d H:i:s', time()),
+            'message' => $request->user()->name . ' logged Out. At ' . date('Y/m/d H:i:s', time()),
         ], 200);
     }
 }

@@ -17,6 +17,9 @@
   </div>
   <!-- 註冊/登入頁面會出現在最下面 -->
   <!-- <router-view /> -->
+  <!-- <router-view class="view one"></router-view> -->
+  <!-- <router-view class="view two" name="a"></router-view>
+  <router-view class="view three" name="b"></router-view> -->
 </template>
 <script>
 import HeaderComponent from "./HeaderComponent.vue";
@@ -24,6 +27,7 @@ import ForumComponent from "./ForumComponent.vue";
 import ContentComponent from "./ContentComponent.vue";
 
 export default {
+  name: "App",
   components: {
     HeaderComponent,
     ForumComponent,

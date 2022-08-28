@@ -111,12 +111,17 @@ export default {
           loginForm: this.loginForm,
         })
         .then((response) => {
+          // console.log(response.data.user.id);
+          // console.log(response.data.user);
+
           // console.log(response.data.accessToken);
           // console.log(response.data.user.name);
           // localStorage.setItem("token", response.data.accessToken);
           // localStorage.setItem("name", response.data.user.name);
+
           sessionStorage.setItem("token", response.data.accessToken);
           sessionStorage.setItem("name", response.data.user.name);
+          sessionStorage.setItem("id", response.data.user.id);
 
           // redirect to home page.
           document.location.href = "/";
