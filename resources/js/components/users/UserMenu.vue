@@ -11,7 +11,6 @@
       註冊 / 登入
     </button>
     <ul class="dropdown-menu">
-      <!-- <div v-if="isGuest" class="navbar-guest"> -->
       <li v-if="isLoggedIn">
         <p>{{ this.name }}</p>
       </li>
@@ -58,7 +57,7 @@ export default {
       this.name = sessionStorage.getItem("name");
       this.id = sessionStorage.getItem("id");
       // console.log(this.id);
-      console.log(this.accessToken);
+      console.log(`token: ${this.accessToken}`);
       this.isLoggedIn = true;
     } else {
       console.log("no token");
@@ -108,8 +107,8 @@ export default {
         sessionStorage.removeItem("token");
         sessionStorage.removeItem("name");
         sessionStorage.removeItem("id");
-        // axios.get("api/lel/logout");
-        document.location.href = "/";
+        // // axios.get("api/lel/logout");
+        // document.location.href = "/";
 
         // axios
         //   .post("api/lel/logout", {
@@ -118,9 +117,11 @@ export default {
         //   })
         //   .then((response) => {
         //     console.log(response);
-        //     this.isLoggedIn = false;
-        //     sessionStorage.removeItem("token");
-        //     sessionStorage.removeItem("name");
+        //     confirm("成功登出");
+        //     // this.isLoggedIn = false;
+        //     // sessionStorage.removeItem("token");
+        //     // sessionStorage.removeItem("name");
+        //     // sessionStorage.removeItem("id");
         //     document.location.href = "/";
         //   })
         //   .catch((error) => {

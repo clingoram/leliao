@@ -112,6 +112,7 @@ export default {
 
           sessionStorage.setItem("token", response.data.accessToken);
           sessionStorage.setItem("name", response.data.user.name);
+          sessionStorage.setItem("id", response.data.user.id);
 
           // history.go(0);
           document.location.href = "/";

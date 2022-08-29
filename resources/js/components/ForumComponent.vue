@@ -25,8 +25,19 @@ export default {
       showForum: false,
     };
   },
+  async beforeMount() {
+    axios
+      .get("api/lel/f/all")
+      .then((response) => {
+        this.forumOptions = response.data;
+        this.showForum = true;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  },
   created() {
-    this.getAllForums();
+    // this.getAllForums();
   },
   methods: {
     // 所有分類看板

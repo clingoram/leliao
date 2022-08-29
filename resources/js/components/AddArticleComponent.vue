@@ -1,6 +1,6 @@
 <template>
   <!-- 新增文章，登入才能看到 -->
-  <div class="container">
+  <div class="container" v-if="isLoggedIn">
     <div class="mb-3">
       <label for="articleTitle" class="form-label">文章標題</label>
       <input
@@ -36,16 +36,20 @@
       </button>
     </div>
   </div>
+  <div v-if="!isLoggedIn">你還沒登入喔!</div>
 </template>
 <script>
 export default {
   data() {
     return {
+      isLoggedIn: true,
+      // post: {
       id: "",
       // 文章標題
       articleTitle: "",
       // 文章內容
       articelContent: "",
+      // },
       // 分類
       selected: null,
       categoryOptions: [],
@@ -53,6 +57,11 @@ export default {
   },
   created() {
     this.getAllForums();
+  },
+  async beforeMount() {
+    if (sessionStorage.getItem("token") === null) {
+      this.isLoggedIn = false;
+    }
   },
   methods: {
     // 所有分類看板
@@ -69,23 +78,25 @@ export default {
     },
     save() {
       this.id = sessionStorage.getItem("id");
-      // console.log(this.id);
-      // console.log(this.selected);
-      // console.log(this.articleTitle);
-      // console.log(this.articelContent);
+      console.log(this.id);
+      console.log(this.selected);
+      console.log(this.articleTitle);
+      console.log(this.articelContent);
       axios
         .post("api/lel/add_post", {
           userId: this.id,
-          category: this.selected,
           title: this.articleTitle,
           content: this.articelContent,
+          // post: this.post,
+          category: this.selected,
         })
         .then((response) => {
           console.log(response);
           // console.log(response.data.user);
+          confirm("新增成功");
 
           // redirect to home page.
-          // document.location.href = "/";
+          document.location.href = "/";
         })
         .catch((error) => {
           console.log(error);

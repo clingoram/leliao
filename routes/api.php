@@ -1,10 +1,12 @@
 <?php
 
 use App\Http\Controllers\Forum\ForumController;
+// use App\Http\Controllers\HomeController;
 use App\Http\Controllers\User\RegisterController;
 use App\Http\Controllers\User\LoginController;
-use App\Http\Controllers\User\UserController;
+// use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\User\LogoutController;
+use App\Http\Controllers\Post\PostController;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -30,6 +32,8 @@ Route::prefix('/lel')->group(function () {
     Route::get('/f/all', [ForumController::class, 'index']);
     Route::get('/f/{id}', [ForumController::class, 'show']);
 
+    Route::post('/add_post', [PostController::class, 'create']);
+
     // register
     Route::post('/register', [RegisterController::class, 'create']);
     // login
@@ -50,7 +54,7 @@ Route::prefix('/lel')->group(function () {
     });
     // });
 
-    Route::post('/add_post', [PostController::class, 'create']);
+
 
     // Route::group(['middleware' => 'api'], function () {
     // http://leliao/api/lel/users
