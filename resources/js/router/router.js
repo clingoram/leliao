@@ -63,7 +63,8 @@ export const routes = [
     // 動態載入(不須載入API)
     // component: () => import("../components/users/RegisterComponent.vue"),
     meta: {
-      auth: false
+      middleware: "guest",
+      title: `Register`
     }
   },
   {
@@ -72,7 +73,8 @@ export const routes = [
     component: LoginComponent,
     // component: () => import("../components/users/LoginComponent.vue"),
     meta: {
-      auth: false
+      middleware: "guest",
+      title: `Login`
     }
   },
   // {
@@ -143,10 +145,9 @@ export const routes = [
   //   path: '/dashboard',
   //   name: 'dashboard',
   //   component: Dashboard,
-  //   meta: {
-  //     // for connected users
-  //     auth: true
-  //   }
+  //    meta: {
+  //      middleware: "auth"
+  //    },
   // },
   // {
   //   // for admin
@@ -171,4 +172,21 @@ const router = createRouter({
   history: createWebHistory(),
   routes,
 });
+
+// add
+router.beforeEach((to, from, next) => {
+  document.title = to.meta.title;
+  if (to.meta.middleware == "guest") {
+    if (store.state.auth.authenticated) {
+      next({ name: "dashboard" });
+    }
+    next();
+  } else {
+    if (store.state.auth.authenticated) {
+      next();
+    } else {
+      next({ name: "login" });
+    }
+  }
+})
 export default router;

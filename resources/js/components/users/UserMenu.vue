@@ -37,6 +37,7 @@ export default {
   data() {
     return {
       isLoggedIn: false,
+      // userName: this.$store.state.auth.user,
       name: "",
       id: "",
       accessToken: "",
@@ -105,13 +106,11 @@ export default {
       //   // axios.get("api/lel/logout");
       //   document.location.href = "/";
       axios
-        .post("api/lel/logout", {
-          name: this.name,
-          accessToken: this.accessToken,
-        })
+        .post("api/lel/logout")
         .then((response) => {
           console.log(response);
           confirm("成功登出");
+          // this.$router.push({ name: "login" });
           // this.isLoggedIn = false;
           // sessionStorage.removeItem("token");
           // sessionStorage.removeItem("name");
