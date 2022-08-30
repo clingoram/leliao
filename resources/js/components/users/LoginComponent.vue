@@ -52,6 +52,7 @@ export default {
       },
       accessToken: "",
       name: "",
+      // secrets: [],
     };
   },
   // async beforeMount() {
@@ -87,50 +88,56 @@ export default {
       return this.login();
       // return this.checkLoginOrNot();
     },
-
-    // checkLoginOrNot() {
-    //   axios.get("/sanctum/csrf-cookie").then((response) => {
-    //     console.log(response);
-
-    //     axios
-    //       .post("api/lel/login", {
-    //         loginForm: this.loginForm,
-    //       })
-    //       .then((response) => {
-    //         console.log(response);
-    //         // this.isLoggedIn = true;
-    //         localStorage.setItem("token", response.data.accessToken);
-    //       })
-    //       .catch(function (error) {
-    //         console.error(error);
-    //       });
-    //   });
-    // },
     login() {
-      axios
-        .post("api/lel/login", {
-          loginForm: this.loginForm,
-        })
-        .then((response) => {
-          // console.log(response.data.user.id);
-          // console.log(response.data.user);
+      axios.get("/sanctum/csrf-cookie").then((response) => {
+        console.log(response);
 
-          // console.log(response.data.accessToken);
-          // console.log(response.data.user.name);
-          // localStorage.setItem("token", response.data.accessToken);
-          // localStorage.setItem("name", response.data.user.name);
-
-          sessionStorage.setItem("token", response.data.accessToken);
-          sessionStorage.setItem("name", response.data.user.name);
-          sessionStorage.setItem("id", response.data.user.id);
-
-          // redirect to home page.
-          document.location.href = "/";
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+        axios
+          .post("api/lel/user/login", {
+            loginForm: this.loginForm,
+          })
+          .then((response) => {
+            console.log(response);
+            // this.getSecret();
+            // this.isLoggedIn = true;
+          })
+          .catch(function (error) {
+            console.error(error);
+          });
+      });
     },
+    // getSecret() {
+    //   axios.get("api/lel/secrets").then((response) => {
+    //     console.log(response);
+    //   });
+    //   // axios
+    //   //   .get("api/lel/secrets", {
+    //   //     params: {
+    //   //       email: this.loginForm.email,
+    //   //     },
+    //   //   })
+    //   //   .then(function (response) {
+    //   //     console.log(response);
+    //   //   })
+    //   //   .catch(function (error) {
+    //   //     console.log(error);
+    //   //   });
+    // },
+    // login() {
+    //   axios
+    //     .post("api/lel/user/login", {
+    //       loginForm: this.loginForm,
+    //     })
+    //     .then((response) => {
+    //       console.log(response.data);
+
+    //       // redirect to home page.
+    //       // document.location.href = "/";
+    //     })
+    //     .catch((error) => {
+    //       console.log(error);
+    //     });
+    // },
   },
 };
 </script>

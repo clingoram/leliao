@@ -14,10 +14,14 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 
 
+/**
+ * User loggin.
+ */
 class LoginController extends UserController
 {
     private $check;
     private $combineString;
+    const Message_Note = 'Logged in.';
 
     /**
      * setter
@@ -48,16 +52,12 @@ class LoginController extends UserController
         $checkUser = parent::checkUserIsset($request->loginForm['email']);
         // $user = Auth::where('email', $request->email)->first();
 
+        // parent::validatorData($request);
         $this->setAttempt($request->loginForm['password'], $checkUser['salt']);
         $attempt = $this->getAttempt();
 
-        $filterData = [
-            $checkUser->name,
-            $checkUser->email
-        ];
-
         if ($attempt === true) {
-            return parent::createToken($checkUser, 200);
+            return parent::createToken($checkUser, 200, self::Message_Note);
         }
         return response()->json(
             ['error' => 'login_error'],

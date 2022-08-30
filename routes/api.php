@@ -1,12 +1,12 @@
 <?php
 
-use App\Http\Controllers\Forum\ForumController;
-// use App\Http\Controllers\HomeController;
 use App\Http\Controllers\User\RegisterController;
 use App\Http\Controllers\User\LoginController;
-// use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\User\LogoutController;
+use App\Http\Controllers\Forum\ForumController;
+// use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\Post\PostController;
+use App\Http\Controllers\Secret\SecretController;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -28,38 +28,21 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::prefix('/lel')->group(function () {
+    // Public routes
     // 分類看板
     Route::get('/f/all', [ForumController::class, 'index']);
     Route::get('/f/{id}', [ForumController::class, 'show']);
 
-    Route::post('/add_post', [PostController::class, 'create']);
-
     // register
-    Route::post('/register', [RegisterController::class, 'create']);
+    Route::post('/user/register', [RegisterController::class, 'create']);
     // login
-    Route::post('/login', [LoginController::class, 'login']);
+    Route::post('/user/login', [LoginController::class, 'login']);
+    // Route::get('/secrets', [SecretController::class, 'index']);
 
-    // Route::get('refresh', [UserController::class, 'refresh']);
-
-    // Route::group(['prefix' => 'auth'], function () {
-    // Route::group(['middleware' => 'auth:sanctum'], function () {
-    //     Route::post('/register', [RegisterController::class, 'create']);
-    //     // login
-    //     // Route::post('/login', [LoginController::class, 'login'])->name('login');
-    //     Route::post('/login', [LoginController::class, 'login']);
-
-    //     Route::get('/refresh', [UserController::class, 'refresh']);
+    // Protected routes
     Route::group(['middleware' => ['auth:sanctum']], function () {
+        Route::post('/add_post', [PostController::class, 'create']);
+        // Route::get('/user/{id}', [UserController::class, 'user']);
         Route::post('/logout', [LogoutController::class, 'logout']);
     });
-    // });
-
-
-
-    // Route::group(['middleware' => 'api'], function () {
-    // http://leliao/api/lel/users
-    // Route::get('user', [UserController::class, 'checkUserIsset']);
-    // logout
-    // Route::post('logout', [LogoutController::class, 'logout']);
-    // });
 });

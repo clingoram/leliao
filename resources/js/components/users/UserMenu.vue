@@ -45,29 +45,26 @@ export default {
   // created() {
   //   this.beforeMount();
   // },
-  async beforeMount() {
-    // let res = await $api.get("/login");
-    // this.isLoggedIn = true;
-
-    if (sessionStorage.getItem("token") !== null) {
-      // this.accessToken = localStorage.getItem("token");
-      // this.name = localStorage.getItem("name");
-
-      this.accessToken = sessionStorage.getItem("token");
-      this.name = sessionStorage.getItem("name");
-      this.id = sessionStorage.getItem("id");
-      // console.log(this.id);
-      console.log(`token: ${this.accessToken}`);
-      this.isLoggedIn = true;
-    } else {
-      console.log("no token");
-      this.isLoggedIn = false;
-    }
-  },
   // async beforeMount() {
-  //   axios.get("/sanctum/csrf-cookie").then((response) => {
-  //     console.log(response);
 
+  //   if (sessionStorage.getItem("token") !== null) {
+  //     // this.accessToken = localStorage.getItem("token");
+  //     // this.name = localStorage.getItem("name");
+
+  //     this.accessToken = sessionStorage.getItem("token");
+  //     this.name = sessionStorage.getItem("name");
+  //     this.id = sessionStorage.getItem("id");
+  //     // console.log(this.id);
+  //     console.log(`token: ${this.accessToken}`);
+  //     this.isLoggedIn = true;
+  //   } else {
+  //     console.log("no token");
+  //     this.isLoggedIn = false;
+  //   }
+  // },
+  // async beforeMount() {
+  // axios.get("/sanctum/csrf-cookie").then((response) => {
+  //   console.log(response);
   //     axios
   //       .post("api/lel/login", {
   //         loginForm: this.loginForm,
@@ -80,17 +77,15 @@ export default {
   //       .catch(function (error) {
   //         console.error(error);
   //       });
-  //   });
+  // });
   // },
   methods: {
     // beforeMount() {
     //   // let res = await $api.get("/login");
     //   // this.isLoggedIn = true;
-
     //   if (sessionStorage.getItem("token") !== null) {
     //     // this.accessToken = localStorage.getItem("token");
     //     // this.name = localStorage.getItem("name");
-
     //     this.accessToken = sessionStorage.getItem("token");
     //     this.name = sessionStorage.getItem("name");
     //     console.log(this.name);
@@ -102,32 +97,31 @@ export default {
     //   }
     // },
     logout() {
-      if (sessionStorage.getItem("token") !== null) {
-        this.isLoggedIn = false;
-        sessionStorage.removeItem("token");
-        sessionStorage.removeItem("name");
-        sessionStorage.removeItem("id");
-        // // axios.get("api/lel/logout");
-        // document.location.href = "/";
-
-        // axios
-        //   .post("api/lel/logout", {
-        //     name: this.name,
-        //     accessToken: this.accessToken,
-        //   })
-        //   .then((response) => {
-        //     console.log(response);
-        //     confirm("成功登出");
-        //     // this.isLoggedIn = false;
-        //     // sessionStorage.removeItem("token");
-        //     // sessionStorage.removeItem("name");
-        //     // sessionStorage.removeItem("id");
-        //     document.location.href = "/";
-        //   })
-        //   .catch((error) => {
-        //     console.log(error);
-        //   });
-      }
+      // if (sessionStorage.getItem("token") !== null) {
+      //   this.isLoggedIn = false;
+      //   sessionStorage.removeItem("token");
+      //   sessionStorage.removeItem("name");
+      //   sessionStorage.removeItem("id");
+      //   // axios.get("api/lel/logout");
+      //   document.location.href = "/";
+      axios
+        .post("api/lel/logout", {
+          name: this.name,
+          accessToken: this.accessToken,
+        })
+        .then((response) => {
+          console.log(response);
+          confirm("成功登出");
+          // this.isLoggedIn = false;
+          // sessionStorage.removeItem("token");
+          // sessionStorage.removeItem("name");
+          // sessionStorage.removeItem("id");
+          document.location.href = "/";
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      // }
     },
   },
 };

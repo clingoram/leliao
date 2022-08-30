@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers\User;
 
-use App\Models\Auth;
+
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use DateTime;
-use HashContext;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\DB;
 
-class LogoutController extends UserController
+/**
+ * Logout user.
+ */
+class LogoutController extends Controller
 {
     public function logout(Request $request)
     {

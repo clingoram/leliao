@@ -59,8 +59,14 @@ class UserController extends Controller
     {
         try {
             $user = TableUser::where('email', $mail)->first();
-            $this->secret = $user;
-            return $this->secret;
+            if (!$user) {
+                return response([
+                    'message' => 'Bad creds'
+                ], 401);
+            } else {
+                $this->secret = $user;
+                return $this->secret;
+            }
         } catch (Exception $e) {
             dd($e);
         }
@@ -71,13 +77,13 @@ class UserController extends Controller
      * 
      * @return json
      */
-    protected function createToken(object $user, int $statusCode)
+    protected function createToken(object $user, int $statusCode, string $message)
     {
         if (isset($user) and !empty($user)) {
-            $token = $user->createToken($user->email)->plainTextToken;
+            $token = $user->createToken($user->name)->plainTextToken;
             return response()->json(
                 [
-                    'user' => $user,
+                    'message' => $user->name . ' ' . $message,
                     'accessToken' => $token,
                     'expires_in' => date('Y/m/d H:i:s', time() + 10 * 60),
                     'type' => 'Bearer',
@@ -101,24 +107,36 @@ class UserController extends Controller
      * @param array $data
      * @return json
      */
-    protected function validatorData(array $data)
+    public function validatorData($data)
     {
-        $result = Validator::make($data, [
-            'name' => ['required', 'string', 'max:30'],
-            'email' => ['required', 'string', 'email', 'max:30', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed']
-        ]);
+        try {
+            $result = Validator::make($data, [
+                'name' => ['required', 'string', 'max:30'],
+                'email' => ['required', 'string', 'email', 'max:30', 'unique:users'],
+                'password' => ['required', 'string', 'min:8', 'confirmed']
+            ]);
 
-        if ($result->fails()) {
+            if ($result->fails()) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Validator error',
+                    'errors' => $result->errors()
+                ], 401);
+            } else {
+                return response()->json(
+                    [
+                        'status' => true,
+                        'message' => 'Success'
+                    ],
+                    200
+                );
+            }
+        } catch (\Throwable $th) {
             return response()->json([
                 'status' => false,
-                'errors' => $result->errors()
-            ], 422);
-        } else {
-            return response()->json(
-                ['status' => true],
-                200
-            );
+                'message' => $th->getMessage(),
+                // 'errors' => $result->errors()
+            ], 500);
         }
     }
 }

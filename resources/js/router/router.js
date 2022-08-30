@@ -5,7 +5,7 @@ import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router
 import UserMenu from '../components/users/UserMenu.vue';
 import LoginComponent from "../components/users/LoginComponent.vue";
 import RegisterComponent from "../components/users/RegisterComponent.vue";
-import LogoutComponent from "../components/users/LogoutComponent.vue";
+// import LogoutComponent from "../components/users/LogoutComponent.vue";
 
 // import ContentComponent from "../components/ContentComponent.vue";
 import AddArticleComponent from "../components/AddArticleComponent.vue";
@@ -75,15 +75,15 @@ export const routes = [
       auth: false
     }
   },
-  {
-    path: '/logout',
-    name: "logout",
-    component: LogoutComponent,
-    // component: () => import("../components/users/LogoutComponent.vue"),
-    meta: {
-      auth: false
-    }
-  },
+  // {
+  //   path: '/logout',
+  //   name: "logout",
+  //   component: LogoutComponent,
+  //   // component: () => import("../components/users/LogoutComponent.vue"),
+  //   meta: {
+  //     auth: false
+  //   }
+  // },
   {
     // 新增文章
     path: '/add_post',

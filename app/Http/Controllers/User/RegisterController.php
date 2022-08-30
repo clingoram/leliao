@@ -10,15 +10,20 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 // use Illuminate\Support\Facades\Validator;
 
+/**
+ * To register.
+ */
 class RegisterController extends UserController
 {
-    public $name;
-    protected $email;
-    protected $password;
+    public string $name;
+    protected string $email;
+    protected string $password;
 
     private string $numbersAndAlphabets;
     private string $specialCharacters;
     private int $len;
+
+    const Message_Note = 'Registered.';
 
     public function __construct(Request $request)
     {
@@ -50,31 +55,29 @@ class RegisterController extends UserController
     public function create()
     {
         $check = parent::validatorData([$this->name, $this->email, $this->password]);
+        // $check = parent::validatorData($request);
+
 
         parent::checkUserIsset($this->email);
+        // parent::checkUserIsset($request->email);
 
         $salt = $this->generateHash();
         $pwdwithHash = sha1($this->password . $salt);
+        // $pwdwithHash = sha1($request->password . $salt);
+
         // $pwdwithHash = sha1($request->password . $salt);
         if ($check) {
             $user = new Auth();
             $user->name = $this->name;
             $user->email = $this->email;
             // $user->password = Hash::make($this->password);
-            // $user->remember_token = $token;
             $user->password = $pwdwithHash;
             $user->salt = $salt;
             $user->created_at = date('Y/m/d H:i:s', time());
             $user->role = null ? 1 : 2;
             $user->save();
 
-            // var_dump(gettype($user));
-
-            // $filterData = [
-            //     $user->name,
-            //     $user->email
-            // ];
-            return parent::createToken($user, 201);
+            return parent::createToken($user, 201, self::Message_Note);
         } else {
             return response()->json([
                 'status' => 'error',

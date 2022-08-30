@@ -6,7 +6,6 @@ const $api = axios.create({
   withCredentials: true,
   baseURL: API_URL,
   headers: { 'Content-Type': 'application/json' },
-  timeout: 20000
 })
 
 $api.interceptors.request.use((config) => {
@@ -17,6 +16,4 @@ $api.interceptors.request.use((config) => {
     return Promise.reject(error)
   }
 )
-
-
 export default $api;

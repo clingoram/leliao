@@ -100,9 +100,9 @@ export default {
      * 把接收到的值傳到後端處理
      * */
     register() {
-      // console.log(this.form);
+      // axios.get("/sanctum/csrf-cookie").then((response) => {
       axios
-        .post("api/lel/register", {
+        .post("api/lel/user/register", {
           form: this.form,
         })
         .then((response) => {
@@ -110,24 +110,18 @@ export default {
           // if (response.status === 201) {
           confirm("註冊成功");
 
-          sessionStorage.setItem("token", response.data.accessToken);
-          sessionStorage.setItem("name", response.data.user.name);
-          sessionStorage.setItem("id", response.data.user.id);
+          // sessionStorage.setItem("token", response.data.accessToken);
+          // sessionStorage.setItem("name", response.data.user.name);
+          // sessionStorage.setItem("id", response.data.user.id);
 
           // history.go(0);
           document.location.href = "/";
-
-          // add
-          // axios.get("/api/lel/csrf-cookie").then((response) => {
-          //   this.$router.go("/dashboard");
-          // });
-          // }
         })
         .catch((error) => {
           console.log(error);
         });
+      // });
     },
   },
-  // add
 };
 </script>
