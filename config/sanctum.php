@@ -46,7 +46,7 @@ return [
     |
     */
 
-    // 'expiration' => date('Y/m/d H:i:s', time() + 10 * 60),
+    // 'expiration' => 60 * 24 * 7,
     'expiration' => null,
 
     /*

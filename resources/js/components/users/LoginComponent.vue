@@ -50,9 +50,7 @@ export default {
         email: "",
         password: "",
       },
-      accessToken: "",
       name: "",
-      // secrets: [],
     };
   },
   // async beforeMount() {
@@ -83,61 +81,28 @@ export default {
         alert("email密碼不能為空");
         return;
       }
-      // this.loginForm.token = token;
-
       return this.login();
-      // return this.checkLoginOrNot();
     },
     login() {
       axios.get("/sanctum/csrf-cookie").then((response) => {
-        console.log(response);
-
+        // console.log(response);
         axios
           .post("api/lel/user/login", {
             loginForm: this.loginForm,
           })
           .then((response) => {
-            console.log(response);
-            // this.getSecret();
-            // this.isLoggedIn = true;
+            // console.log(response);
+            sessionStorage.setItem("token", response.data.accessToken);
+            sessionStorage.setItem("id", response.data.user.id);
+            sessionStorage.setItem("name", response.data.user.account);
+
+            document.location.href = "/";
           })
           .catch(function (error) {
             console.error(error);
           });
       });
     },
-    // getSecret() {
-    //   axios.get("api/lel/secrets").then((response) => {
-    //     console.log(response);
-    //   });
-    //   // axios
-    //   //   .get("api/lel/secrets", {
-    //   //     params: {
-    //   //       email: this.loginForm.email,
-    //   //     },
-    //   //   })
-    //   //   .then(function (response) {
-    //   //     console.log(response);
-    //   //   })
-    //   //   .catch(function (error) {
-    //   //     console.log(error);
-    //   //   });
-    // },
-    // login() {
-    //   axios
-    //     .post("api/lel/user/login", {
-    //       loginForm: this.loginForm,
-    //     })
-    //     .then((response) => {
-    //       console.log(response.data);
-
-    //       // redirect to home page.
-    //       // document.location.href = "/";
-    //     })
-    //     .catch((error) => {
-    //       console.log(error);
-    //     });
-    // },
   },
 };
 </script>

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Post;
 
 use App\Models\Post;
+use App\Models\Auth;
+use App\Models\Forum;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
@@ -29,15 +31,27 @@ class PostController extends Controller
 
     public function create(Request $request)
     {
+        // var_dump($request);
         $this->validateCheck($request);
 
-        $post = new Post();
-        $post->title = $request->content;
-        $post->content = $request->content;
-        $post->category_id = $request->category;
-        $post->writer_id = $request->userId;
-        $post->created_at = date('Y/m/d H:i:s', time());
-        $post->save();
+        $user = Auth::find($request->userId);
+        $category = Forum::find($request->category);
+
+        // $post = new Post();
+        // $post->title = $request->title;
+        // $post->content = $request->content;
+        // $post->category_id = $category;
+        // $post->writer_id = $user->id;
+        // $post->created_at = date('Y/m/d H:i:s', time());
+        // $post->save();
+
+        $article = Post::create([
+            'title' => $request->title,
+            'content' => $request->content,
+            'category_id' => $category,
+            'writer_id' => $user->id,
+            'created_at' => date('Y/m/d H:i:s', time())
+        ]);
 
         return response()->json(
             ['status' => 'success'],

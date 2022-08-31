@@ -11,13 +11,13 @@
       註冊 / 登入
     </button>
     <ul class="dropdown-menu">
-      <li v-if="isLoggedIn">
+      <li v-if="isLoggedIn === true">
         <p>{{ this.name }}</p>
       </li>
-      <li v-if="isLoggedIn">
+      <li v-if="isLoggedIn === true">
         <router-link v-bind:to="{ name: 'add' }">新增文章</router-link>
       </li>
-      <li v-if="isLoggedIn">
+      <li v-if="isLoggedIn === true">
         <a class="nav-link" v-on:click="logout">登出</a>
       </li>
       <li v-if="!isLoggedIn">
@@ -37,90 +37,37 @@ export default {
   data() {
     return {
       isLoggedIn: false,
-      // userName: this.$store.state.auth.user,
+      // accessToken: "",
       name: "",
-      id: "",
-      accessToken: "",
     };
   },
-  // created() {
-  //   this.beforeMount();
-  // },
-  // async beforeMount() {
+  created() {
+    if (sessionStorage.getItem("token") !== null) {
+      // this.accessToken = sessionStorage.getItem("token");
+      this.name = sessionStorage.getItem("name");
+      this.isLoggedIn = true;
 
-  //   if (sessionStorage.getItem("token") !== null) {
-  //     // this.accessToken = localStorage.getItem("token");
-  //     // this.name = localStorage.getItem("name");
-
-  //     this.accessToken = sessionStorage.getItem("token");
-  //     this.name = sessionStorage.getItem("name");
-  //     this.id = sessionStorage.getItem("id");
-  //     // console.log(this.id);
-  //     console.log(`token: ${this.accessToken}`);
-  //     this.isLoggedIn = true;
-  //   } else {
-  //     console.log("no token");
-  //     this.isLoggedIn = false;
-  //   }
-  // },
-  // async beforeMount() {
-  // axios.get("/sanctum/csrf-cookie").then((response) => {
-  //   console.log(response);
-  //     axios
-  //       .post("api/lel/login", {
-  //         loginForm: this.loginForm,
-  //       })
-  //       .then((response) => {
-  //         console.log(response);
-  //         this.isLoggedIn = true;
-  //         localStorage.setItem("token", response.data.accessToken);
-  //       })
-  //       .catch(function (error) {
-  //         console.error(error);
-  //       });
-  // });
-  // },
+      // axios.defaults.headers.common[
+      //   "Authorization"
+      // ] = `Bearer ${this.accessToken}`;
+    }
+  },
   methods: {
-    // beforeMount() {
-    //   // let res = await $api.get("/login");
-    //   // this.isLoggedIn = true;
-    //   if (sessionStorage.getItem("token") !== null) {
-    //     // this.accessToken = localStorage.getItem("token");
-    //     // this.name = localStorage.getItem("name");
-    //     this.accessToken = sessionStorage.getItem("token");
-    //     this.name = sessionStorage.getItem("name");
-    //     console.log(this.name);
-    //     console.log(this.accessToken);
-    //     this.isLoggedIn = true;
-    //   } else {
-    //     console.log("no token");
-    //     this.isLoggedIn = false;
-    //   }
-    // },
     logout() {
-      // if (sessionStorage.getItem("token") !== null) {
-      //   this.isLoggedIn = false;
-      //   sessionStorage.removeItem("token");
-      //   sessionStorage.removeItem("name");
-      //   sessionStorage.removeItem("id");
-      //   // axios.get("api/lel/logout");
-      //   document.location.href = "/";
       axios
         .post("api/lel/logout")
         .then((response) => {
-          console.log(response);
+          // console.log(response);
           confirm("成功登出");
-          // this.$router.push({ name: "login" });
-          // this.isLoggedIn = false;
-          // sessionStorage.removeItem("token");
-          // sessionStorage.removeItem("name");
-          // sessionStorage.removeItem("id");
           document.location.href = "/";
+          this.isLoggedIn = false;
+          sessionStorage.removeItem("token");
+          sessionStorage.removeItem("id");
+          sessionStorage.removeItem("name");
         })
         .catch((error) => {
           console.log(error);
         });
-      // }
     },
   },
 };

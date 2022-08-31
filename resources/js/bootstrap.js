@@ -20,6 +20,7 @@ window.axios = axios;
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 // add
+window.axios.defaults.headers.common['Authorization'] = `Bearer ${sessionStorage.getItem("token")}`;
 window.axios.defaults.withCredentials = true;
 
 /**

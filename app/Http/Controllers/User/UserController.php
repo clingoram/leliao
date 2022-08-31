@@ -83,6 +83,10 @@ class UserController extends Controller
             $token = $user->createToken($user->name)->plainTextToken;
             return response()->json(
                 [
+                    'user' => [
+                        'id' => $user->id,
+                        'account' => $user->name
+                    ],
                     'message' => $user->name . ' ' . $message,
                     'accessToken' => $token,
                     'expires_in' => date('Y/m/d H:i:s', time() + 10 * 60),

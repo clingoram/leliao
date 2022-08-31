@@ -28,10 +28,11 @@
         id="articelContent"
         rows="3"
         v-model="articelContent"
+        placeholder="在這打上內容!"
       ></textarea>
     </div>
     <div class="col-auto">
-      <button type="submit" class="btn btn-primary" v-on:click="save()">
+      <button type="submit" class="btn btn-primary" v-on:click="savePost()">
         Submit
       </button>
     </div>
@@ -44,7 +45,7 @@ export default {
     return {
       isLoggedIn: true,
       // post: {
-      id: "",
+      id: sessionStorage.getItem("id"),
       // 文章標題
       articleTitle: "",
       // 文章內容
@@ -70,32 +71,28 @@ export default {
         .get("api/lel/f/all")
         .then((response) => {
           this.categoryOptions = response.data;
-          // console.log(this.categoryOptions);
         })
         .catch((error) => {
           console.log(error);
         });
     },
-    save() {
-      this.id = sessionStorage.getItem("id");
+    savePost() {
+      // this.id = sessionStorage.getItem("id");
       console.log(this.id);
       console.log(this.selected);
       console.log(this.articleTitle);
       console.log(this.articelContent);
+
       axios
         .post("api/lel/add_post", {
           userId: this.id,
           title: this.articleTitle,
-          content: this.articelContent,
-          // post: this.post,
           category: this.selected,
+          content: this.articelContent,
         })
         .then((response) => {
-          console.log(response);
-          // console.log(response.data.user);
+          // console.log(response);
           confirm("新增成功");
-
-          // redirect to home page.
           document.location.href = "/";
         })
         .catch((error) => {

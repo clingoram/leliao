@@ -38,4 +38,16 @@ class Post extends Model
         'reply',
         'others'
     ];
+
+    // table users
+    public function user()
+    {
+        return $this->belongsTo(Auth::class, 'foreign_key');
+    }
+
+    // table category
+    public function category()
+    {
+        return $this->belongsTo(Forum::class, 'foreign_key');
+    }
 }

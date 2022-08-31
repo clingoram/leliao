@@ -61,8 +61,6 @@ export default {
         password: "",
         role: "",
       },
-      // store token in storage or session.
-      token: "",
     };
   },
   methods: {
@@ -73,7 +71,6 @@ export default {
       const name = document.getElementById("inputAccount").value;
       const email = document.getElementById("inputEmail").value;
       const pwd = document.getElementById("inputPwd").value;
-      // console.log(name);
 
       // regex
       let accountPattern = /^[0-9A-Za-z]+$/;
@@ -100,27 +97,22 @@ export default {
      * 把接收到的值傳到後端處理
      * */
     register() {
-      // axios.get("/sanctum/csrf-cookie").then((response) => {
       axios
         .post("api/lel/user/register", {
           form: this.form,
         })
         .then((response) => {
-          // console.log(response);
+          // console.log(response.data.accessToken);
           // if (response.status === 201) {
           confirm("註冊成功");
-
-          // sessionStorage.setItem("token", response.data.accessToken);
-          // sessionStorage.setItem("name", response.data.user.name);
-          // sessionStorage.setItem("id", response.data.user.id);
-
-          // history.go(0);
+          sessionStorage.setItem("token", response.data.accessToken);
+          sessionStorage.setItem("id", response.data.id);
+          sessionStorage.setItem("name", response.data.name);
           document.location.href = "/";
         })
         .catch((error) => {
           console.log(error);
         });
-      // });
     },
   },
 };
