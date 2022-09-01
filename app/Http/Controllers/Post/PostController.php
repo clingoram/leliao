@@ -8,6 +8,7 @@ use App\Models\Forum;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
 /**
  * 文章的新增、編輯
@@ -21,48 +22,81 @@ class PostController extends Controller
     protected $replyUsers;
     protected $emoj;
 
-    // public function __construct(Request $request)
-    // {
-    //     $this->author = $request->userId;
-    //     $this->title = $request->title;
-    //     $this->category = $request->category;
-    //     $this->content = $request->content;
-    // }
+    public function index()
+    {
+        $all = Post::select(
+            'posts.id',
+            'posts.title',
+            'posts.writer_id',
+            'posts.content',
+            'posts.reply',
+            'posts.others',
+            'posts.created_at',
+            'category.name AS cName',
+            'category.id AS cId',
+            'users.name AS uName'
+        )->join('category', 'category.id', '=', 'posts.category_id')
+            ->join('users', 'users.id', '=', 'posts.writer_id')->get();
+
+        if (isset($all)) {
+            return response()->json([
+                'status' => true,
+                'message' => 'Success',
+                'data_return' => $all
+            ], 200);
+        } else {
+            return response()->json([
+                'status' => false,
+                'message' => 'Something wrong.',
+                'data_return' => null,
+            ], 400);
+        }
+    }
 
     public function create(Request $request)
     {
-        // var_dump($request);
-        $this->validateCheck($request);
+        // $this->validateCheck($request);
 
-        $user = Auth::find($request->userId);
-        $category = Forum::find($request->category);
+        $checkUser = DB::table('users')->where('id', '=', $request->post['id'])->exists();
+        $checkCategory = DB::table('category')->where('id', '=', $request->post['selected'])->exists();
 
-        // $post = new Post();
-        // $post->title = $request->title;
-        // $post->content = $request->content;
-        // $post->category_id = $category;
-        // $post->writer_id = $user->id;
-        // $post->created_at = date('Y/m/d H:i:s', time());
-        // $post->save();
+        // $user = Auth::find($request->post['id']);
+        // $category = Forum::find($request->post['selected']);
 
-        $article = Post::create([
-            'title' => $request->title,
-            'content' => $request->content,
-            'category_id' => $category,
-            'writer_id' => $user->id,
-            'created_at' => date('Y/m/d H:i:s', time())
-        ]);
+        if ($checkCategory and $checkUser) {
+            $post = new Post();
+            $post->title = $request->post['articleTitle'];
+            $post->content = $request->post['articelContent'];
+            $post->category_id = $request->post['selected'];
+            $post->writer_id = $request->post['id'];
+            $post->created_at = date('Y/m/d H:i:s', time());
+            $post->save();
 
-        return response()->json(
-            ['status' => 'success'],
-            200
-        );
+            return response()->json(
+                ['status' => 'success'],
+                200
+            );
+        } else {
+            return response()->json(
+                ['status' => 'fail'],
+                400
+            );
+        }
+
+        // $article = Post::create([
+        //     'title' => $request->post['articleTitle'],
+        //     'content' => $request->post['articelContent'],
+        //     'category_id' => $category,
+        //     'writer_id' => $user->id,
+        //     'created_at' => date('Y/m/d H:i:s', time())
+        // ]);
+
+
     }
-
 
     public function validateCheck(Request $request)
     {
-        $result = Validator::make($request, [
+        $result = Validator::make($request->all(), [
             'writer_id' => ['required', 'int'],
             'title' => ['required', 'string'],
             'content' => ['required', 'string'],
@@ -80,5 +114,22 @@ class PostController extends Controller
                 200
             );
         }
+    }
+
+    public function show(int $id)
+    {
+        $find = Post::select(
+            'posts.id',
+            'posts.title',
+            'posts.writer_id',
+            'posts.content',
+            'posts.reply',
+            'posts.others',
+            'posts.created_at',
+            'category.name AS cName',
+            'category.id AS cId',
+            'users.name AS uName'
+        )->join('category', 'category.id', '=', 'posts.category_id')
+            ->join('users', 'users.id', '=', 'posts.writer_id')->where('posts.id', $id)->first();
     }
 }

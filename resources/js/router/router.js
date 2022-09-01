@@ -7,54 +7,33 @@ import LoginComponent from "../components/users/LoginComponent.vue";
 import RegisterComponent from "../components/users/RegisterComponent.vue";
 // import LogoutComponent from "../components/users/LogoutComponent.vue";
 
-// import ContentComponent from "../components/ContentComponent.vue";
-import AddArticleComponent from "../components/AddArticleComponent.vue";
-import ForumComponent from "../components/ForumComponent.vue";
+import Posts from "../components/Post/PostsComponent.vue";
+import PostComponent from "../components/Post/PostComponent.vue";
+import AddArticleComponent from "../components/Post/AddArticleComponent.vue";
+
+import ForumComponent from "../components/Forum/ForumComponent.vue";
 
 import MainComponent from "../components/MainContentComponent.vue";
 import NotFound from "../components/404.vue";
 
 // Route 設定
 export const routes = [
-
-  // {
-  //   path: '/home',
-  //   name: 'home',
-  //   component: App,
-  //   // meta: {
-  //   //   // public routes
-  //   //   auth: undefined
-  //   // }
-  // },
-  // {
-  //   path: '/users/',
-  //   component: UserMenu,
-  //   children: [
-  //     {
-  //       path: 'register',
-  //       name: "register-page",
-  //       component: RegisterComponent,
-  //     },
-  //     {
-  //       path: 'login',
-  //       name: "login-page",
-  //       component: LoginComponent,
-  //     },
-  //     {
-  //       path: 'logout',
-  //       name: "logout",
-  //       component: LogoutComponent,
-  //     },
-  //   ],
-  // },
-
   {
-    // 看板類別和文章區塊
+    // 首頁看板類別和文章區塊
     path: "/:main(.*)*",
     name: "main",
     component: MainComponent,
+    // add 
+    children: [
+      {
+        path: '/f/:category/p/:id',
+        name: "post",
+        component: PostComponent,
+      }
+    ]
   },
   {
+    // 註冊
     path: '/register',
     name: "register-page",
     component: RegisterComponent,
@@ -68,6 +47,7 @@ export const routes = [
     }
   },
   {
+    // 登入
     path: '/login',
     name: "login-page",
     component: LoginComponent,
@@ -77,15 +57,6 @@ export const routes = [
       title: `Login`
     }
   },
-  // {
-  //   path: '/logout',
-  //   name: "logout",
-  //   component: LogoutComponent,
-  //   // component: () => import("../components/users/LogoutComponent.vue"),
-  //   meta: {
-  //     auth: false
-  //   }
-  // },
   {
     // 新增文章
     path: '/add_post',
@@ -96,34 +67,32 @@ export const routes = [
       auth: false
     }
   },
+  // {
+  //   // 單一類別的某篇文章，例如工作版內的文章C
+  //   path: '/f/:categoryName/p/:id',
+  //   name: "post",
+  //   component: ContentComponent,
+  //   meta: {
+  //     // public routes
+  //     auth: undefined
+  //   }
+  // },
+  // {
+  //   // 單一類別內的所有文章，例如閒聊版內的所有文章
+  //   path: '/f/:categoryName',
+  //   name: "forum",
+  //   component: Posts,
+  //   meta: {
+  //     // public routes
+  //     auth: undefined
+  //   }
+  // },
   {
     path: "/:domain(.*)*",
     name: "NotFound",
     // component: NotFound
     component: () => import("../components/404.vue"),
   },
-
-
-  // {
-  // 特定文章
-  //   path: '/article/:id',
-  //   name: "article",
-  //   component: ContentComponent,
-  //   meta: {
-  //     // public routes
-  //     auth: undefined
-  //   }
-  // },
-  // {
-  //   // 特定類別
-  //   path: '/f/:id',
-  //   name: "forum",
-  //   component: ContentComponent,
-  //   meta: {
-  //     // public routes
-  //     auth: undefined
-  //   }
-  // },
 
 
   // {

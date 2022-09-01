@@ -26,10 +26,24 @@
 .card {
   width: 100%;
   background-color: #fff;
+  margin-bottom: 10px;
 }
 
 /* 註冊、登入 下拉式選單*/
 .dropdown {
   right: 128px;
   width: 50px;
+}
+
+/*article*/
+.warning {
+  color: red;
+}
+
+.ellipsis {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  white-space: normal;
 }

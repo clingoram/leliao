@@ -7,11 +7,11 @@
         type="text"
         class="form-control"
         id="articleTitle"
-        v-model="articleTitle"
+        v-model="post.articleTitle"
         placeholder="這是文章標題喔!"
       />
     </div>
-    <select v-model="selected">
+    <select v-model="post.selected">
       <option
         v-for="option in categoryOptions"
         v-bind:key="option.id"
@@ -27,7 +27,7 @@
         class="form-control"
         id="articelContent"
         rows="3"
-        v-model="articelContent"
+        v-model="post.articelContent"
         placeholder="在這打上內容!"
       ></textarea>
     </div>
@@ -37,23 +37,23 @@
       </button>
     </div>
   </div>
-  <div v-if="!isLoggedIn">你還沒登入喔!</div>
+  <div class="warning" v-if="!isLoggedIn">你還沒登入喔!</div>
 </template>
 <script>
 export default {
   data() {
     return {
       isLoggedIn: true,
-      // post: {
-      id: sessionStorage.getItem("id"),
-      // 文章標題
-      articleTitle: "",
-      // 文章內容
-      articelContent: "",
-      // },
-      // 分類
-      selected: null,
-      categoryOptions: [],
+      post: {
+        id: sessionStorage.getItem("id"),
+        // 文章標題
+        articleTitle: "",
+        // 文章內容
+        articelContent: "",
+        // 分類
+        selected: null,
+        categoryOptions: [],
+      },
     };
   },
   created() {
@@ -77,18 +77,9 @@ export default {
         });
     },
     savePost() {
-      // this.id = sessionStorage.getItem("id");
-      console.log(this.id);
-      console.log(this.selected);
-      console.log(this.articleTitle);
-      console.log(this.articelContent);
-
       axios
         .post("api/lel/add_post", {
-          userId: this.id,
-          title: this.articleTitle,
-          category: this.selected,
-          content: this.articelContent,
+          post: this.post,
         })
         .then((response) => {
           // console.log(response);

@@ -19,7 +19,7 @@ class ForumController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
         $array = [];
         foreach (Forum::all() as $category) {
@@ -27,13 +27,6 @@ class ForumController extends Controller
             array_push($array, $category);
         }
         return $array;
-    }
-
-    /**
-     * 取得特定分類文章
-     */
-    public function getSpecificForumPost()
-    {
     }
 
     /**
@@ -59,13 +52,28 @@ class ForumController extends Controller
 
     /**
      * Display the specified resource.
+     * 取得特定分類文章
      *
      * @param  \App\Models\Forum  $forum
      * @return \Illuminate\Http\Response
      */
-    public function show(Forum $forum)
+    public function show()
     {
-        //
+        // $find = Forum::select(
+        //     'posts.id',
+        //     'posts.title',
+        //     'posts.writer_id',
+        //     'posts.content',
+        //     'posts.reply',
+        //     'posts.others',
+        //     'posts.created_at',
+        //     'category.name AS cName',
+        //     'category.id AS cId',
+        //     'users.name AS uName'
+        // )->join('category', 'category.id', '=', 'posts.category_id')
+        //     ->join('users', 'users.id', '=', 'posts.writer_id')->where('category.id', $id)->first();
+
+        // return $find;
     }
 
     /**

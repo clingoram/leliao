@@ -13,8 +13,8 @@
   </div>
 </template>
 <script>
-import ForumComponent from "./ForumComponent.vue";
-import ContentComponent from "./ContentComponent.vue";
+import ForumComponent from "./Forum/ForumComponent.vue";
+import ContentComponent from "./Post/PostsComponent.vue";
 
 export default {
   components: {

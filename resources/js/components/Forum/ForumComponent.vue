@@ -1,5 +1,5 @@
 <template>
-  <!-- 左邊論壇分類看板 -->
+  <!-- 首頁 左邊論壇分類看板 -->
   <div v-if="forumOptions.length !== 0">
     <div
       class="forums"
@@ -21,11 +21,13 @@ export default {
   // setup() {},
   data() {
     return {
+      // for forums
       forumOptions: [],
       showForum: false,
     };
   },
   async beforeMount() {
+    // get all forums.
     axios
       .get("api/lel/f/all")
       .then((response) => {
@@ -41,32 +43,32 @@ export default {
   },
   methods: {
     // 所有分類看板
-    getAllForums() {
-      axios
-        .get("api/lel/f/all")
-        .then((response) => {
-          this.forumOptions = response.data;
-          this.showForum = true;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
+    // getAllForums() {
+    //   axios
+    //     .get("api/lel/f/all")
+    //     .then((response) => {
+    //       this.forumOptions = response.data;
+    //       this.showForum = true;
+    //     })
+    //     .catch((error) => {
+    //       console.log(error);
+    //     });
+    // },
     // 取得特定看板的文章
-    getSpecificForum() {
-      axios
-        .get("api/lel/f", {
-          params: {
-            ID: category.id,
-          },
-        })
-        .then(function (response) {
-          console.log(response);
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    },
+    // getSpecificForum() {
+    //   axios
+    //     .get("api/lel/f", {
+    //       params: {
+    //         ID: category.id,
+    //       },
+    //     })
+    //     .then(function (response) {
+    //       console.log(response);
+    //     })
+    //     .catch(function (error) {
+    //       console.log(error);
+    //     });
+    // },
   },
 };
 </script>
