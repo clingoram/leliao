@@ -7,13 +7,13 @@ import LoginComponent from "../components/users/LoginComponent.vue";
 import RegisterComponent from "../components/users/RegisterComponent.vue";
 // import LogoutComponent from "../components/users/LogoutComponent.vue";
 
-import Posts from "../components/Post/PostsComponent.vue";
+// import Posts from "../components/Post/PostsComponent.vue";
 import PostComponent from "../components/Post/PostComponent.vue";
 import AddArticleComponent from "../components/Post/AddArticleComponent.vue";
 
-import ForumComponent from "../components/Forum/ForumComponent.vue";
+// import ForumComponent from "../components/Forum/ForumComponent.vue";
 
-import MainComponent from "../components/MainContentComponent.vue";
+import MainComponent from "../components/Content/MainContentComponent.vue";
 import NotFound from "../components/404.vue";
 
 // Route 設定
@@ -24,13 +24,13 @@ export const routes = [
     name: "main",
     component: MainComponent,
     // add 
-    children: [
-      {
-        path: '/f/:category/p/:id',
-        name: "post",
-        component: PostComponent,
-      }
-    ]
+    // children: [
+    //   {
+    //     path: '/f/:category/p/:id',
+    //     name: "post",
+    //     component: PostComponent,
+    //   }
+    // ]
   },
   {
     // 註冊
@@ -62,31 +62,21 @@ export const routes = [
     path: '/add_post',
     name: "add",
     component: AddArticleComponent,
-    // meta: { requiresAuth: true },
     meta: {
-      auth: false
+      auth: true
     }
   },
-  // {
-  //   // 單一類別的某篇文章，例如工作版內的文章C
-  //   path: '/f/:categoryName/p/:id',
-  //   name: "post",
-  //   component: ContentComponent,
-  //   meta: {
-  //     // public routes
-  //     auth: undefined
-  //   }
-  // },
-  // {
-  //   // 單一類別內的所有文章，例如閒聊版內的所有文章
-  //   path: '/f/:categoryName',
-  //   name: "forum",
-  //   component: Posts,
-  //   meta: {
-  //     // public routes
-  //     auth: undefined
-  //   }
-  // },
+  {
+    // 單一類別的某篇文章，例如工作版內的文章C
+    path: '/f/:categoryId/post/:id',
+    name: "post",
+    component: PostComponent,
+    props: true
+    // meta: {
+    //   // public routes
+    //   auth: undefined
+    // }
+  },
   {
     path: "/:domain(.*)*",
     name: "NotFound",

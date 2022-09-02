@@ -31,12 +31,12 @@ Route::prefix('/lel')->group(function () {
     // 首頁，所有分類看板
     Route::get('/f/all', [ForumController::class, 'index']);
     // 單一類別內的所有文章，例如閒聊版內的所有文章
-    Route::get('/f/{id}', [ForumController::class, 'show']);
+    Route::get('/f/{id}/posts', [ForumController::class, 'show']);
 
     // 首頁，不分類別的全部文章
-    Route::get('/posts', [PostController::class, 'index']);
+    // Route::get('/posts', [PostController::class, 'index']);
     // 單一類別的某篇文章，例如工作版內的文章C
-    // Route::get('/f/{id}/posts/{id}', [PostController::class, 'show']);
+    Route::get('/f/{category_id}/post/{post_id}', [PostController::class, 'show']);
 
     // register
     Route::post('/user/register', [RegisterController::class, 'create']);

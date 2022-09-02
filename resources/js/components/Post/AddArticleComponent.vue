@@ -7,11 +7,11 @@
         type="text"
         class="form-control"
         id="articleTitle"
-        v-model="post.articleTitle"
+        v-model="post.title"
         placeholder="這是文章標題喔!"
       />
     </div>
-    <select v-model="post.selected">
+    <select v-model="post.category_id">
       <option
         v-for="option in categoryOptions"
         v-bind:key="option.id"
@@ -27,7 +27,7 @@
         class="form-control"
         id="articelContent"
         rows="3"
-        v-model="post.articelContent"
+        v-model="post.content"
         placeholder="在這打上內容!"
       ></textarea>
     </div>
@@ -45,13 +45,13 @@ export default {
     return {
       isLoggedIn: true,
       post: {
-        id: sessionStorage.getItem("id"),
+        writer_id: sessionStorage.getItem("id"),
         // 文章標題
-        articleTitle: "",
+        title: "",
         // 文章內容
-        articelContent: "",
+        content: "",
         // 分類
-        selected: null,
+        category_id: null,
         categoryOptions: [],
       },
     };

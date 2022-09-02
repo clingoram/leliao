@@ -6,11 +6,8 @@ use App\Models\Forum;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-
-session_start();
-session_destroy();
 /**
- * 分類看板
+ * 首頁分類看板以及所屬看板的文章
  */
 class ForumController extends Controller
 {
@@ -23,10 +20,30 @@ class ForumController extends Controller
     {
         $array = [];
         foreach (Forum::all() as $category) {
-            // echo $category->name;
             array_push($array, $category);
         }
         return $array;
+    }
+
+    /**
+     * 首頁預設會出現的所有文章
+     */
+    public function defaultAllposts()
+    {
+        $all = Forum::select(
+            'posts.id',
+            'posts.title',
+            'posts.writer_id',
+            'posts.content',
+            'posts.reply',
+            'posts.others',
+            'posts.created_at',
+            'category.name AS cName',
+            'category.id AS cId',
+            'users.name AS uName'
+        )->join('posts', 'posts.category_id', '=', 'category.id')
+            ->join('users', 'users.id', '=', 'posts.writer_id')->get();
+        return $all;
     }
 
     /**
@@ -57,23 +74,39 @@ class ForumController extends Controller
      * @param  \App\Models\Forum  $forum
      * @return \Illuminate\Http\Response
      */
-    public function show()
+    public function show(int $categoryId)
     {
-        // $find = Forum::select(
-        //     'posts.id',
-        //     'posts.title',
-        //     'posts.writer_id',
-        //     'posts.content',
-        //     'posts.reply',
-        //     'posts.others',
-        //     'posts.created_at',
-        //     'category.name AS cName',
-        //     'category.id AS cId',
-        //     'users.name AS uName'
-        // )->join('category', 'category.id', '=', 'posts.category_id')
-        //     ->join('users', 'users.id', '=', 'posts.writer_id')->where('category.id', $id)->first();
+        if ($categoryId !== 0) {
+            $all = Forum::select(
+                'posts.id',
+                'posts.title',
+                'posts.writer_id',
+                'posts.content',
+                'posts.reply',
+                'posts.others',
+                'posts.created_at',
+                'category.name AS cName',
+                'category.id AS cId',
+                'users.name AS uName'
+            )->join('posts', 'posts.category_id', '=', 'category.id')
+                ->join('users', 'users.id', '=', 'posts.writer_id')->where('category.id', $categoryId)->get();
+        } else {
+            $all = $this->defaultAllposts();
+        }
 
-        // return $find;
+        if (isset($all)) {
+            return response()->json([
+                'status' => true,
+                'message' => 'Success',
+                'data_return' => $all
+            ], 200);
+        } else {
+            return response()->json([
+                'status' => false,
+                'message' => 'Something wrong.',
+                'data_return' => null,
+            ], 400);
+        }
     }
 
     /**

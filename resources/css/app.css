@@ -13,13 +13,19 @@
 
 /* main vue file*/
 .mainarea {
-  padding-top: 10pt;
+  padding-top: 10px;
 }
 
 /* 論壇分類 */
 .forums {
   list-style: none;
   width: 20%
+}
+
+.forumsButton {
+  border-style: none;
+  margin-bottom: 8px;
+  background-color: transparent;
 }
 
 /* 文章區塊 */

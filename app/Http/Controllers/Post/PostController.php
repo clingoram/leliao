@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 
 /**
- * 文章的新增、編輯
+ * 針對單一文章的新增、編輯以及回應
  */
 class PostController extends Controller
 {
@@ -22,53 +22,56 @@ class PostController extends Controller
     protected $replyUsers;
     protected $emoj;
 
-    public function index()
-    {
-        $all = Post::select(
-            'posts.id',
-            'posts.title',
-            'posts.writer_id',
-            'posts.content',
-            'posts.reply',
-            'posts.others',
-            'posts.created_at',
-            'category.name AS cName',
-            'category.id AS cId',
-            'users.name AS uName'
-        )->join('category', 'category.id', '=', 'posts.category_id')
-            ->join('users', 'users.id', '=', 'posts.writer_id')->get();
+    // public function index()
+    // {
+    //     $all = Post::select(
+    //         'posts.id',
+    //         'posts.title',
+    //         'posts.writer_id',
+    //         'posts.content',
+    //         'posts.reply',
+    //         'posts.others',
+    //         'posts.created_at',
+    //         'category.name AS cName',
+    //         'category.id AS cId',
+    //         'users.name AS uName'
+    //     )->join('category', 'category.id', '=', 'posts.category_id')
+    //         ->join('users', 'users.id', '=', 'posts.writer_id')->get();
 
-        if (isset($all)) {
-            return response()->json([
-                'status' => true,
-                'message' => 'Success',
-                'data_return' => $all
-            ], 200);
-        } else {
-            return response()->json([
-                'status' => false,
-                'message' => 'Something wrong.',
-                'data_return' => null,
-            ], 400);
-        }
-    }
+    //     if (isset($all)) {
+    //         return response()->json([
+    //             'status' => true,
+    //             'message' => 'Success',
+    //             'data_return' => $all
+    //         ], 200);
+    //     } else {
+    //         return response()->json([
+    //             'status' => false,
+    //             'message' => 'Something wrong.',
+    //             'data_return' => null,
+    //         ], 400);
+    //     }
+    // }
 
+    /** 
+     * 建立新文章
+     */
     public function create(Request $request)
     {
         // $this->validateCheck($request);
 
-        $checkUser = DB::table('users')->where('id', '=', $request->post['id'])->exists();
-        $checkCategory = DB::table('category')->where('id', '=', $request->post['selected'])->exists();
+        $checkUser = DB::table('users')->where('id', '=', $request->post['writer_id'])->exists();
+        $checkCategory = DB::table('category')->where('id', '=', $request->post['category_id'])->exists();
 
         // $user = Auth::find($request->post['id']);
         // $category = Forum::find($request->post['selected']);
 
         if ($checkCategory and $checkUser) {
             $post = new Post();
-            $post->title = $request->post['articleTitle'];
-            $post->content = $request->post['articelContent'];
-            $post->category_id = $request->post['selected'];
-            $post->writer_id = $request->post['id'];
+            $post->title = $request->post['title'];
+            $post->content = $request->post['content'];
+            $post->category_id = $request->post['category_id'];
+            $post->writer_id = $request->post['writer_id'];
             $post->created_at = date('Y/m/d H:i:s', time());
             $post->save();
 
@@ -94,6 +97,45 @@ class PostController extends Controller
 
     }
 
+    /**
+     * 取得特定看板內的某文章
+     * */
+    public function show(int $categoryId, int $postId)
+    {
+        $find = Post::select(
+            'posts.id',
+            'posts.title',
+            'posts.writer_id',
+            'posts.content',
+            'posts.reply',
+            'posts.others',
+            'posts.created_at',
+            'category.name AS cName',
+            'category.id AS cId',
+            'users.name AS uName'
+        )->join('category', 'category.id', '=', 'posts.category_id')
+            ->join('users', 'users.id', '=', 'posts.writer_id')
+            ->where('category.id', $categoryId)
+            ->where('posts.id', $postId)->first();
+
+        if (isset($find)) {
+            return response()->json([
+                'status' => true,
+                'message' => 'Success',
+                'data_return' => $find
+            ], 200);
+        } else {
+            return response()->json([
+                'status' => false,
+                'message' => 'Something wrong.',
+                'data_return' => null,
+            ], 400);
+        }
+    }
+
+    /**
+     * 檢查
+     */
     public function validateCheck(Request $request)
     {
         $result = Validator::make($request->all(), [
@@ -114,22 +156,5 @@ class PostController extends Controller
                 200
             );
         }
-    }
-
-    public function show(int $id)
-    {
-        $find = Post::select(
-            'posts.id',
-            'posts.title',
-            'posts.writer_id',
-            'posts.content',
-            'posts.reply',
-            'posts.others',
-            'posts.created_at',
-            'category.name AS cName',
-            'category.id AS cId',
-            'users.name AS uName'
-        )->join('category', 'category.id', '=', 'posts.category_id')
-            ->join('users', 'users.id', '=', 'posts.writer_id')->where('posts.id', $id)->first();
     }
 }

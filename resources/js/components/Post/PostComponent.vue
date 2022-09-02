@@ -1,6 +1,8 @@
 <template>
   <!-- single post -->
   <!-- modal -->
+  <p>{{ id }}</p>
+
   <div
     class="modal fade"
     id="singlePost"
@@ -12,7 +14,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="modalLabel">
-            {{ item.title }}
+            {{ id }}
           </h5>
           <button
             type="button"
@@ -21,7 +23,7 @@
             aria-label="Close"
           ></button>
         </div>
-        <div class="modal-body">{{ item.content }}</div>
+        <div class="modal-body">{{ id }}</div>
         <div class="modal-footer">
           <button
             type="button"
@@ -37,7 +39,7 @@
 </template>
 <script>
 export default {
-  props: ["openCategoryModal"],
+  props: ["categoryId", "id", "openCategoryModal"],
   created() {
     // this.allCategories();
   },
