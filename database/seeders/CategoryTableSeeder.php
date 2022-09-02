@@ -15,17 +15,20 @@ class CategoryTableSeeder extends Seeder
      */
     public function run()
     {
-        // $data = [
-        //     ['name' => '閒聊', 'created_at' => date('Y/m/d H:i:s', time()), 'updated_at' => date('Y/m/d H:i:s', time())],
-        //     ['name' => '工作', 'created_at' => date('Y/m/d H:i:s', time()), 'updated_at' => date('Y/m/d H:i:s', time())],
-        //     ['name' => '美食', 'created_at' => date('Y/m/d H:i:s', time()), 'updated_at' => date('Y/m/d H:i:s', time())],
+        $data = [
+            ['id' => 1, 'name' => '閒聊', 'created_at' => date('Y/m/d H:i:s', time()), 'updated_at' => date('Y/m/d H:i:s', time())],
+            ['id' => 2, 'name' => '工作', 'created_at' => date('Y/m/d H:i:s', time()), 'updated_at' => date('Y/m/d H:i:s', time())],
+            ['id' => 3, 'name' => '美食', 'created_at' => date('Y/m/d H:i:s', time()), 'updated_at' => date('Y/m/d H:i:s', time())],
 
-        // ];
-        // $category = new Forum();
-        // for ($i = 0; $i < count($data); $i++) {
-        //     $category->name = $data[$i];
-        // }
+        ];
+        foreach ($data as $key) {
+            $category = new Forum();
+            $category->id = $key['id'];
+            $category->name = $key['name'];
+            $category->created_at = $key['created_at'];
+            $category->updated_at = $key['updated_at'];
 
-        // $category->save();
+            $category->save();
+        }
     }
 }
