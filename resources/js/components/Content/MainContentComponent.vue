@@ -48,37 +48,6 @@
                 {{ item.content }}
               </p>
 
-              <!-- <router-link
-                v-bind:to="{
-                  name: 'post',
-                  params: { categoryId: item.cId, id: item.id },
-                }"
-                tag="button"
-                >繼續閱讀</router-link
-              > -->
-
-              <!-- <single-post-modal
-                v-bind:id="item.id"
-                v-bind:cId="item.cId"
-                v-bind:openmodal="modalOpen"
-                name="modal"
-                >繼續閱讀</single-post-modal
-              > -->
-
-              <!-- modal -->
-
-              <!-- <button
-                type="button"
-                class="btn btn-primary"
-                data-bs-toggle="modal"
-                data-bs-target="#singlePost"
-                v-bind:id="item.id"
-                v-bind:openmodal="modalOpen"
-                v-on:click="getSpecificPost(item.cId, item.id)"
-              >
-                繼續閱讀
-              </button> -->
-              <!-- <label>{{ clickChecked }}</label> -->
               <button
                 type="button"
                 class="btn btn-primary"
@@ -89,42 +58,86 @@
               >
                 繼續閱讀
               </button>
-              <div
-                class="modal fade"
-                id="singlePost"
-                tabindex="-1"
-                aria-labelledby="modalLabel"
-                aria-hidden="true"
-              >
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="modalLabel">
-                        {{ item.title }}
-                      </h5>
-                      <button
-                        type="button"
-                        class="btn-close"
-                        data-bs-dismiss="modal"
-                        aria-label="Close"
-                      ></button>
+            </div>
+          </div>
+
+          <!-- modal start-->
+          <div
+            class="modal fade"
+            id="singlePost"
+            tabindex="-1"
+            aria-labelledby="modalLabel"
+            aria-hidden="true"
+          >
+            <div
+              class="
+                modal-dialog
+                modal-lg
+                modal-dialog-centered
+                modal-dialog-scrollable
+              "
+            >
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="modalLabel">
+                    {{ specificPostData.title }}
+                  </h5>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div class="modal-body">
+                  {{ specificPostData.content }}
+
+                  <hr />
+                  <div v-if="isLoggedIn === false">
+                    <p>要先登入才能回應喔!</p>
+                  </div>
+                  <div v-if="isLoggedIn === true">
+                    <div v-if="specificPostData.length != 0">
+                      {{ specificPostData.reply }}
                     </div>
-                    <div class="modal-body">{{ item.content }}</div>
-                    <div class="modal-footer">
-                      <button
-                        type="button"
-                        class="btn btn-secondary"
-                        data-bs-dismiss="modal"
-                      >
-                        關閉
-                      </button>
+                    <div class="replyArea">
+                      <!-- <form> -->
+                      <div class="mb-3">
+                        <label for="message-text" class="col-form-label"
+                          >回覆:</label
+                        >
+                        <textarea
+                          class="form-control"
+                          id="message-text"
+                          v-model.trim="replyContent"
+                        ></textarea>
+                        <button
+                          type="submit"
+                          class="btn btn-primary"
+                          v-on:click="reply()"
+                        >
+                          發送
+                        </button>
+                      </div>
+                      <!-- </form> -->
                     </div>
                   </div>
+                </div>
+
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                  >
+                    關閉
+                  </button>
                 </div>
               </div>
             </div>
           </div>
         </div>
+        <!-- modale end -->
         <div v-else>還沒有文章喔!要新增嗎?</div>
       </div>
       <div class="col"></div>
@@ -135,31 +148,45 @@
 import singlePostModal from "../Post/PostComponent.vue";
 export default {
   // props: ["categoryId", "id", "openmodal"],
-  props: {
-    id: {
-      tpye: Number,
-    },
-    categoryId: {
-      type: Number,
-    },
-    openmodal: {
-      type: Boolean,
-    },
-  },
+  // props: {
+  //   id: {
+  //     tpye: Number,
+  //   },
+  //   categoryId: {
+  //     type: Number,
+  //   },
+  //   openmodal: {
+  //     type: Boolean,
+  //   },
+  // },
   components() {
     singlePostModal;
   },
   data() {
     return {
-      // for forums
+      // checked is loggin or not.
+      isLoggedIn: sessionStorage.getItem("token") ? true : false,
+      // 所有看板(只顯示現有看板)
       forumOptions: [],
       showForum: false,
-      // for posts
+      // 預設不分看板id為0。後面SQL會做顯示所有文章
+      categoryId: 0,
+      // 首頁文章，依據categoryId或forumOptions點擊，做SQL條件顯示對應文章
       wholeData: [],
-      categoryId: 0, // default all posts.
-      // specific post.
-      specificPost: [],
-      // modalOpen: false,
+      // modal顯示單一文章
+      specificPostData: {
+        id: "",
+        title: "",
+        author: "",
+        content: "",
+        categoryName: "",
+        categoryId: "",
+        created: "",
+        others: "",
+        reply: "",
+      },
+      // 回應區，insert into table reply
+      replyContent: "",
     };
   },
   async beforeMount() {
@@ -195,13 +222,53 @@ export default {
     getSpecificPost(forumId, postId) {
       axios
         .get("api/lel/f/" + forumId + "/post/" + postId)
-        .then(function (response) {
-          console.log(response.data.data_return);
+        .then((response) => {
+          // console.log(response.data.data_return);
 
-          // this.specificPost = response.data.data_return;
-          // console.log(this.specificPost);
+          // let obj = response.data.data_return;
+          // this.specificPostData = Object.keys(obj).map((key) => [
+          //   String(key),
+          //   obj[key],
+          // ]);
+
+          // this.specificPostData = Object.entries(response.data.data_return);
+          // this.specificPostData = response.data.data_return;
+          this.specificPostData.id = response.data.data_return.id;
+          this.specificPostData.title = response.data.data_return.title;
+          this.specificPostData.author = response.data.data_return.wrtiter_id;
+          this.specificPostData.content = response.data.data_return.content;
+          this.specificPostData.category_id = response.data.data_return.cId;
+          this.specificPostData.categoryName = response.data.data_return.cName;
+          this.specificPostData.created = response.data.data_return.created_at;
+          this.specificPostData.reply = response.data.data_return.reply;
+          this.specificPostData.others = response.data.data_return.others;
         })
-        .catch(function (error) {
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    // 回覆該文章(需登入)
+
+    // TO-DO: 回覆文章，判斷是哪個帳號登入回應
+    reply() {
+      /*
+      文章id,回覆者id,回覆內容,回覆時間
+      */
+      axios
+        .post(
+          "api/lel/f/" +
+            this.specificPostData.category_id +
+            "/post/" +
+            this.specificPostData.id,
+          {
+            postId: this.specificPostData.id,
+            reply: this.replyContent,
+          }
+        )
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
           console.log(error);
         });
     },

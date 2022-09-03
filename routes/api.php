@@ -35,8 +35,11 @@ Route::prefix('/lel')->group(function () {
 
     // 首頁，不分類別的全部文章
     // Route::get('/posts', [PostController::class, 'index']);
+
     // 單一類別的某篇文章，例如工作版內的文章C
     Route::get('/f/{category_id}/post/{post_id}', [PostController::class, 'show']);
+    // 回覆(留言)該文章
+    Route::post('/f/{category_id}/post/{post_id}', [PostController::class], 'replyPost');
 
     // register
     Route::post('/user/register', [RegisterController::class, 'create']);

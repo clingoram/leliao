@@ -97,6 +97,14 @@ class PostController extends Controller
 
     }
 
+    /** 
+     * 回覆特定文章(文章id,回覆者id,回覆內容,回覆時間)
+     * column: jsonb
+     */
+    public function replyPost(int $postId)
+    {
+    }
+
     /**
      * 取得特定看板內的某文章
      * */

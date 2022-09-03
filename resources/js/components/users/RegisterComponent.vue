@@ -105,9 +105,9 @@ export default {
           // console.log(response.data.accessToken);
           // if (response.status === 201) {
           confirm("註冊成功");
-          sessionStorage.setItem("token", response.data.accessToken);
-          sessionStorage.setItem("id", response.data.id);
-          sessionStorage.setItem("name", response.data.name);
+          // sessionStorage.setItem("token", response.data.accessToken);
+          // sessionStorage.setItem("id", response.data.id);
+          // sessionStorage.setItem("name", response.data.name);
           document.location.href = "/";
         })
         .catch((error) => {
