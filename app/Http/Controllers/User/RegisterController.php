@@ -54,11 +54,10 @@ class RegisterController extends UserController
      */
     public function create()
     {
-        $check = parent::validatorData([$this->name, $this->email, $this->password]);
+        parent::validatorData([$this->name, $this->email, $this->password]);
         // $check = parent::validatorData($request);
 
-
-        parent::checkUserIsset($this->email);
+        $checkUserIsset = parent::checkUserIsset($this->email);
         // parent::checkUserIsset($request->email);
 
         $salt = $this->generateHash();
@@ -66,7 +65,7 @@ class RegisterController extends UserController
         // $pwdwithHash = sha1($request->password . $salt);
 
         // $pwdwithHash = sha1($request->password . $salt);
-        if ($check) {
+        if ($checkUserIsset === false) {
             $user = new Auth();
             $user->name = $this->name;
             $user->email = $this->email;
@@ -81,7 +80,7 @@ class RegisterController extends UserController
         } else {
             return response()->json([
                 'status' => 'error',
-                'errors' => $check->errors()
+                'errors' => 'Something wrong.'
             ], 422);
         }
     }

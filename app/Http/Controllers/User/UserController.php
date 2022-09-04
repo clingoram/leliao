@@ -54,22 +54,34 @@ class UserController extends Controller
     /**
      * 檢查table內是否有該筆資料存在
      * 
+     * 註冊:沒該筆資料->可以註冊
+     * 登入:沒該筆資料->不能登入
      */
     public function checkUserIsset(string $mail)
     {
-        try {
-            $user = TableUser::where('email', $mail)->first();
-            if (!$user) {
-                return response([
-                    'message' => 'Bad creds'
-                ], 401);
-            } else {
-                $this->secret = $user;
-                return $this->secret;
-            }
-        } catch (Exception $e) {
-            dd($e);
-        }
+        // try {
+        return DB::table('users')->where('email', '=', $mail)->exists();
+
+
+        //     if ($check === true and $purpose === "login") {
+        //         // 資料表內有該筆資料且來源自登入
+        //         $user = TableUser::where('email', $mail)->first();
+
+        //         $this->secret = $user;
+        //         return $this->secret;
+        //     } else if ($check === false and $purpose === 'register') {
+        //         // 資料表內沒有該筆資料且來源自註冊
+
+        //         // return response()->json()([
+        //         //     'message' => 'Bad creds'
+        //         // ], 401);
+        //         echo 'Wrong';
+        //         die();
+        //     } else {
+        //     }
+        // } catch (Exception $e) {
+        //     dd($e);
+        // }
     }
 
     /**

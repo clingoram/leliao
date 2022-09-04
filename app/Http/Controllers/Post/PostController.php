@@ -101,8 +101,33 @@ class PostController extends Controller
      * 回覆特定文章(文章id,回覆者id,回覆內容,回覆時間)
      * column: jsonb
      */
-    public function replyPost(int $postId)
+    // TO-DO: jsonb儲存格式須修正、在vue如何顯示回應區、method show select jsonb格式
+    public function reply(array $data)
     {
+
+        // obj example - column name = contact
+        // update customer
+        // set contact = '{ "phones":[ {"type": "mobile", "phone": "001001"} , {"type": "fix", "phone": "002002"} ] }'
+        // where id = '4ca27243-6a55-4855-b0e6-d6e1d957f289';
+
+        // array example - column name = phones 
+        // update customer
+        // set phones = '[ {"type": "mobile", "phone": "001001"} , {"type": "fix", "phone": "002002"} ]'
+        // where id = '4ca27243-6a55-4855-b0e6-d6e1d957f289';
+
+        // 取得目前回應欄位有幾筆資料 jsonb_array_length()
+        Post::where("id", $data['postId'])->update(
+            [
+                'reply' => [
+                    'userId' => $data['userId'],
+                    'content' => $data['content'],
+                    'created_at' => date('Y/m/d H:i:s', time()),
+                    // 'push_notifications' => [
+                    //     'follow' => false,
+                    // ]
+                ],
+            ]
+        );
     }
 
     /**
@@ -115,6 +140,8 @@ class PostController extends Controller
             'posts.title',
             'posts.writer_id',
             'posts.content',
+            // json_encode('posts.reply'),
+            // json_encode('posts.others'),
             'posts.reply',
             'posts.others',
             'posts.created_at',

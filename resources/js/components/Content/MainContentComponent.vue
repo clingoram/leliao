@@ -97,9 +97,6 @@
                     <p>要先登入才能回應喔!</p>
                   </div>
                   <div v-if="isLoggedIn === true">
-                    <div v-if="specificPostData.length != 0">
-                      {{ specificPostData.reply }}
-                    </div>
                     <div class="replyArea">
                       <!-- <form> -->
                       <div class="mb-3">
@@ -120,6 +117,9 @@
                         </button>
                       </div>
                       <!-- </form> -->
+                    </div>
+                    <div v-if="specificPostData.length != 0">
+                      {{ specificPostData.reply }}
                     </div>
                   </div>
                 </div>
@@ -181,9 +181,9 @@ export default {
         content: "",
         categoryName: "",
         categoryId: "",
-        created: "",
-        others: "",
-        reply: "",
+        createdAt: "",
+        othersEmoj: "",
+        reply: [],
       },
       // 回應區，insert into table reply
       replyContent: "",
@@ -224,24 +224,17 @@ export default {
         .get("api/lel/f/" + forumId + "/post/" + postId)
         .then((response) => {
           // console.log(response.data.data_return);
-
-          // let obj = response.data.data_return;
-          // this.specificPostData = Object.keys(obj).map((key) => [
-          //   String(key),
-          //   obj[key],
-          // ]);
-
-          // this.specificPostData = Object.entries(response.data.data_return);
-          // this.specificPostData = response.data.data_return;
           this.specificPostData.id = response.data.data_return.id;
           this.specificPostData.title = response.data.data_return.title;
           this.specificPostData.author = response.data.data_return.wrtiter_id;
           this.specificPostData.content = response.data.data_return.content;
           this.specificPostData.category_id = response.data.data_return.cId;
           this.specificPostData.categoryName = response.data.data_return.cName;
-          this.specificPostData.created = response.data.data_return.created_at;
+          this.specificPostData.createdAt =
+            response.data.data_return.created_at;
+          // jsonb
           this.specificPostData.reply = response.data.data_return.reply;
-          this.specificPostData.others = response.data.data_return.others;
+          this.specificPostData.othersEmoj = response.data.data_return.others;
         })
         .catch((error) => {
           console.log(error);
@@ -254,15 +247,31 @@ export default {
       /*
       文章id,回覆者id,回覆內容,回覆時間
       */
+      const replyUserId = sessionStorage.getItem("id");
+      const replyUserName = sessionStorage.getItem("name");
+
+      // console.log(replyUserId);
+      // console.log(replyUserName);
+      // console.log(this.specificPostData.id);
+      // console.log(this.replyContent);
+
+      const data = {
+        postId: this.specificPostData.id,
+        userId: replyUserId,
+        content: this.replyContent,
+      };
+
       axios
         .post(
           "api/lel/f/" +
             this.specificPostData.category_id +
-            "/post/" +
+            "/post/r/" +
             this.specificPostData.id,
           {
-            postId: this.specificPostData.id,
-            reply: this.replyContent,
+            data: data,
+            // postId: this.specificPostData.id,
+            // reply: this.replyContent,
+            // userId: replyUserId,
           }
         )
         .then((response) => {

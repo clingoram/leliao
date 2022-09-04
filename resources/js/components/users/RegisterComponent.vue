@@ -97,12 +97,13 @@ export default {
      * 把接收到的值傳到後端處理
      * */
     register() {
+      // console.log(this.form);
       axios
         .post("api/lel/user/register", {
           form: this.form,
         })
         .then((response) => {
-          // console.log(response.data.accessToken);
+          // console.log(response.data);
           // if (response.status === 201) {
           confirm("註冊成功");
           // sessionStorage.setItem("token", response.data.accessToken);

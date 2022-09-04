@@ -48,13 +48,13 @@ export default {
   data() {
     return {
       isLoggedIn: false,
-      // accessToken: "",
+      accessToken: "",
       name: "",
     };
   },
   created() {
     if (sessionStorage.getItem("token") !== null) {
-      // this.accessToken = sessionStorage.getItem("token");
+      this.accessToken = sessionStorage.getItem("token");
       this.name = sessionStorage.getItem("name");
       this.isLoggedIn = true;
 

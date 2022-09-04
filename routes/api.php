@@ -38,8 +38,6 @@ Route::prefix('/lel')->group(function () {
 
     // 單一類別的某篇文章，例如工作版內的文章C
     Route::get('/f/{category_id}/post/{post_id}', [PostController::class, 'show']);
-    // 回覆(留言)該文章
-    Route::post('/f/{category_id}/post/{post_id}', [PostController::class], 'replyPost');
 
     // register
     Route::post('/user/register', [RegisterController::class, 'create']);
@@ -50,6 +48,9 @@ Route::prefix('/lel')->group(function () {
     Route::group(['middleware' => ['auth:sanctum']], function () {
 
         Route::post('/add_post', [PostController::class, 'create']);
+
+        // 回覆(留言)該文章
+        Route::post('/f/{category_id}/post/r/{post_id}', [PostController::class, 'reply']);
 
         // Route::get('/user/{id}', [UserController::class, 'user']);
 

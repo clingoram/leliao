@@ -49,16 +49,21 @@ class LoginController extends UserController
      */
     public function login(Request $request)
     {
-        $checkUser = parent::checkUserIsset($request->loginForm['email']);
+        $checkUserIsset = parent::checkUserIsset($request->loginForm['email']);
         // $user = Auth::where('email', $request->email)->first();
 
-        // parent::validatorData($request);
-        $this->setAttempt($request->loginForm['password'], $checkUser['salt']);
-        $attempt = $this->getAttempt();
+        if ($checkUserIsset === true) {
+            $user = Auth::where('email', $request->loginForm['email'])->first();
 
-        if ($attempt === true) {
-            return parent::createToken($checkUser, 200, self::Message_Note);
+            // parent::validatorData($request);
+            $this->setAttempt($request->loginForm['password'], $user['salt']);
+            $attempt = $this->getAttempt();
+
+            if ($attempt === true) {
+                return parent::createToken($user, 200, self::Message_Note);
+            }
         }
+
         return response()->json(
             ['error' => 'login_error'],
             401
