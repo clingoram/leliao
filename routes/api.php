@@ -6,6 +6,7 @@ use App\Http\Controllers\User\LogoutController;
 use App\Http\Controllers\Forum\ForumController;
 // use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\Post\PostController;
+use App\Http\Controllers\Comment\CommentController;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -38,6 +39,8 @@ Route::prefix('/lel')->group(function () {
 
     // 單一類別的某篇文章，例如工作版內的文章C
     Route::get('/f/{category_id}/post/{post_id}', [PostController::class, 'show']);
+    // 取單一文章的留言
+    Route::get('/f/{category_id}/post/c/{post_id}', [CommentController::class, 'show']);
 
     // register
     Route::post('/user/register', [RegisterController::class, 'create']);
@@ -50,7 +53,9 @@ Route::prefix('/lel')->group(function () {
         Route::post('/add_post', [PostController::class, 'create']);
 
         // 回覆(留言)該文章
-        Route::post('/f/{category_id}/post/r/{post_id}', [PostController::class, 'reply']);
+        // Route::post('/f/{category_id}/post/r/{post_id}', [PostController::class, 'reply']);
+        Route::post('/f/{category_id}/post/r/{post_id}', [CommentController::class, 'createReply']);
+
 
         // Route::get('/user/{id}', [UserController::class, 'user']);
 

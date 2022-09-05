@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 
 /**
- * 針對單一文章的新增、編輯以及回應
+ * 針對單一文章的新增、編輯
  */
 class PostController extends Controller
 {
@@ -102,60 +102,62 @@ class PostController extends Controller
      * column: jsonb
      */
     // TO-DO: jsonb儲存格式須修正、在vue如何顯示回應區、method show select jsonb格式
-    public function reply(Request $request, int $postId)
-    {
-
-        // obj example - column name = contact
-        // update customer
-        // set contact = '{ "phones":[ {"type": "mobile", "phone": "001001"} , {"type": "fix", "phone": "002002"} ] }'
-        // where id = '4ca27243-6a55-4855-b0e6-d6e1d957f289';
-
-        // array example - column name = phones 
-        // update customer
-        // set phones = '[ {"type": "mobile", "phone": "001001"} , {"type": "fix", "phone": "002002"} ]'
-        // where id = '4ca27243-6a55-4855-b0e6-d6e1d957f289';
-
-        // --------------------
-        // 似乎需要多一張表(comments)專門放置文章回應
-        // -------------------------
-
-        // 取得目前回應欄位有幾筆資料 jsonb_array_length()
-        Post::where("id", $postId)->update(
-            [
-                // 'reply' => [
-                //     'userId' => $data['userId'],
-                //     'content' => $data['content'],
-                //     'created_at' => date('Y/m/d H:i:s', time()),
-                // 'push_notifications' => [
-                //     'follow' => false,
-                // ]
-                // ],
-                'reply' => [
-                    'userId' => $request->data['replyUserId'],
-                    'userName' => $request->data['replyUserName'],
-                    'content' => $request->data['replyContent'],
-                    'created_at' => date('Y/m/d H:i:s', time()),
-                ],
-            ]
-        );
-    }
+    // public function reply(Request $request, int $postId)
+    // {
+    //     // 取得目前回應欄位有幾筆資料 jsonb_array_length()
+    //     Post::where("id", $postId)->update(
+    //         [
+    //             // 'reply' => [
+    //             //     'userId' => $data['userId'],
+    //             //     'content' => $data['content'],
+    //             //     'created_at' => date('Y/m/d H:i:s', time()),
+    //             // 'push_notifications' => [
+    //             //     'follow' => false,
+    //             // ]
+    //             // ],
+    //             'reply' => [
+    //                 'userId' => $request->data['replyUserId'],
+    //                 'userName' => $request->data['replyUserName'],
+    //                 'content' => $request->data['replyContent'],
+    //                 'created_at' => date('Y/m/d H:i:s', time()),
+    //             ],
+    //         ]
+    //     );
+    // }
 
     /**
      * 取得特定看板內的某文章
      * */
     public function show(int $categoryId, int $postId)
     {
+        // $find = Post::select(
+        //     'posts.id',
+        //     'posts.title',
+        //     'posts.writer_id',
+        //     'posts.content',
+        //     // jsonb start
+        //     // 'posts.reply->userName AS replyName',
+        //     // 'posts.reply->content AS replyContent',
+        //     // 'posts.reply->created_at AS replyTime',
+        //     // 'posts.others',
+        //     // jsonb end
+        //     'posts.created_at',
+        //     'category.name AS cName',
+        //     'category.id AS cId',
+        //     'users.name AS uName'
+        // )->join('category', 'category.id', '=', 'posts.category_id')
+        //     ->join('users', 'users.id', '=', 'posts.writer_id')
+        //     ->where('category.id', $categoryId)
+        //     ->where('posts.id', $postId)->first();
+
+
         $find = Post::select(
             'posts.id',
             'posts.title',
             'posts.writer_id',
             'posts.content',
-            // jsonb start
-            'posts.reply->userName AS replyName',
-            'posts.reply->content AS replyContent',
-            'posts.reply->created_at AS replyTime',
+            'posts.reply',
             'posts.others',
-            // jsonb end
             'posts.created_at',
             'category.name AS cName',
             'category.id AS cId',

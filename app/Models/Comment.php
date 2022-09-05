@@ -4,17 +4,19 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Post extends Model
+class Comment extends Model
 {
     use HasFactory;
+    use SoftDeletes;
 
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'posts';
+    protected $table = 'comments';
 
     /**
      * The primary key associated with the table.
@@ -31,17 +33,10 @@ class Post extends Model
     protected $keyType = 'string';
 
     protected $fillable = [
-        'title',
-        'writer_id',
-        'category_id',
-        'content',
-        'reply',
-        'others'
+        'name',
+        'conent',
     ];
 
-    // protected $casts = [
-    //     'reply' => 'array',
-    // ];
 
     // table users
     public function user()
@@ -55,8 +50,8 @@ class Post extends Model
         return $this->belongsTo(Forum::class, 'foreign_key');
     }
 
-    public function comments()
+    public function posts()
     {
-        return $this->hasMany(Comment::class, 'foreign_key');
+        return $this->belongsTo(Post::class, 'foreign_key');
     }
 }

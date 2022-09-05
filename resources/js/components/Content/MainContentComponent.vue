@@ -226,6 +226,7 @@ export default {
     // 取得特定看板內的某文章
     getSpecificPost(forumId, postId) {
       // call table comments.
+
       axios
         .get("api/lel/f/" + forumId + "/post/" + postId)
         .then((response) => {
@@ -242,17 +243,28 @@ export default {
           // jsonb
           // this.specificPostData.reply = response.data.data_return.reply;
           // this.specificPostData.othersEmoj = response.data.data_return.others;
+
+          console.log(this.specificPostData.id);
+          console.log(this.specificPostData.category_id);
+          this.getPostComments(forumId, postId);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    // 取得文章留言
+    getPostComments(categoryId, id) {
+      axios
+        .get("api/lel/f/" + categoryId + "/post/c/" + id)
+        .then((response) => {
+          console.log(response.data.data_return);
         })
         .catch((error) => {
           console.log(error);
         });
     },
     // 回覆該文章(需登入)
-
     reply() {
-      console.log(`看板: ${this.specificPostData.category_id}`);
-      console.log(`文章: ${this.specificPostData.id}`);
-
       /*
       文章id,回覆者id,回覆內容,回覆時間
       */
@@ -264,9 +276,8 @@ export default {
             this.specificPostData.id,
           {
             postId: this.specificPostData.id,
+            categoryId: this.specificPostData.category_id,
             data: this.replyArea,
-            // reply: this.replyContent,
-            // userId: replyUserId,
           }
         )
         .then((response) => {
