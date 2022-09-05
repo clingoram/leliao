@@ -106,7 +106,7 @@
                         <textarea
                           class="form-control"
                           id="message-text"
-                          v-model.trim="replyContent"
+                          v-model.trim="replyArea.replyContent"
                         ></textarea>
                         <button
                           type="submit"
@@ -182,11 +182,16 @@ export default {
         categoryName: "",
         categoryId: "",
         createdAt: "",
-        othersEmoj: "",
-        reply: [],
+        // othersEmoj: "",
+        // reply: [],
       },
       // 回應區，insert into table reply
-      replyContent: "",
+      replyArea: {
+        // postId: this.specificPostData.id ? this.specificPostData.id : "",
+        replyUserId: sessionStorage.getItem("id"),
+        replyUserName: sessionStorage.getItem("name"),
+        replyContent: "",
+      },
     };
   },
   async beforeMount() {
@@ -223,7 +228,7 @@ export default {
       axios
         .get("api/lel/f/" + forumId + "/post/" + postId)
         .then((response) => {
-          // console.log(response.data.data_return);
+          console.log(response.data.data_return);
           this.specificPostData.id = response.data.data_return.id;
           this.specificPostData.title = response.data.data_return.title;
           this.specificPostData.author = response.data.data_return.wrtiter_id;
@@ -232,9 +237,11 @@ export default {
           this.specificPostData.categoryName = response.data.data_return.cName;
           this.specificPostData.createdAt =
             response.data.data_return.created_at;
+
+          // call table comments.
           // jsonb
-          this.specificPostData.reply = response.data.data_return.reply;
-          this.specificPostData.othersEmoj = response.data.data_return.others;
+          // this.specificPostData.reply = response.data.data_return.reply;
+          // this.specificPostData.othersEmoj = response.data.data_return.others;
         })
         .catch((error) => {
           console.log(error);
@@ -242,25 +249,13 @@ export default {
     },
     // 回覆該文章(需登入)
 
-    // TO-DO: 回覆文章，判斷是哪個帳號登入回應
     reply() {
+      console.log(`看板: ${this.specificPostData.category_id}`);
+      console.log(`文章: ${this.specificPostData.id}`);
+
       /*
       文章id,回覆者id,回覆內容,回覆時間
       */
-      const replyUserId = sessionStorage.getItem("id");
-      const replyUserName = sessionStorage.getItem("name");
-
-      // console.log(replyUserId);
-      // console.log(replyUserName);
-      // console.log(this.specificPostData.id);
-      // console.log(this.replyContent);
-
-      const data = {
-        postId: this.specificPostData.id,
-        userId: replyUserId,
-        content: this.replyContent,
-      };
-
       axios
         .post(
           "api/lel/f/" +
@@ -268,8 +263,8 @@ export default {
             "/post/r/" +
             this.specificPostData.id,
           {
-            data: data,
-            // postId: this.specificPostData.id,
+            postId: this.specificPostData.id,
+            data: this.replyArea,
             // reply: this.replyContent,
             // userId: replyUserId,
           }

@@ -39,6 +39,10 @@ class Post extends Model
         'others'
     ];
 
+    // protected $casts = [
+    //     'reply' => 'array',
+    // ];
+
     // table users
     public function user()
     {

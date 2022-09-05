@@ -11,7 +11,9 @@
         placeholder="這是文章標題喔!"
       />
     </div>
+    <div>看板分類</div>
     <select v-model="post.category_id">
+      <option disabled value="">請選擇看板分類</option>
       <option
         v-for="option in categoryOptions"
         v-bind:key="option.id"
@@ -56,26 +58,35 @@ export default {
       },
     };
   },
-  created() {
-    this.getAllForums();
-  },
+  // mounted() {
+  //   this.getAllForums();
+  // },
   async beforeMount() {
     if (sessionStorage.getItem("token") === null) {
       this.isLoggedIn = false;
     }
+    // this.getAllForums();
+    axios
+      .get("api/lel/f/all")
+      .then((response) => {
+        this.categoryOptions = response.data;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   },
   methods: {
     // 所有分類看板
-    getAllForums() {
-      axios
-        .get("api/lel/f/all")
-        .then((response) => {
-          this.categoryOptions = response.data;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
+    // getAllForums() {
+    //   axios
+    //     .get("api/lel/f/all")
+    //     .then((response) => {
+    //       this.categoryOptions = response.data;
+    //     })
+    //     .catch((error) => {
+    //       console.log(error);
+    //     });
+    // },
     savePost() {
       axios
         .post("api/lel/add_post", {

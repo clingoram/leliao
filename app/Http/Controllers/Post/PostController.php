@@ -102,7 +102,7 @@ class PostController extends Controller
      * column: jsonb
      */
     // TO-DO: jsonb儲存格式須修正、在vue如何顯示回應區、method show select jsonb格式
-    public function reply(array $data)
+    public function reply(Request $request, int $postId)
     {
 
         // obj example - column name = contact
@@ -115,16 +115,26 @@ class PostController extends Controller
         // set phones = '[ {"type": "mobile", "phone": "001001"} , {"type": "fix", "phone": "002002"} ]'
         // where id = '4ca27243-6a55-4855-b0e6-d6e1d957f289';
 
+        // --------------------
+        // 似乎需要多一張表專門放置文章回應，原本的表只能更新不會累加的jsonb
+        // -------------------------
+
         // 取得目前回應欄位有幾筆資料 jsonb_array_length()
-        Post::where("id", $data['postId'])->update(
+        Post::where("id", $postId)->update(
             [
+                // 'reply' => [
+                //     'userId' => $data['userId'],
+                //     'content' => $data['content'],
+                //     'created_at' => date('Y/m/d H:i:s', time()),
+                // 'push_notifications' => [
+                //     'follow' => false,
+                // ]
+                // ],
                 'reply' => [
-                    'userId' => $data['userId'],
-                    'content' => $data['content'],
+                    'userId' => $request->data['replyUserId'],
+                    'userName' => $request->data['replyUserName'],
+                    'content' => $request->data['replyContent'],
                     'created_at' => date('Y/m/d H:i:s', time()),
-                    // 'push_notifications' => [
-                    //     'follow' => false,
-                    // ]
                 ],
             ]
         );
@@ -140,10 +150,12 @@ class PostController extends Controller
             'posts.title',
             'posts.writer_id',
             'posts.content',
-            // json_encode('posts.reply'),
-            // json_encode('posts.others'),
-            'posts.reply',
+            // jsonb start
+            'posts.reply->userName AS replyName',
+            'posts.reply->content AS replyContent',
+            'posts.reply->created_at AS replyTime',
             'posts.others',
+            // jsonb end
             'posts.created_at',
             'category.name AS cName',
             'category.id AS cId',

@@ -108,7 +108,7 @@ export default {
           confirm("註冊成功");
           // sessionStorage.setItem("token", response.data.accessToken);
           // sessionStorage.setItem("id", response.data.id);
-          // sessionStorage.setItem("name", response.data.name);
+          // sessionStorage.setItem("name", this.form.name);
           document.location.href = "/";
         })
         .catch((error) => {

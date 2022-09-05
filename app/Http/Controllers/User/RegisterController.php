@@ -64,7 +64,9 @@ class RegisterController extends UserController
         $pwdwithHash = sha1($this->password . $salt);
         // $pwdwithHash = sha1($request->password . $salt);
 
-        // $pwdwithHash = sha1($request->password . $salt);
+        // 資料表內是否已有role = 2
+        $roleIsset = Auth::where('email', $this->email)->where('role', 2)->get();
+
         if ($checkUserIsset === false) {
             $user = new Auth();
             $user->name = $this->name;
@@ -73,7 +75,7 @@ class RegisterController extends UserController
             $user->password = $pwdwithHash;
             $user->salt = $salt;
             $user->created_at = date('Y/m/d H:i:s', time());
-            $user->role = null ? 1 : 2;
+            $user->role = count($roleIsset) === 1 ? 1 : 2;
             $user->save();
 
             return parent::createToken($user, 201, self::Message_Note);
