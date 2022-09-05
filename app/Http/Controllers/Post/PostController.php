@@ -116,7 +116,7 @@ class PostController extends Controller
         // where id = '4ca27243-6a55-4855-b0e6-d6e1d957f289';
 
         // --------------------
-        // 似乎需要多一張表專門放置文章回應，原本的表只能更新不會累加的jsonb
+        // 似乎需要多一張表(comments)專門放置文章回應
         // -------------------------
 
         // 取得目前回應欄位有幾筆資料 jsonb_array_length()

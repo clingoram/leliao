@@ -225,6 +225,7 @@ export default {
     },
     // 取得特定看板內的某文章
     getSpecificPost(forumId, postId) {
+      // call table comments.
       axios
         .get("api/lel/f/" + forumId + "/post/" + postId)
         .then((response) => {
@@ -238,7 +239,6 @@ export default {
           this.specificPostData.createdAt =
             response.data.data_return.created_at;
 
-          // call table comments.
           // jsonb
           // this.specificPostData.reply = response.data.data_return.reply;
           // this.specificPostData.othersEmoj = response.data.data_return.others;
