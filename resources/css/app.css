@@ -1,3 +1,5 @@
+@import "@fortawesome/fontawesome-free/css/all.css";
+
 * {
   color: #000;
   font-size: 14pt;
@@ -38,6 +40,14 @@ li {
   width: 100%;
   background-color: #fff;
   margin-bottom: 10px;
+}
+
+.replyer {
+  font-size: smaller;
+}
+
+.fa-heart:hover {
+  color: red;
 }
 
 /* 註冊、登入 下拉式選單*/

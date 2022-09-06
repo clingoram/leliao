@@ -14,6 +14,9 @@ use Illuminate\Support\Facades\Validator;
 class CommentController extends Controller
 {
 
+    /*
+    回應文章
+    */
     public function createReply(Request $request)
     {
         $this->validateCheck($request);
@@ -35,9 +38,9 @@ class CommentController extends Controller
     {
         $find = Comment::select(
             'comments.id',
-            // 'comments.category_id',
             'comments.name AS replyName',
             'comments.content',
+            'comments.likeit AS heart',
             'comments.created_at'
         )->join('posts', 'posts.id', '=', 'comments.post_id')
             ->join('category', 'category.id', '=', 'posts.category_id')
@@ -59,6 +62,16 @@ class CommentController extends Controller
                 'data_return' => null,
             ], 400);
         }
+    }
+
+    /*
+    針對留言按愛心
+    */
+    public function update(Request $request)
+    {
+        $comment = Comment::find($request->commentId);
+        $comment->likeit = $request->heart;
+        $comment->save();
     }
 
     public function validateCheck(Request $request)

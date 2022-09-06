@@ -131,10 +131,18 @@
                         v-for="comments in replyData"
                         v-bind:key="comments.id"
                       >
-                        <p>{{ comments.replyName }}</p>
+                        <p class="replyer">{{ comments.replyName }}</p>
                         {{ comments.content }}<br />
-                        - {{ timeLag(comments.created_at) }}<br />
-
+                        <p class="replyer">
+                          - {{ timeLag(comments.created_at) }}
+                        </p>
+                        <p
+                          class="heart"
+                          v-on:click="likeit(comments.id, comments.heart)"
+                        >
+                          <i class="fa-regular fa-heart"></i
+                          >{{ comments.heart }}
+                        </p>
                         <hr />
                       </li>
                     </ul>
@@ -227,6 +235,8 @@ export default {
     },
     // 取得特定看板內的某文章
     getSpecificPost(forumId, postId) {
+      // call table comments.
+      this.getPostComments(forumId, postId);
       axios
         .get("api/lel/f/" + forumId + "/post/" + postId)
         .then((response) => {
@@ -239,8 +249,6 @@ export default {
           this.specificPostData.categoryName = response.data.data_return.cName;
           this.specificPostData.createdAt =
             response.data.data_return.created_at;
-          // call table comments.
-          this.getPostComments(forumId, postId);
         })
         .catch((error) => {
           console.log(error);
@@ -274,12 +282,12 @@ export default {
       axios
         .post(
           "api/lel/f/" +
-            this.specificPostData.category_id +
+            this.specificPostData.cid +
             "/post/r/" +
             this.specificPostData.id,
           {
             postId: this.specificPostData.id,
-            categoryId: this.specificPostData.category_id,
+            categoryId: this.specificPostData.cid,
             data: this.replyArea,
           }
         )
@@ -290,6 +298,34 @@ export default {
         .catch((error) => {
           console.log(error);
         });
+    },
+    likeit(commentId, heart) {
+      // console.log(heart);
+      if (this.isLoggedIn === false) {
+        alert("請先登入");
+      } else {
+        const increase = heart + 1;
+        axios
+          .put(
+            "api/lel/f/" +
+              this.specificPostData.cid +
+              "/post/r/" +
+              this.specificPostData.id +
+              "/l/" +
+              commentId,
+            {
+              commentId: commentId,
+              heart: increase,
+            }
+          )
+          .then((response) => {
+            // console.log(response);
+            document.location.href = "/";
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
     },
     // 時間差
     timeLag(datetime) {
