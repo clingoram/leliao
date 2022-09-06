@@ -14,13 +14,13 @@ use Illuminate\Support\Facades\Validator;
 class CommentController extends Controller
 {
 
-    public function createReply(Request $request, int $postId)
+    public function createReply(Request $request)
     {
         $this->validateCheck($request);
 
         $comment = new Comment();
         $comment->category_id = $request->categoryId;
-        $comment->post_id = $postId;
+        $comment->post_id =  $request->postId;
         $comment->user_id = $request->data['replyUserId'];
         $comment->name = $request->data['replyUserName'];
         $comment->content = $request->data['replyContent'];
@@ -35,14 +35,16 @@ class CommentController extends Controller
     {
         $find = Comment::select(
             'comments.id',
-            'comments.category_id',
+            // 'comments.category_id',
             'comments.name AS replyName',
             'comments.content',
             'comments.created_at'
         )->join('posts', 'posts.id', '=', 'comments.post_id')
             ->join('category', 'category.id', '=', 'posts.category_id')
             ->where('comments.category_id', $categoryId)
-            ->where('posts.id', $postId)->get();
+            ->where('posts.id', $postId)
+            ->orderByDesc('comments.created_at')
+            ->get();
 
         if ($find) {
             return response()->json([

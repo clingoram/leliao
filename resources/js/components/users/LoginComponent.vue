@@ -85,8 +85,6 @@ export default {
     },
     login() {
       axios.get("/sanctum/csrf-cookie").then((response) => {
-        // console.log(response);
-        console.log(this.loginForm);
         axios
           .post("api/lel/user/login", {
             loginForm: this.loginForm,

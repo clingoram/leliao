@@ -53,7 +53,10 @@ export default {
     };
   },
   created() {
-    if (sessionStorage.getItem("token") !== null) {
+    if (
+      sessionStorage.getItem("token") !== null &&
+      sessionStorage.getItem("token") !== "undefined"
+    ) {
       this.accessToken = sessionStorage.getItem("token");
       this.name = sessionStorage.getItem("name");
       this.isLoggedIn = true;

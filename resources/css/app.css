@@ -11,6 +11,11 @@
   background-color: rgb(44, 106, 148);
 }
 
+ul,
+li {
+  list-style: none;
+}
+
 /* main vue file*/
 .mainarea {
   padding-top: 10px;

@@ -82,6 +82,7 @@
                   <h5 class="modal-title" id="modalLabel">
                     {{ specificPostData.title }}
                   </h5>
+
                   <button
                     type="button"
                     class="btn-close"
@@ -90,6 +91,9 @@
                   ></button>
                 </div>
                 <div class="modal-body">
+                  <!-- <p>文章ID:{{ specificPostData.id }}</p>
+                  <p>文章分類:{{ specificPostData.categoryName }}</p>
+                  <p>分類ID:{{ specificPostData.category_id }}</p> -->
                   {{ specificPostData.content }}
 
                   <hr />
@@ -118,9 +122,22 @@
                       </div>
                       <!-- </form> -->
                     </div>
-                    <div v-if="specificPostData.length != 0">
-                      {{ specificPostData.reply }}
-                    </div>
+                  </div>
+                  <div>
+                    <hr />
+                    <!-- 留言區 -->
+                    <ul>
+                      <li
+                        v-for="comments in replyData"
+                        v-bind:key="comments.id"
+                      >
+                        <p>{{ comments.replyName }}</p>
+                        {{ comments.content }}<br />
+                        - {{ timeLag(comments.created_at) }}<br />
+
+                        <hr />
+                      </li>
+                    </ul>
                   </div>
                 </div>
 
@@ -145,23 +162,7 @@
   </div>
 </template>
 <script>
-import singlePostModal from "../Post/PostComponent.vue";
 export default {
-  // props: ["categoryId", "id", "openmodal"],
-  // props: {
-  //   id: {
-  //     tpye: Number,
-  //   },
-  //   categoryId: {
-  //     type: Number,
-  //   },
-  //   openmodal: {
-  //     type: Boolean,
-  //   },
-  // },
-  components() {
-    singlePostModal;
-  },
   data() {
     return {
       // checked is loggin or not.
@@ -180,14 +181,15 @@ export default {
         author: "",
         content: "",
         categoryName: "",
-        categoryId: "",
+        cid: "",
         createdAt: "",
         // othersEmoj: "",
-        // reply: [],
       },
-      // 回應區，insert into table reply
+      // reply show with modal.
+      replyData: [],
+      // floor: [],
+      // 回應區，insert into table.
       replyArea: {
-        // postId: this.specificPostData.id ? this.specificPostData.id : "",
         replyUserId: sessionStorage.getItem("id"),
         replyUserName: sessionStorage.getItem("name"),
         replyContent: "",
@@ -225,27 +227,19 @@ export default {
     },
     // 取得特定看板內的某文章
     getSpecificPost(forumId, postId) {
-      // call table comments.
-
       axios
         .get("api/lel/f/" + forumId + "/post/" + postId)
         .then((response) => {
-          console.log(response.data.data_return);
+          // console.log(response.data.data_return);
           this.specificPostData.id = response.data.data_return.id;
           this.specificPostData.title = response.data.data_return.title;
           this.specificPostData.author = response.data.data_return.wrtiter_id;
           this.specificPostData.content = response.data.data_return.content;
-          this.specificPostData.category_id = response.data.data_return.cId;
+          this.specificPostData.cid = response.data.data_return.cId;
           this.specificPostData.categoryName = response.data.data_return.cName;
           this.specificPostData.createdAt =
             response.data.data_return.created_at;
-
-          // jsonb
-          // this.specificPostData.reply = response.data.data_return.reply;
-          // this.specificPostData.othersEmoj = response.data.data_return.others;
-
-          console.log(this.specificPostData.id);
-          console.log(this.specificPostData.category_id);
+          // call table comments.
           this.getPostComments(forumId, postId);
         })
         .catch((error) => {
@@ -257,7 +251,13 @@ export default {
       axios
         .get("api/lel/f/" + categoryId + "/post/c/" + id)
         .then((response) => {
-          console.log(response.data.data_return);
+          // console.log(response.data.data_return.length);
+          // let length = response.data.data_return.length;
+          // for (let i = 1; i <= length; i++) {
+          //   this.floor.push(i);
+          // }
+          // console.log(this.floor);
+          this.replyData = response.data.data_return;
         })
         .catch((error) => {
           console.log(error);
@@ -268,6 +268,9 @@ export default {
       /*
       文章id,回覆者id,回覆內容,回覆時間
       */
+      if (this.replyArea.replyContent.length < 2) {
+        return;
+      }
       axios
         .post(
           "api/lel/f/" +
@@ -281,16 +284,40 @@ export default {
           }
         )
         .then((response) => {
-          console.log(response);
+          // console.log(response);
+          document.location.href = "/";
         })
         .catch((error) => {
           console.log(error);
         });
     },
-    // 離開modal就清除
-    // resetModal() {
-    //   this.specificPost = null;
-    // },
+    // 時間差
+    timeLag(datetime) {
+      const date = new Date(datetime);
+      // 年份
+      const year = date.getFullYear();
+      // 月份
+      const month =
+        date.getMonth() + 1 < 10 ? date.getMonth() + 1 : date.getMonth() + 1;
+      // 日期
+      const day = date.getDate() < 9 ? "0" + date.getDate() : date.getDate();
+      // 時
+      const hours =
+        date.getHours() < 9 ? "0" + date.getHours() : date.getHours();
+      // 分
+      const minutes =
+        date.getMinutes() < 9 ? "0" + date.getMinutes() : date.getMinutes();
+      // 秒
+      const sec =
+        date.getSeconds() < 9 ? "0" + date.getSeconds() : date.getSeconds();
+      // 毫秒
+      const millSec =
+        date.getMilliseconds() < 9
+          ? "0" + date.getMilliseconds()
+          : date.getMilliseconds();
+
+      return year + "-" + month + "-" + day + " " + hours + ":" + minutes;
+    },
   },
 };
 </script>

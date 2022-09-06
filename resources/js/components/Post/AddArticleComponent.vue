@@ -11,17 +11,19 @@
         placeholder="這是文章標題喔!"
       />
     </div>
-    <div>看板分類</div>
-    <select v-model="post.category_id">
-      <option disabled value="">請選擇看板分類</option>
-      <option
-        v-for="option in categoryOptions"
-        v-bind:key="option.id"
-        :value="option.id"
-      >
-        {{ option.name }}
-      </option>
-    </select>
+    <div class="mb-3">
+      <div>看板分類</div>
+      <select v-model="post.category_id">
+        <option disabled value="">請選擇看板分類</option>
+        <option
+          v-for="option in categoryOptions"
+          v-bind:key="option.id"
+          :value="option.id"
+        >
+          {{ option.name }}
+        </option>
+      </select>
+    </div>
 
     <div class="mb-3">
       <label for="articelContent" class="form-label">內容</label>
@@ -58,36 +60,36 @@ export default {
       },
     };
   },
-  // mounted() {
-  //   this.getAllForums();
-  // },
   async beforeMount() {
-    if (sessionStorage.getItem("token") === null) {
+    if (
+      sessionStorage.getItem("token") === null ||
+      sessionStorage.getItem("token") === "undefined"
+    ) {
       this.isLoggedIn = false;
     }
-    // this.getAllForums();
-    axios
-      .get("api/lel/f/all")
-      .then((response) => {
-        this.categoryOptions = response.data;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+  },
+  created() {
+    this.allCategory();
   },
   methods: {
-    // 所有分類看板
-    // getAllForums() {
-    //   axios
-    //     .get("api/lel/f/all")
-    //     .then((response) => {
-    //       this.categoryOptions = response.data;
-    //     })
-    //     .catch((error) => {
-    //       console.log(error);
-    //     });
-    // },
+    allCategory() {
+      axios
+        .get("api/lel/f/all")
+        .then((response) => {
+          this.categoryOptions = response.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
     savePost() {
+      if (
+        this.post.title === null ||
+        this.post.content === null ||
+        this.post.category_id === null
+      ) {
+        return;
+      }
       axios
         .post("api/lel/add_post", {
           post: this.post,

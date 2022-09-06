@@ -95,6 +95,7 @@ class UserController extends Controller
             $token = $user->createToken($user->name)->plainTextToken;
             return response()->json(
                 [
+                    'status' => 'success',
                     'user' => [
                         'id' => $user->id,
                         'account' => $user->name
@@ -104,6 +105,7 @@ class UserController extends Controller
                     'expires_in' => date('Y/m/d H:i:s', time() + 10 * 60),
                     'type' => 'Bearer',
                     'Accept' => 'application/json'
+
                 ],
                 $statusCode
             );
