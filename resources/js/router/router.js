@@ -1,75 +1,112 @@
 import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router';
 
-import App from '../components/App.vue';
+// import App from '../components/App.vue';
+
+import UserMenu from '../components/users/UserMenu.vue';
 import LoginComponent from "../components/users/LoginComponent.vue";
 import RegisterComponent from "../components/users/RegisterComponent.vue";
-import ContentComponent from "../components/ContentComponent.vue";
-// import UserMenu from '../components/UserMenu.vue';
+// import LogoutComponent from "../components/users/LogoutComponent.vue";
+
+// import Posts from "../components/Post/PostsComponent.vue";
+import PostComponent from "../components/Post/PostComponent.vue";
+import AddArticleComponent from "../components/Post/AddArticleComponent.vue";
+
+// import ForumComponent from "../components/Forum/ForumComponent.vue";
+
+import MainComponent from "../components/Content/MainContentComponent.vue";
+import NotFound from "../components/404.vue";
 
 // Route 設定
 export const routes = [
-  // {
-  //   path: '/user/',
-  //   component: UserMenu,
-  //   children: [
-  //     {
-  //       path: 'register',
-  //       component: RegisterComponent,
-  //       name: "register-page"
-  //     },
-  //     {
-  //       path: 'login',
-  //       component: LoginComponent,
-  //       name: "login-page",
-  //       helper: LoginComponent
-  //     },
-  //   ],
-  // },
   {
+    // 首頁看板類別和文章區塊
+    path: "/:main(.*)*",
+    name: "main",
+    component: MainComponent,
+    // add 
+    // children: [
+    //   {
+    //     path: '/f/:category/p/:id',
+    //     name: "post",
+    //     component: PostComponent,
+    //   }
+    // ]
+  },
+  {
+    // 註冊
     path: '/register',
     name: "register-page",
     component: RegisterComponent,
+    // redirect: '/',
+
+    // 動態載入(不須載入API)
+    // component: () => import("../components/users/RegisterComponent.vue"),
     meta: {
-      auth: false
+      middleware: "guest",
+      title: `Register`
     }
   },
   {
+    // 登入
     path: '/login',
     name: "login-page",
     component: LoginComponent,
-    // meta: { requiresAuth: true },
+    // component: () => import("../components/users/LoginComponent.vue"),
     meta: {
-      auth: false
+      middleware: "guest",
+      title: `Login`
     }
   },
   {
-    // 特定類別
-    path: '/f/:id',
-    name: "forum",
-    component: ContentComponent,
+    // 新增文章
+    path: '/add_post',
+    name: "add",
+    component: AddArticleComponent,
     meta: {
-      // public routes
-      auth: undefined
+      auth: true
     }
   },
   {
-    path: '/home',
-    name: 'home',
-    component: App,
-    meta: {
-      // public routes
-      auth: undefined
-    }
+    // 單一類別的某篇文章，例如工作版內的文章C
+    path: '/f/:categoryId/post/:id',
+    name: "post",
+    component: PostComponent,
+    props: true
+    // meta: {
+    //   // public routes
+    //   auth: undefined
+    // }
   },
+  {
+    path: "/:domain(.*)*",
+    name: "NotFound",
+    // component: NotFound
+    component: () => import("../components/404.vue"),
+  },
+
+
+  // {
+  //   path: '/',
+  //   name: 'home',
+  //   component: {
+  //     // default: App,
+  //     viewLeft: ForumComponent,
+  //     viewRight: ContentComponent
+  //   },
+  //   meta: {
+  //     // public routes
+  //     auth: undefined
+  //   }
+  // },
+
   // {
   //   // for user
   //   path: '/dashboard',
   //   name: 'dashboard',
   //   component: Dashboard,
-  //   meta: {
-  //     // for connected users
-  //     auth: true
-  //   }
+  //    meta: {
+  //      middleware: "auth"
+  //    },
   // },
   // {
   //   // for admin
@@ -81,8 +118,10 @@ export const routes = [
   //   }
   // }
   // {
-  //   path: "/*",
-  //   redirect: "/"
+  // path: "/*",
+  // redirect: '/',
+  //   name: 'home',
+  //   component: App,
   // },
 ];
 

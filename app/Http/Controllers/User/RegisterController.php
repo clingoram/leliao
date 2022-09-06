@@ -3,26 +3,33 @@
 namespace App\Http\Controllers\User;
 
 use App\Models\Auth;
-// use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Hash\HashController;
-use DateTime;
 use HashContext;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+// use Illuminate\Support\Facades\Validator;
 
+/**
+ * To register.
+ */
 class RegisterController extends UserController
 {
-    // public $name;
-    // protected $email;
-    // private $password;
+    // public string $name;
+    // protected string $email;
+    // protected string $password;
 
     private string $numbersAndAlphabets;
     private string $specialCharacters;
     private int $len;
 
-    // public function __construct()
+    const Message_Note = 'Registered.';
+
+    // public function __construct(Request $request)
     // {
-    //     $this->middleware('guest');
+    //     $this->name = $request->form['name'];
+    //     $this->email = $request->form['email'];
+    //     $this->password = $request->form['password'];
     // }
     /**
      * 使用封裝，隨機產生的數字+英文字母+特殊符號，送到HashController組成salt
@@ -40,26 +47,55 @@ class RegisterController extends UserController
         return $salt;
     }
 
-    public function create()
+    /**
+     * 建立新的使用者
+     * 
+     * @return json
+     */
+    public function create(Request $request)
     {
-        $now = new DateTime();
+        // parent::validatorData([$this->name, $this->email, $this->password]);
+        $check = parent::validatorData($request);
 
-        parent::registerValidator([$this->name, $this->email, $this->password]);
+        // $checkUserIsset = parent::checkUserIsset($this->email);
+        $checkUserIsset = parent::checkUserIsset($request->form['email']);
 
         $salt = $this->generateHash();
-        $pwdwithHash = sha1($this->password . $salt);
+        // $pwdwithHash = sha1($this->password . $salt);
+        $pwdwithHash = sha1($request->form['password'] . $salt);
 
-        if (parent::checkUserExist()) {
+        // 資料表內是否已有role = 2
+        // $roleIsset = Auth::where('email', $this->email)->where('role', 2)->get();
+        $roleIsset = Auth::where('email', $request->form['email'])->where('role', 2)->get();
+
+
+        if ($checkUserIsset === false) {
+            // $user = new Auth();
+            // $user->name = $this->name;
+            // $user->email = $this->email;
+            // // $user->password = Hash::make($this->password);
+            // $user->password = $pwdwithHash;
+            // $user->salt = $salt;
+            // $user->created_at = date('Y/m/d H:i:s', time());
+            // $user->role = count($roleIsset) === 1 ? 1 : 2;
+            // $user->save();
+
             $user = new Auth();
-            $user->name = $this->name;
-            $user->email = $this->email;
+            $user->name = $request->form['name'];
+            $user->email = $request->form['email'];
             // $user->password = Hash::make($this->password);
             $user->password = $pwdwithHash;
             $user->salt = $salt;
-            $user->created_at = $now;
+            $user->created_at = date('Y/m/d H:i:s', time());
+            $user->role = count($roleIsset) > 1 ? 1 : 2;
             $user->save();
+
+            return parent::createToken($user, 201, self::Message_Note);
         } else {
-            echo $this->name . '無法註冊。';
+            return response()->json([
+                'status' => 'error',
+                'errors' => 'Something wrong.'
+            ], 422);
         }
     }
 }

@@ -14,6 +14,4 @@
 - [Vue](https://vuejs.org/).
 - [Vite](https://vitejs.dev/).
 - [Heroku](https://www.heroku.com/).
-- [jwt-auth](https://github.com/tymondesigns/jwt-auth).
-- [PHP-Open-Source-Saver](https://github.com/PHP-Open-Source-Saver/jwt-auth).
-- [Vue Auth](https://github.com/websanova/vue-auth)
+- [Sanctum](https://github.com/laravel/sanctum).

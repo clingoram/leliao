@@ -11,9 +11,9 @@
 </head>
 
 <body>
-  <div id="app"></div>
+  <div id="app">
+  </div>
   <router-view />
-
 </body>
 
 </html>

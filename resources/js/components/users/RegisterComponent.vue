@@ -71,7 +71,6 @@ export default {
       const name = document.getElementById("inputAccount").value;
       const email = document.getElementById("inputEmail").value;
       const pwd = document.getElementById("inputPwd").value;
-      console.log(name);
 
       // regex
       let accountPattern = /^[0-9A-Za-z]+$/;
@@ -100,14 +99,17 @@ export default {
     register() {
       // console.log(this.form);
       axios
-        .post("api/lel/register", {
+        .post("api/lel/user/register", {
           form: this.form,
         })
         .then((response) => {
-          // console.log(response);
-          if (response.status === 200) {
-            confirm("註冊成功");
-          }
+          // console.log(response.data);
+          // if (response.status === 201) {
+          confirm("註冊成功");
+          sessionStorage.setItem("token", response.data.accessToken);
+          sessionStorage.setItem("id", response.data.user.id);
+          sessionStorage.setItem("name", this.form.name);
+          document.location.href = "/";
         })
         .catch((error) => {
           console.log(error);
