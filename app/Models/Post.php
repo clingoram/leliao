@@ -52,7 +52,7 @@ class Post extends Model
     // table category
     public function category()
     {
-        return $this->belongsTo(Forum::class, 'foreign_key');
+        return $this->belongsTo(Category::class, 'foreign_key');
     }
 
     public function comments()

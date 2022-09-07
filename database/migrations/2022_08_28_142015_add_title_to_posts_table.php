@@ -14,7 +14,9 @@ return new class extends Migration
     public function up()
     {
         Schema::table('posts', function (Blueprint $table) {
-            $table->string('title', 50)->comment("文章標題");
+            // $table->string('title', 50)->comment("文章標題");
+
+            $table->string('title', 50)->default('')->comment("文章標題");
         });
     }
 

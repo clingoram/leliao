@@ -4,31 +4,50 @@ namespace Tests\Unit;
 
 use App\Models\Auth;
 use Tests\TestCase;
-
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class UserTest extends TestCase
 {
-    /**
-     * A basic unit test example.
-     *
-     * @return void
-     */
-    // public function test_example()
-    // {
-    //     $this->assertTrue(true);
-    // }
+    use RefreshDatabase;
+    use DatabaseMigrations;
+
+    public function setUp(): void
+    {
+        // 呼叫父類別的 setUp()
+        parent::setUp();
+        $this->initDatabase();
+    }
+
+    public function tearDown(): void
+    {
+        $this->resetDatabase();
+        // 呼叫子類別的 tearDown()
+        parent::tearDown();
+    }
+
+    // HTTP test start.
+    public function test_basic_test()
+    {
+        $this->get('/laliao/')->assertStatus(200);
+
+        // $response->ddHeaders();
+
+        // $response->ddSession();
+
+        // $response->dd();
+    }
 
     public function test_login_from()
     {
-        $response = $this->get('/login');
-        $response->assertStatus(200);
+        $this->get('/login')->assertStatus(200);
     }
 
     public function test_register_from()
     {
-        $response = $this->get('/register');
-        $response->assertStatus(200);
+        $this->get('/register')->assertStatus(200);
     }
+
 
     public function test_user_duplication()
     {
@@ -56,30 +75,42 @@ class UserTest extends TestCase
     //     $this->assertTrue(true);
     // }
 
-    // http testing
-    public function test_its_stores_new_users()
+    public function test_its_stores_and_redirest()
     {
-        $response = $this->post('/register', [
+        $this->post('/register', [
             'name' => 'James',
             'email' => 'jamestest@gmail.com',
             'password' => 'james12345',
             'salt' => 'fdJ|skfL36ad%H*',
             'role' => 1
-            // 'password_confirmation' => 'james12345'
-        ])->assertRedirect('api/lel/f/all');
+        ])->assertLocation('/');
     }
 
-    // database test for testing database.
-    public function test_database()
+    public function test_register_user()
     {
-        $this->assertDatabaseHas('users', [
-            'name' => "JessiH"
-        ]);
+        $data = new Auth();
+        $data->name = 'James';
+        $data->email = 'jamestest@gmail.com';
+        $data->password = 'james12345';
+        $data->salt = 'fdJ|skfL36ad%H*';
+        $data->created_at = date('Y/m/d H:i:s', time());
+        $data->role = 1;
+        $saved = $data->save();
+        $this->assertTrue($saved);
+    }
+
+    // Database test.
+    public function test_database_count_data()
+    {
+        // $this->assertDatabaseHas('users', [
+        //     'name' => "Jessi H",
+        // ]);
+        $this->assertDatabaseCount('users', 5);
     }
 
     // seeder test.
-    public function test_if_seeders_works()
-    {
-        $this->seed();
-    }
+    // public function test_if_seeders_works()
+    // {
+    //     $this->seed();
+    // }
 }

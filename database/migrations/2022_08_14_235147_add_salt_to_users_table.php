@@ -14,7 +14,9 @@ return new class extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('salt')->after('email_verified_at');
+            // $table->string('salt')->after('email_verified_at');
+
+            $table->string('salt')->default('')->after('email_verified_at');
         });
     }
 
