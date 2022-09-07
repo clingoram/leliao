@@ -3,34 +3,20 @@
 namespace App\Http\Controllers\User;
 
 use App\Models\Auth;
-use App\Http\Controllers\Controller;
 use App\Http\Controllers\Hash\HashController;
-use HashContext;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-// use Illuminate\Support\Facades\Validator;
 
 /**
  * To register.
  */
 class RegisterController extends UserController
 {
-    // public string $name;
-    // protected string $email;
-    // protected string $password;
-
     private string $numbersAndAlphabets;
     private string $specialCharacters;
     private int $len;
 
     const Message_Note = 'Registered.';
 
-    // public function __construct(Request $request)
-    // {
-    //     $this->name = $request->form['name'];
-    //     $this->email = $request->form['email'];
-    //     $this->password = $request->form['password'];
-    // }
     /**
      * 使用封裝，隨機產生的數字+英文字母+特殊符號，送到HashController組成salt
      * 把從HashController得到的salt+使用者打上的密碼用sha1組合在一起

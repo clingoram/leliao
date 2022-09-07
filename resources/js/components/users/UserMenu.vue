@@ -60,10 +60,6 @@ export default {
       this.accessToken = sessionStorage.getItem("token");
       this.name = sessionStorage.getItem("name");
       this.isLoggedIn = true;
-
-      // axios.defaults.headers.common[
-      //   "Authorization"
-      // ] = `Bearer ${this.accessToken}`;
     }
   },
   methods: {
@@ -71,7 +67,6 @@ export default {
       axios
         .post("api/lel/logout")
         .then((response) => {
-          // console.log(response);
           confirm("成功登出");
           document.location.href = "/";
           this.isLoggedIn = false;

@@ -2,15 +2,7 @@
 
 namespace App\Http\Controllers\User;
 
-use App\Models\Auth as TableUser;
 use Illuminate\Support\Facades\Validator;
-
-// use Illuminate\Support\Facades\Auth as defaultAuth;
-use Exception;
-
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 
@@ -59,29 +51,7 @@ class UserController extends Controller
      */
     public function checkUserIsset(string $mail)
     {
-        // try {
         return DB::table('users')->where('email', '=', $mail)->exists();
-
-
-        //     if ($check === true and $purpose === "login") {
-        //         // 資料表內有該筆資料且來源自登入
-        //         $user = TableUser::where('email', $mail)->first();
-
-        //         $this->secret = $user;
-        //         return $this->secret;
-        //     } else if ($check === false and $purpose === 'register') {
-        //         // 資料表內沒有該筆資料且來源自註冊
-
-        //         // return response()->json()([
-        //         //     'message' => 'Bad creds'
-        //         // ], 401);
-        //         echo 'Wrong';
-        //         die();
-        //     } else {
-        //     }
-        // } catch (Exception $e) {
-        //     dd($e);
-        // }
     }
 
     /**
@@ -100,12 +70,11 @@ class UserController extends Controller
                         'id' => $user->id,
                         'account' => $user->name
                     ],
-                    'message' => $user->name . ' ' . $message,
+                    // 'message' => $user->name . ' ' . $message,
                     'accessToken' => $token,
                     'expires_in' => date('Y/m/d H:i:s', time() + 10 * 60),
                     'type' => 'Bearer',
                     'Accept' => 'application/json'
-
                 ],
                 $statusCode
             );
@@ -153,7 +122,6 @@ class UserController extends Controller
             return response()->json([
                 'status' => false,
                 'message' => $th->getMessage(),
-                // 'errors' => $result->errors()
             ], 500);
         }
     }

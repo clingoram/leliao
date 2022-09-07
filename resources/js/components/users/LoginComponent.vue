@@ -33,7 +33,7 @@
       class="btn btn-primary"
       v-on:click="checkInputsValue()"
     >
-      Submit
+      登入
     </button>
     <!-- <button v-on:click="removeToken()">Clear</button> -->
   </div>
@@ -41,9 +41,9 @@
 <script>
 // import $api from "../../api";
 export default {
-  mounted() {
-    console.log("login");
-  },
+  // mounted() {
+  //   console.log("login");
+  // },
   data() {
     return {
       loginForm: {
@@ -53,14 +53,6 @@ export default {
       name: "",
     };
   },
-  // async beforeMount() {
-  //   let resUser = await $api.get("/f/all");
-  //   this.userData = resUser.data;
-
-  //   let res = await $api.get("/login");
-  //   this.isLoggedIn = true;
-  //   localStorage.setItem("token", res.data.accessToken);
-  // },
   methods: {
     /**
      * 檢查inputs值。
@@ -75,12 +67,14 @@ export default {
         /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 
       if (
-        emailPattern.test(email) === false &&
+        email.search("@") === -1 ||
+        emailPattern.test(email) === false ||
         passwordPattern.test(pwd) === false
       ) {
-        alert("email密碼不能為空");
+        alert("email密碼不能為空。");
         return;
       }
+
       return this.login();
     },
     login() {
@@ -90,7 +84,6 @@ export default {
             loginForm: this.loginForm,
           })
           .then((response) => {
-            // console.log(response);
             sessionStorage.setItem("token", response.data.accessToken);
             sessionStorage.setItem("id", response.data.user.id);
             sessionStorage.setItem("name", response.data.user.account);
@@ -98,7 +91,8 @@ export default {
             document.location.href = "/";
           })
           .catch(function (error) {
-            console.error(error);
+            // console.error(error);
+            alert(error.error);
           });
       });
     },

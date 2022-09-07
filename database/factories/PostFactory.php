@@ -22,8 +22,8 @@ class PostFactory extends Factory
     public function definition()
     {
         return [
-            'title' => fake()->sentence(),
-            'content' => fake()->realText($maxNbChars = 200, $indexSize = 2),
+            'title' => fake()->text($maxNbChars = 50),
+            'content' => fake()->realText($maxNbChars = 150, $indexSize = 2),
             'category_id' => Category::all()->random()->id,
             'writer_id' => Auth::all()->random()->id,
             'created_at' => date('Y/m/d H:i:s', time()),

@@ -69,9 +69,11 @@ class CommentController extends Controller
     */
     public function update(Request $request)
     {
-        $comment = Comment::find($request->commentId);
-        $comment->likeit = $request->heart;
-        $comment->save();
+        if (!empty($request->commentId)) {
+            $comment = Comment::find($request->commentId);
+            $comment->likeit = $request->heart;
+            $comment->save();
+        }
     }
 
     public function validateCheck(Request $request)

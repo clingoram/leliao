@@ -276,7 +276,10 @@ export default {
       /*
       文章id,回覆者id,回覆內容,回覆時間
       */
-      if (this.replyArea.replyContent.length < 2) {
+      if (
+        this.replyArea.replyContent.length < 2 ||
+        this.replyArea.replyContent.length > 200
+      ) {
         return;
       }
       axios

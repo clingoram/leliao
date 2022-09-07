@@ -4,15 +4,6 @@ namespace App\Http\Controllers\User;
 
 use App\Models\Auth;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use DateTime;
-use Illuminate\Support\Facades\Hash;
-use App\Providers\RouteServiceProvider;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
-
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\DB;
-
 
 /**
  * User loggin.
@@ -62,11 +53,13 @@ class LoginController extends UserController
 
             if ($attempt === true) {
                 return parent::createToken($user, 200, self::Message_Note);
+            } else {
+                return;
             }
         }
 
         return response()->json(
-            ['error' => 'login_error'],
+            ['error' => '登入錯誤。'],
             401
         );
     }

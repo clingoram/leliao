@@ -8,6 +8,8 @@
         class="form-control"
         id="articleTitle"
         v-model="post.title"
+        v-bind:max="max"
+        v-bind:min="min"
         placeholder="這是文章標題喔!"
       />
     </div>
@@ -37,7 +39,7 @@
     </div>
     <div class="col-auto">
       <button type="submit" class="btn btn-primary" v-on:click="savePost()">
-        Submit
+        儲存
       </button>
     </div>
   </div>
@@ -47,6 +49,8 @@
 export default {
   data() {
     return {
+      max: 15,
+      min: 5,
       isLoggedIn: true,
       post: {
         writer_id: sessionStorage.getItem("id"),
@@ -85,8 +89,10 @@ export default {
     savePost() {
       if (
         this.post.title === null ||
+        this.post.title < 5 ||
+        this.post.category_id === null ||
         this.post.content === null ||
-        this.post.category_id === null
+        this.post.content.length < 5
       ) {
         return;
       }

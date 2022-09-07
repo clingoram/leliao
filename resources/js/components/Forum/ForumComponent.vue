@@ -38,9 +38,6 @@ export default {
         console.log(error);
       });
   },
-  created() {
-    // this.getAllForums();
-  },
   methods: {
     // 所有分類看板
     // getAllForums() {

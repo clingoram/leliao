@@ -1,13 +1,10 @@
 import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router';
 
-// import App from '../components/App.vue';
 
 import UserMenu from '../components/users/UserMenu.vue';
 import LoginComponent from "../components/users/LoginComponent.vue";
 import RegisterComponent from "../components/users/RegisterComponent.vue";
-// import LogoutComponent from "../components/users/LogoutComponent.vue";
 
-// import Posts from "../components/Post/PostsComponent.vue";
 import PostComponent from "../components/Post/PostComponent.vue";
 import AddArticleComponent from "../components/Post/AddArticleComponent.vue";
 
@@ -83,46 +80,6 @@ export const routes = [
     // component: NotFound
     component: () => import("../components/404.vue"),
   },
-
-
-  // {
-  //   path: '/',
-  //   name: 'home',
-  //   component: {
-  //     // default: App,
-  //     viewLeft: ForumComponent,
-  //     viewRight: ContentComponent
-  //   },
-  //   meta: {
-  //     // public routes
-  //     auth: undefined
-  //   }
-  // },
-
-  // {
-  //   // for user
-  //   path: '/dashboard',
-  //   name: 'dashboard',
-  //   component: Dashboard,
-  //    meta: {
-  //      middleware: "auth"
-  //    },
-  // },
-  // {
-  //   // for admin
-  //   path: '/admin',
-  //   name: 'admin.dashboard',
-  //   component: AdminDashboard,
-  //   meta: {
-  //     auth: { roles: 2, redirect: { name: 'login' }, forbiddenRedirect: '/403' }
-  //   }
-  // }
-  // {
-  // path: "/*",
-  // redirect: '/',
-  //   name: 'home',
-  //   component: App,
-  // },
 ];
 
 const router = createRouter({

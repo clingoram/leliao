@@ -42,15 +42,15 @@
       class="btn btn-primary"
       v-on:click="checkInputsValue()"
     >
-      Submit
+      註冊
     </button>
   </div>
 </template>
 <script>
 export default {
-  mounted() {
-    console.log("register");
-  },
+  // mounted() {
+  //   console.log("register");
+  // },
   data() {
     return {
       max: 20,
@@ -73,6 +73,7 @@ export default {
       const pwd = document.getElementById("inputPwd").value;
 
       // regex
+      // input不能有單引號、OR、1=1和--
       let accountPattern = /^[0-9A-Za-z]+$/;
       let passwordPattern = /^[0-9A-Za-z]\w{7,20}$/;
       let emailPattern =
@@ -86,10 +87,15 @@ export default {
         alert("email無效。");
         return;
       }
-      if (passwordPattern.test(pwd) === false || pwd.length < 7) {
+      if (
+        passwordPattern.test(pwd) === false ||
+        pwd.length < 7 ||
+        pwd.length > 20
+      ) {
         alert("請重設密碼。");
         return;
       }
+
       return this.register();
     },
     /**
@@ -97,14 +103,11 @@ export default {
      * 把接收到的值傳到後端處理
      * */
     register() {
-      // console.log(this.form);
       axios
         .post("api/lel/user/register", {
           form: this.form,
         })
         .then((response) => {
-          // console.log(response.data);
-          // if (response.status === 201) {
           confirm("註冊成功");
           sessionStorage.setItem("token", response.data.accessToken);
           sessionStorage.setItem("id", response.data.user.id);
