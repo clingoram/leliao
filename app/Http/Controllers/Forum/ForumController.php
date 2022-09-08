@@ -77,6 +77,7 @@ class ForumController extends Controller
     public function show(int $categoryId)
     {
         if ($categoryId !== 0) {
+
             $all = Category::select(
                 'posts.id',
                 'posts.title',
@@ -89,7 +90,9 @@ class ForumController extends Controller
                 'category.id AS cId',
                 'users.name AS uName'
             )->join('posts', 'posts.category_id', '=', 'category.id')
-                ->join('users', 'users.id', '=', 'posts.writer_id')->where('category.id', $categoryId)->get();
+                ->join('users', 'users.id', '=', 'posts.writer_id')
+                ->where('category.id', $categoryId)
+                ->dd();
         } else {
             $all = $this->defaultAllposts();
         }
