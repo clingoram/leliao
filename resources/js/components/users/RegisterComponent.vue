@@ -48,9 +48,6 @@
 </template>
 <script>
 export default {
-  // mounted() {
-  //   console.log("register");
-  // },
   data() {
     return {
       max: 20,

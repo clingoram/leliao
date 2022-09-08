@@ -9,7 +9,7 @@
         class="form-control"
         id="email_address"
         v-model="loginForm.email"
-        aria-describedby="emailHelp"
+        required
       />
       <div id="emailHelp" class="form-text">
         We'll never share your email with anyone else.
@@ -22,6 +22,7 @@
         class="form-control"
         id="input_pwd"
         v-model="loginForm.password"
+        required
       />
     </div>
     <!-- <div class="mb-3 form-check">
@@ -34,6 +35,9 @@
       v-on:click="checkInputsValue()"
     >
       登入
+    </button>
+    <button type="button" class="btn btn-danger" v-on:click="clearAll()">
+      清除
     </button>
     <!-- <button v-on:click="removeToken()">Clear</button> -->
   </div>
@@ -50,13 +54,13 @@ export default {
         email: "",
         password: "",
       },
-      name: "",
+      // name: "",
     };
   },
   methods: {
     /**
      * 檢查inputs值。
-     * 若檢查通過，則把值傳給function
+     * 若檢查通過，則把值傳給login
      * */
     checkInputsValue() {
       const email = document.getElementById("email_address").value;
@@ -95,6 +99,18 @@ export default {
             alert(error.error);
           });
       });
+    },
+    // 清除所有inputs值
+    clearAll() {
+      // const email = document.getElementById("email_address").value;
+      // const password = document.getElementById("input_pwd").value;
+      this.loginForm.email = "";
+      this.loginForm.password = "";
+      // for (let i = 0; i < email.length; i++) {
+      //   if (email[i].type === "text") {
+      //     email[i].value = "";
+      //   }
+      // }
     },
   },
 };

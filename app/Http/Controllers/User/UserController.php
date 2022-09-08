@@ -70,7 +70,7 @@ class UserController extends Controller
                         'id' => $user->id,
                         'account' => $user->name
                     ],
-                    // 'message' => $user->name . ' ' . $message,
+                    'message' => $user->name . ' ' . $message,
                     'accessToken' => $token,
                     'expires_in' => date('Y/m/d H:i:s', time() + 10 * 60),
                     'type' => 'Bearer',
@@ -100,7 +100,7 @@ class UserController extends Controller
             $result = Validator::make($data, [
                 'name' => ['required', 'string', 'max:30'],
                 'email' => ['required', 'string', 'email', 'max:30', 'unique:users'],
-                'password' => ['required', 'string', 'min:8', 'confirmed']
+                'password' => ['required', 'string', 'min:7', 'max:20', 'confirmed']
             ]);
 
             if ($result->fails()) {
