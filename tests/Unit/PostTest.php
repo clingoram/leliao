@@ -42,9 +42,9 @@ class PostTest extends TestCase
         $this->get('/add_post')->assertStatus(200);
     }
 
-    public function test_add_a_post()
+    public function test_add_post()
     {
-        $data = Post::make()->first();
+        $data = Post::make();
         $this->post("api/lel/add_post", [
             'title' => $data['title'],
             'content' => $data['content'],

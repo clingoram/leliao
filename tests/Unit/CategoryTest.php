@@ -2,7 +2,6 @@
 
 namespace Tests\Unit;
 
-// use PHPUnit\Framework\TestCase;
 use Tests\TestCase;
 use App\Models\Category;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -13,19 +12,19 @@ class CategoryTest extends TestCase
     use RefreshDatabase;
     use DatabaseMigrations;
 
-    // public function setUp(): void
-    // {
-    //     // 呼叫父類別的 setUp()
-    //     parent::setUp();
-    //     $this->initDatabase();
-    // }
+    public function setUp(): void
+    {
+        // 呼叫父類別的 setUp()
+        parent::setUp();
+        $this->initDatabase();
+    }
 
-    // public function tearDown(): void
-    // {
-    //     $this->resetDatabase();
-    //     // 呼叫子類別的 tearDown()
-    //     parent::tearDown();
-    // }
+    public function tearDown(): void
+    {
+        $this->resetDatabase();
+        // 呼叫子類別的 tearDown()
+        parent::tearDown();
+    }
 
     /**
      * A basic unit test example.
@@ -39,7 +38,7 @@ class CategoryTest extends TestCase
 
     public function test_add_category()
     {
-        $data = Category::make()->first();
+        $data = Category::make();
         $response = $this->post("api/lel/f/all", [
             'name' => $data['name'],
             'created_at' => $data['created_at']
