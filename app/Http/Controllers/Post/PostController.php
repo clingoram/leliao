@@ -20,7 +20,7 @@ class PostController extends Controller
      */
     public function create(Request $request)
     {
-        // $this->validateCheck($request);
+        $this->validateCheck($request);
 
         $checkUser = DB::table('users')->where('id', '=', $request->post['writer_id'])->exists();
         $checkCategory = DB::table('category')->where('id', '=', $request->post['category_id'])->exists();
@@ -50,7 +50,7 @@ class PostController extends Controller
     }
 
     /**
-     * 取得特定看板內的某文章
+     * modal 取得特定看板內的某篇文章
      * */
     public function show(int $categoryId, int $postId)
     {

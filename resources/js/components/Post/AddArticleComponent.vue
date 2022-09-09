@@ -1,25 +1,11 @@
 <template>
   <!-- 新增文章，登入才能看到 -->
   <div class="container" v-if="isLoggedIn">
-    <!-- <div class="mb-3">
-      <label for="articleTitle" class="form-label">文章標題</label>
-      <input
-        type="text"
-        class="form-control"
-        id="articleTitle"
-        v-model="post.title"
-        v-bind:max="max"
-        v-bind:min="min"
-        placeholder="這是文章標題喔!"
-        required
-      />
-    </div> -->
-    <div class="input-group mb-3">
+    <div class="input-group mb-3" style="padding-top: 20px">
       <span class="input-group-text" id="title">文章標題</span>
       <input
         type="text"
         class="form-control"
-        aria-label="Sizing example input"
         aria-describedby="articleTitle"
         id="articleTitle"
         v-model="post.title"
@@ -61,12 +47,12 @@
       </select>
     </div>
 
-    <div class="mb-3">
-      <label for="articelContent" class="form-label">內容</label>
+    <div class="input-group mb-3">
+      <span class="input-group-text">內容</span>
       <textarea
         class="form-control"
         id="articelContent"
-        rows="3"
+        rows="5"
         v-model="post.content"
         placeholder="在這打上內容!"
         required
@@ -129,6 +115,7 @@ export default {
         this.post.content === null ||
         this.post.content.length < 5
       ) {
+        alert("請確實填寫欄位。");
         return;
       }
       axios

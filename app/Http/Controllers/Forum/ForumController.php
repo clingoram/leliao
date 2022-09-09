@@ -76,8 +76,7 @@ class ForumController extends Controller
      */
     public function show(int $categoryId)
     {
-        if ($categoryId !== 0) {
-
+        if (isset($categoryId) and $categoryId !== 0) {
             $all = Category::select(
                 'posts.id',
                 'posts.title',
@@ -92,7 +91,7 @@ class ForumController extends Controller
             )->join('posts', 'posts.category_id', '=', 'category.id')
                 ->join('users', 'users.id', '=', 'posts.writer_id')
                 ->where('category.id', $categoryId)
-                ->dd();
+                ->get();
         } else {
             $all = $this->defaultAllposts();
         }

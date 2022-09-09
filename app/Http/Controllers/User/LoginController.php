@@ -63,7 +63,10 @@ class LoginController extends UserController
         }
 
         return response()->json(
-            ['error' => '登入錯誤。'],
+            [
+                'status' => false,
+                'error' => '登入發生一些問題。'
+            ],
             401
         );
     }

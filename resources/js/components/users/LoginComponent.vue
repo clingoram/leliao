@@ -25,29 +25,23 @@
         required
       />
     </div>
-    <!-- <div class="mb-3 form-check">
-        <input type="checkbox" class="form-check-input" id="exampleCheck1" />
-        <label class="form-check-label" for="exampleCheck1">Check me out</label>
-      </div> -->
+
     <button
       type="submit"
       class="btn btn-primary"
       v-on:click="checkInputsValue()"
+      style="padding-right: 5px"
     >
       登入
     </button>
     <button type="button" class="btn btn-danger" v-on:click="clearAll()">
       清除
     </button>
-    <!-- <button v-on:click="removeToken()">Clear</button> -->
   </div>
 </template>
 <script>
 // import $api from "../../api";
 export default {
-  // mounted() {
-  //   console.log("login");
-  // },
   data() {
     return {
       loginForm: {
@@ -95,22 +89,15 @@ export default {
             document.location.href = "/";
           })
           .catch(function (error) {
-            // console.error(error);
-            alert(error.error);
+            // console.log(error.response.data.error);
+            alert(error.response.data.error);
           });
       });
     },
     // 清除所有inputs值
     clearAll() {
-      // const email = document.getElementById("email_address").value;
-      // const password = document.getElementById("input_pwd").value;
       this.loginForm.email = "";
       this.loginForm.password = "";
-      // for (let i = 0; i < email.length; i++) {
-      //   if (email[i].type === "text") {
-      //     email[i].value = "";
-      //   }
-      // }
     },
   },
 };

@@ -235,7 +235,8 @@ export default {
           this.wholeData = response.data.data_return;
         })
         .catch((error) => {
-          console.log(error);
+          alert("無文章");
+          console.log(error.message);
         });
     },
     // 取得特定看板內的某文章
@@ -282,6 +283,7 @@ export default {
         this.replyArea.replyContent.length < 2 ||
         this.replyArea.replyContent.length > 200
       ) {
+        alert("內容記得填寫。");
         return;
       }
       axios

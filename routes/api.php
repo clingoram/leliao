@@ -34,9 +34,9 @@ Route::prefix('/lel')->group(function () {
     // 單一類別內的所有文章，例如閒聊版內的所有文章
     Route::get('/f/{id}/posts', [ForumController::class, 'show']);
 
-    // 單一類別的某篇文章，例如工作版內的文章C
+    // modal 單一類別的某篇文章，例如工作版內的文章C
     Route::get('/f/{category_id}/post/{post_id}', [PostController::class, 'show']);
-    // 取單一文章的留言
+    // modal 取單一文章的留言
     Route::get('/f/{category_id}/post/c/{post_id}', [CommentController::class, 'show']);
 
     // 註冊
@@ -50,9 +50,9 @@ Route::prefix('/lel')->group(function () {
         // 新增文章
         Route::post('/add_post', [PostController::class, 'create']);
 
-        // 回覆(留言)該文章
+        // modal 回覆(留言)該文章
         Route::post('/f/{category_id}/post/r/{post_id}', [CommentController::class, 'createReply']);
-        // 針對留言按like(愛心)
+        // modal 針對留言按like(愛心)
         Route::put('/f/{category_id}/post/r/{post_id}/l/{comment_id}', [CommentController::class, 'update']);
 
         // Route::get('/user/{id}', [UserController::class, 'user']);

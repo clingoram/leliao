@@ -107,7 +107,7 @@ class UserController extends Controller
                 return response()->json([
                     'status' => false,
                     'message' => 'Validator error',
-                    'errors' => $result->errors()
+                    // 'errors' => $result->errors()
                 ], 401);
             } else {
                 return response()->json(

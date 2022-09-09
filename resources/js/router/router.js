@@ -11,7 +11,7 @@ import AddArticleComponent from "../components/Post/AddArticleComponent.vue";
 // import ForumComponent from "../components/Forum/ForumComponent.vue";
 
 import MainComponent from "../components/Content/MainContentComponent.vue";
-import NotFound from "../components/404.vue";
+import NotFound from "../components/Error.vue";
 
 // Route 設定
 export const routes = [
@@ -78,7 +78,7 @@ export const routes = [
     path: "/:domain(.*)*",
     name: "NotFound",
     // component: NotFound
-    component: () => import("../components/404.vue"),
+    component: () => import("../components/Error.vue"),
   },
 ];
 
