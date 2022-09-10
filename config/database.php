@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Str;
 // add 
-$DATABASE_URL = parse_url("DATABASE_URL");
+$DATABASE_URL = parse_url(getenv('DATABASE_URL'));
 
 return [
 
@@ -17,7 +17,8 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'mysql'),
+    // 'default' => env('DB_CONNECTION', 'mysql'),
+    'default' => env('DB_CONNECTION', 'pgsql'),
 
     /*
     |--------------------------------------------------------------------------
