@@ -6,8 +6,9 @@ import path from 'path';
 export default defineConfig({
     server: {
         hmr: {
-            host: 'localhost',
+            // host: 'localhost',
             // https: true,
+            host: '0.0.0.0'
         },
     },
     plugins: [
@@ -19,15 +20,14 @@ export default defineConfig({
                 },
             },
         }),
-        // laravel({
-        //     input: [
-        //         'resources/css/app.css',
-        //         'resources/js/app.js',
-        //     ],
-        //     // work with blade
-        //     refresh: true,
-        // }),
-        laravel()
+        laravel({
+            input: [
+                'resources/css/app.css',
+                'resources/js/app.js',
+            ],
+            // work with blade
+            refresh: true,
+        }),
     ],
     resolve: {
         alias: {
