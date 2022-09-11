@@ -8,7 +8,7 @@ export default defineConfig({
         hmr: {
             // host: 'localhost',
             https: true,
-            // host: '0.0.0.0'
+            host: '0.0.0.0'
         },
     },
     plugins: [
