@@ -21,7 +21,7 @@ class RegisterController extends UserController
      * 使用封裝，隨機產生的數字+英文字母+特殊符號，送到HashController組成salt
      * 把從HashController得到的salt+使用者打上的密碼用sha1組合在一起
      */
-    public function generateHash()
+    protected function generateHash(): string
     {
         $hash = new HashController();
         $this->numbersAndAlphabets = '0987654321abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';

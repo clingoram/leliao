@@ -4,6 +4,7 @@ import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router
 import UserMenu from '../components/users/UserMenu.vue';
 import LoginComponent from "../components/users/LoginComponent.vue";
 import RegisterComponent from "../components/users/RegisterComponent.vue";
+import Admin from "../components/Admin/ManagementComponent.vue";
 
 import PostComponent from "../components/Post/PostComponent.vue";
 import AddArticleComponent from "../components/Post/AddArticleComponent.vue";
@@ -59,6 +60,15 @@ export const routes = [
     path: '/add_post',
     name: "add",
     component: AddArticleComponent,
+    meta: {
+      auth: true
+    }
+  },
+  {
+    // 管理頁面
+    path: '/management',
+    name: "management",
+    component: Admin,
     meta: {
       auth: true
     }

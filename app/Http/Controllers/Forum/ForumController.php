@@ -42,7 +42,10 @@ class ForumController extends Controller
             'category.id AS cId',
             'users.name AS uName'
         )->join('posts', 'posts.category_id', '=', 'category.id')
-            ->join('users', 'users.id', '=', 'posts.writer_id')->get();
+            ->join('users', 'users.id', '=', 'posts.writer_id')
+            ->orderBy('pin', 'DESC')
+            ->orderby('posts.created_at', 'ASC')
+            ->get();
         return $all;
     }
 
@@ -91,6 +94,8 @@ class ForumController extends Controller
             )->join('posts', 'posts.category_id', '=', 'category.id')
                 ->join('users', 'users.id', '=', 'posts.writer_id')
                 ->where('category.id', $categoryId)
+                ->orderBy('pin', 'DESC')
+                ->orderby('posts.created_at', 'ASC')
                 ->get();
         } else {
             $all = $this->defaultAllposts();

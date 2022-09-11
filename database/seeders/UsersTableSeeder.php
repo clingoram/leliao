@@ -18,16 +18,5 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         Auth::factory()->count(5)->create();
-
-        // $user = new Auth();
-        // $user->id = 1;
-        // $user->name = 'Jessi H';
-        // $user->email = 'detettestts4@gmail.com';
-        // $user->password = Hash::make('password');
-        // $user->salt = "fdJ|skfL36ad%H*";
-        // $user->role = 1;
-        // $user->created_at = date('Y/m/d H:i:s', time());
-        // $user->updated_at = date('Y/m/d H:i:s', time());
-        // $user->save();
     }
 }

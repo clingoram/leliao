@@ -76,7 +76,7 @@ export default {
       let emailPattern =
         /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 
-      if (accountPattern.test(name) === false || name.length < 5) {
+      if (accountPattern.test(name) === false || name.length < 3) {
         alert(`帳號長度請重設。`);
         return;
       }

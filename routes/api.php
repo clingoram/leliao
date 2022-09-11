@@ -4,9 +4,10 @@ use App\Http\Controllers\User\RegisterController;
 use App\Http\Controllers\User\LoginController;
 use App\Http\Controllers\User\LogoutController;
 use App\Http\Controllers\Forum\ForumController;
-// use App\Http\Controllers\User\UserController;
+
 use App\Http\Controllers\Post\PostController;
 use App\Http\Controllers\Comment\CommentController;
+// use App\Http\Controllers\User\AdminController;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -55,7 +56,9 @@ Route::prefix('/lel')->group(function () {
         // modal 針對留言按like(愛心)
         Route::put('/f/{category_id}/post/r/{post_id}/l/{comment_id}', [CommentController::class, 'update']);
 
-        // Route::get('/user/{id}', [UserController::class, 'user']);
+        // Route::get('/management', [AdminController::class, 'admin']);
+        // Route::get('/check/{id}/{name}', [AdminController::class, 'check']);
+
 
         Route::post('/logout', [LogoutController::class, 'logout']);
     });

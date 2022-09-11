@@ -12,6 +12,9 @@
         {{ this.name }}
       </button>
       <ul class="dropdown-menu">
+        <li v-if="roleResult === true">
+          <router-link v-bind:to="{ name: 'management' }">管理頁面</router-link>
+        </li>
         <li>
           <router-link v-bind:to="{ name: 'add' }">新增文章</router-link>
         </li>
@@ -50,6 +53,7 @@ export default {
       isLoggedIn: false,
       accessToken: "",
       name: "",
+      roleResult: false,
     };
   },
   created() {
@@ -60,9 +64,24 @@ export default {
       this.accessToken = sessionStorage.getItem("token");
       this.name = sessionStorage.getItem("name");
       this.isLoggedIn = true;
+      // this.checkRole();
     }
   },
   methods: {
+    checkRole() {
+      axios
+        .get("api/lel/check", {
+          id: sessionStorage.getItem("id"),
+          name: sessionStorage.getItem("name"),
+        })
+        .then((response) => {
+          console.log(response);
+          this.roleResult = response;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
     logout() {
       axios
         .post("api/lel/logout")
