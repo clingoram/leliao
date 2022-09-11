@@ -5,11 +5,11 @@ import path from 'path';
 
 export default defineConfig({
     server: {
-        // hmr: {
-        host: 'localhost',
-        // https: true,
-        // host: '0.0.0.0'
-        // },
+        hmr: {
+            host: 'localhost',
+            // https: true,
+            // host: '0.0.0.0'
+        },
     },
     plugins: [
         vue({
