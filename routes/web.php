@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 // })->where('any', '^((?!api).)*$');
 
 Route::get('/{any}', function () {
-    return view('lauouts.app');
+    return view('layouts.app');
 });
 // Auth::routes();
 
