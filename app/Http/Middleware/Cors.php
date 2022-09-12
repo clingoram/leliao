@@ -19,6 +19,7 @@ class Cors
     //     return $next($request);
     // }
 
+    // add
     public function handle(Request $request, Closure $next)
     {
         return $next($request)

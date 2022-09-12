@@ -47,8 +47,8 @@ Route::prefix('/lel')->group(function () {
     Route::post('/user/login', [LoginController::class, 'login']);
 
     // Protected routes
-    // Route::group(['middleware' => ['auth:sanctum', 'cors']], function () {
-    Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::group(['middleware' => ['auth:sanctum', 'cors']], function () {
+        // Route::group(['middleware' => ['auth:sanctum']], function () {
 
 
         // 新增文章
