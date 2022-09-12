@@ -29,6 +29,7 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::prefix('/lel')->group(function () {
+
     // Public routes
     // 首頁，所有分類看板
     Route::get('/f/all', [ForumController::class, 'index']);
@@ -46,7 +47,7 @@ Route::prefix('/lel')->group(function () {
     Route::post('/user/login', [LoginController::class, 'login']);
 
     // Protected routes
-    Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::group(['middleware' => ['auth:sanctum', 'cors']], function () {
 
         // 新增文章
         Route::post('/add_post', [PostController::class, 'create']);
