@@ -22,11 +22,11 @@ return [
     'allowed_methods' => ['*'],
 
     'allowed_origins' => ['*'],
+    // 'allowed_origins' => ['http://leliao.herokuapp.com/'],
 
     'allowed_origins_patterns' => [],
 
     'allowed_headers' => ['*'],
-    // 'allowed_headers' => ['https://leliao.herokuapp.com/'],
 
 
     'exposed_headers' => [],
@@ -36,7 +36,5 @@ return [
 
     // 'supports_credentials' => false,
     'supports_credentials' => true,
-
-
 
 ];
