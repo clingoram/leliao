@@ -5,14 +5,14 @@
     #         Header set Access-Control-Allow-Origin "*"
     #     </IfModule>
     # </FilesMatch>
-    <IfModule mod_setenvif.c>
-        <IfModule mod_headers.c>
-            <FilesMatch "\.(bmp|cur|gif|ico|jpe?g|png|svgz?|webp|pdf)$">
+    # <IfModule mod_setenvif.c>
+    #     <IfModule mod_headers.c>
+    #         <FilesMatch "\.(bmp|cur|gif|ico|jpe?g|png|svgz?|webp|pdf)$">
                 
-                Header set Access-Control-Allow-Origin "*" env=IS_CORS
-            </FilesMatch>
-        </IfModule>
-    </IfModule>
+    #             Header set Access-Control-Allow-Origin "*" env=IS_CORS
+    #         </FilesMatch>
+    #     </IfModule>
+    # </IfModule>
     #add end
 
     <IfModule mod_negotiation.c>
