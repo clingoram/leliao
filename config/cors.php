@@ -25,8 +25,8 @@ return [
 
     'allowed_origins_patterns' => [],
 
-    // 'allowed_headers' => ['*'],
-    'allowed_headers' => ['https://leliao.herokuapp.com/'],
+    'allowed_headers' => ['*'],
+    // 'allowed_headers' => ['https://leliao.herokuapp.com/'],
 
 
     'exposed_headers' => [],
