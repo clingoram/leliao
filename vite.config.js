@@ -20,14 +20,15 @@ export default defineConfig({
                 },
             },
         }),
-        laravel({
-            input: [
-                'resources/css/app.css',
-                'resources/js/app.js',
-            ],
-            // work with blade
-            refresh: true,
-        }),
+        // laravel({
+        //     input: [
+        //         'resources/css/app.css',
+        //         'resources/js/app.js',
+        //     ],
+        //     // work with blade
+        //     refresh: true,
+        // }),
+        laravel()
     ],
     resolve: {
         alias: {
