@@ -15,8 +15,8 @@ class Kernel extends HttpKernel
      */
     protected $middleware = [
         // cors
-        \App\Http\Middleware\Cors::class,
-        // \Fruitcake\Cors\HandleCors::class,
+        // \App\Http\Middleware\Cors::class,
+        \Fruitcake\Cors\HandleCors::class,
         // \App\Http\Middleware\CheckForMaintenanceMode::class,
 
 
@@ -73,6 +73,6 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
 
         // add
-        '*' => \App\Http\Middleware\Cors::class,
+        // '*' => \App\Http\Middleware\Cors::class,
     ];
 }
