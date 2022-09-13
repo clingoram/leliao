@@ -13,7 +13,6 @@
 
 <body>
   <div id="app">
-    <!-- <p>Hello</p> -->
   </div>
   <router-view />
 </body>
