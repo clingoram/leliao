@@ -28,7 +28,7 @@ window.axios.defaults.withCredentials = true;
 // window.axios.defaults.headers.post['xsrfHeaderName'] = 'X-CSRFToken';
 // window.axios.defaults.headers.post['responseType'] = 'json';
 // window.axios.defaults.headers.post['Content-Type'] = 'application/json';
-window.axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
+// window.axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
 
 
 /**
