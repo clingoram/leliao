@@ -145,8 +145,9 @@
                           class="heart"
                           v-on:click="likeit(comments.id, comments.heart)"
                         >
-                          <i class="fa-regular fa-heart"></i
-                          >{{ comments.heart }}
+                          <!-- <i class="fa-regular fa-heart"></i
+                          > -->
+                          Do you like it? {{ comments.heart }}
                         </p>
                         <hr />
                       </li>
