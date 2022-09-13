@@ -28,7 +28,6 @@ export default defineConfig({
             // work with blade
             refresh: true,
         }),
-        // laravel()
     ],
     resolve: {
         alias: {
