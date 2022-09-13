@@ -2,8 +2,7 @@
   <!-- main Vue file -->
 
   <!-- 最上方navbar -->
-  <!-- <header-component /> -->
-  <p>Hello</p>
+  <header-component />
 </template>
 <script>
 import HeaderComponent from "./HeaderComponent.vue";
