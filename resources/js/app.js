@@ -1,7 +1,7 @@
 // main file to run vue 3.
 import './bootstrap';
 
-import '../sass/app.scss';
+// import '../sass/app.scss';
 
 // vue
 import { createApp } from 'vue';
