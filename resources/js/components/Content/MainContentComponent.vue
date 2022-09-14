@@ -145,9 +145,9 @@
                           class="heart"
                           v-on:click="likeit(comments.id, comments.heart)"
                         >
-                          <!-- <i class="fa-regular fa-heart"></i
-                          > -->
-                          Do you like it? {{ comments.heart }}
+                          <i class="fa-regular fa-heart"></i
+                          >{{ comments.heart }}
+                          <!-- Do you like it?  -->
                         </p>
                         <hr />
                       </li>
@@ -325,6 +325,8 @@ export default {
     },
     /**
      * 對留言按愛心
+     * @param commentId int
+     * @param heart int
      */
     likeit(commentId, heart) {
       // console.log(heart);
@@ -355,7 +357,7 @@ export default {
       }
     },
     /**
-     * 關閉modal時清除留言
+     * 關閉modal時清除modal內留言、該文章所有內容
      * */
     clear() {
       this.replyData = [];
@@ -369,7 +371,7 @@ export default {
       this.specificPostData.createdAt = "";
     },
     /**
-     * 時間
+     * 轉換時間格式
      */
     timeLag(datetime) {
       const date = new Date(datetime);
