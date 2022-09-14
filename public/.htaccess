@@ -21,9 +21,12 @@
 # http://enable-cors.org/
 # http://www.w3.org/TR/cors/
 
-# <IfModule mod_headers.c>
-#     Header set Access-Control-Allow-Origin "*"
-# </IfModule>
+<IfModule mod_headers.c>
+    <FilesMatch "\.(ttf|ttc|otf|eot|woff|woff2|font.css|css)$">
+        Header set Access-Control-Allow-Origin "*"
+    </FilesMatch>
+    # Header set Access-Control-Allow-Origin "*"
+</IfModule>
 
 <IfModule mod_rewrite.c>
     # add
