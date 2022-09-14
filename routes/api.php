@@ -56,7 +56,6 @@ Route::prefix('/lel')->group(function () {
     // Route::group(['middleware' => ['auth:sanctum', 'cors']], function () {
     Route::group(['middleware' => ['auth:sanctum']], function () {
 
-
         // 新增文章
         Route::post('/add_post', [PostController::class, 'create']);
 
@@ -67,7 +66,6 @@ Route::prefix('/lel')->group(function () {
 
         // Route::get('/management', [AdminController::class, 'admin']);
         // Route::get('/check/{id}/{name}', [AdminController::class, 'check']);
-
 
         Route::post('/logout', [LogoutController::class, 'logout']);
     });
