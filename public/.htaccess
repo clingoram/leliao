@@ -72,5 +72,3 @@
         Header set Access-Control-Allow-Origin "*"
     </FilesMatch>
 </IfModule>
-
-<IfModule mod_rewrite.c>
