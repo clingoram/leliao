@@ -68,6 +68,9 @@ export default {
     }
   },
   methods: {
+    /**
+     * 檢查登入者role
+     */
     checkRole() {
       axios
         .get("api/lel/check", {
@@ -82,6 +85,9 @@ export default {
           console.log(error);
         });
     },
+    /**
+     * 登出
+     * */
     logout() {
       axios
         .post("api/lel/logout")

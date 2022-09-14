@@ -38,34 +38,5 @@ export default {
         console.log(error);
       });
   },
-  methods: {
-    // 所有分類看板
-    // getAllForums() {
-    //   axios
-    //     .get("api/lel/f/all")
-    //     .then((response) => {
-    //       this.forumOptions = response.data;
-    //       this.showForum = true;
-    //     })
-    //     .catch((error) => {
-    //       console.log(error);
-    //     });
-    // },
-    // 取得特定看板的文章
-    // getSpecificForum() {
-    //   axios
-    //     .get("api/lel/f", {
-    //       params: {
-    //         ID: category.id,
-    //       },
-    //     })
-    //     .then(function (response) {
-    //       console.log(response);
-    //     })
-    //     .catch(function (error) {
-    //       console.log(error);
-    //     });
-    // },
-  },
 };
 </script>

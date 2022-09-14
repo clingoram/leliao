@@ -70,10 +70,10 @@ export default {
       const pwd = document.getElementById("inputPwd").value;
 
       // regex
-      // input不能有單引號、OR、1=1和--
-      let accountPattern = /^[0-9A-Za-z]+$/;
-      let passwordPattern = /^[0-9A-Za-z]\w{7,20}$/;
-      let emailPattern =
+      // input不能有單引號、OR、1 = 1和 --
+      const accountPattern = /^[0-9A-Za-z]+$/;
+      const passwordPattern = /^[0-9A-Za-z]\w{7,20}$/;
+      const emailPattern =
         /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 
       if (accountPattern.test(name) === false || name.length < 3) {

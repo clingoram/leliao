@@ -211,7 +211,9 @@ export default {
     };
   },
   async beforeMount() {
-    // get all forums.
+    /**
+     * 取得所有分類列表
+     */
     axios
       .get("api/lel/f/all")
       .then((response) => {
@@ -227,7 +229,11 @@ export default {
     this.getPosts(this.categoryId);
   },
   methods: {
-    // 取特定分類內所有文章
+    /**
+     * 取特定分類內所有文章
+     *
+     * @param forumId int
+     * */
     getPosts(forumId) {
       axios
         .get("api/lel/f/" + forumId + "/posts")
@@ -240,7 +246,11 @@ export default {
           console.log(error.message);
         });
     },
-    // 取得特定看板內的某文章
+    /**
+     *  取得特定看板內的某文章
+     * @param forumId int
+     * @param postId int
+     */
     getSpecificPost(forumId, postId) {
       // call table comments.
       this.getPostComments(forumId, postId);
@@ -261,7 +271,11 @@ export default {
           console.log(error);
         });
     },
-    // 取得文章留言
+    /**
+     * 取得文章留言
+     * @param categortId int
+     * @param id int
+     *  */
     getPostComments(categoryId, id) {
       axios
         .get("api/lel/f/" + categoryId + "/post/c/" + id)
@@ -278,7 +292,9 @@ export default {
           console.log(error);
         });
     },
-    // 回覆該文章(需登入)
+    /**
+     * 回覆該文章(需登入)
+     */
     reply() {
       if (
         this.replyArea.replyContent.length < 2 ||
@@ -307,6 +323,9 @@ export default {
           console.log(error);
         });
     },
+    /**
+     * 對留言按愛心
+     */
     likeit(commentId, heart) {
       // console.log(heart);
       if (this.isLoggedIn === false) {
@@ -335,11 +354,23 @@ export default {
           });
       }
     },
-    // 關閉modal時清除留言
+    /**
+     * 關閉modal時清除留言
+     * */
     clear() {
       this.replyData = [];
+      this.specificPostData.id = "";
+      this.specificPostData.title = "";
+      this.specificPostData.content = "";
+      this.specificPostData.author = "";
+      this.specificPostData.content = "";
+      this.specificPostData.cid = "";
+      this.specificPostData.categoryName = "";
+      this.specificPostData.createdAt = "";
     },
-    // 時間
+    /**
+     * 時間
+     */
     timeLag(datetime) {
       const date = new Date(datetime);
       // 年份

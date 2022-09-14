@@ -75,6 +75,9 @@ export default {
 
       return this.login();
     },
+    /**
+     * 註冊
+     */
     login() {
       axios.get("/sanctum/csrf-cookie").then((response) => {
         axios
@@ -94,7 +97,9 @@ export default {
           });
       });
     },
-    // 清除所有inputs值
+    /**
+     * 清除所有inputs值
+     *  */
     clearAll() {
       this.loginForm.email = "";
       this.loginForm.password = "";

@@ -97,6 +97,9 @@ export default {
     this.allCategory();
   },
   methods: {
+    /**
+     * 取得所有看板類別，用於下拉式選單
+     */
     allCategory() {
       axios
         .get("api/lel/f/all")
@@ -107,6 +110,9 @@ export default {
           console.log(error);
         });
     },
+    /**
+     * 文章儲存
+     * */
     savePost() {
       if (
         this.post.title === null ||
