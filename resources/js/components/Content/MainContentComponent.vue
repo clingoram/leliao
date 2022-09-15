@@ -90,7 +90,7 @@
                     class="btn-close"
                     data-bs-dismiss="modal"
                     aria-label="Close"
-                    v-on:click="clear()"
+                    v-on:click="clearModal()"
                   ></button>
                 </div>
                 <div class="modal-body">
@@ -160,7 +160,7 @@
                     type="button"
                     class="btn btn-secondary"
                     data-bs-dismiss="modal"
-                    v-on:click="clear()"
+                    v-on:click="clearModal()"
                   >
                     關閉
                   </button>
@@ -359,7 +359,7 @@ export default {
     /**
      * 關閉modal時清除modal內留言、該文章所有內容
      * */
-    clear() {
+    clearModal() {
       this.replyData = [];
       this.specificPostData.id = "";
       this.specificPostData.title = "";
