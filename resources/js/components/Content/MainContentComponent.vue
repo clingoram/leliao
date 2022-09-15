@@ -107,7 +107,6 @@
                   </div>
                   <div v-if="isLoggedIn === true">
                     <div class="replyArea">
-                      <!-- <form> -->
                       <div class="mb-3">
                         <label for="message-text" class="col-form-label"
                           >回覆:</label
@@ -125,7 +124,6 @@
                           發送
                         </button>
                       </div>
-                      <!-- </form> -->
                     </div>
                   </div>
                   <div>
