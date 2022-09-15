@@ -22,13 +22,13 @@ window.axios = axios;
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 // 把token加到header內
 window.axios.defaults.headers.common['Authorization'] = `Bearer ${sessionStorage.getItem("token")}`;
-// window.axios.defaults.withCredentials = true;
+window.axios.defaults.withCredentials = true;
+window.axios.defaults.headers.common['Access-Control-Allow-Origin'] = 'http://leliao/';
 
 // window.axios.defaults.headers.post['xsrfCookieName'] = 'CSRFToken';
 // window.axios.defaults.headers.post['xsrfHeaderName'] = 'X-CSRFToken';
 // window.axios.defaults.headers.post['responseType'] = 'json';
 // window.axios.defaults.headers.post['Content-Type'] = 'application/json';
-// window.axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
 
 
 /**

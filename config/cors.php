@@ -19,10 +19,11 @@ return [
     // 'paths' => ['api/*', 'login', 'logout', 'sanctum/csrf-cookie'],
 
 
-    'allowed_methods' => ['*'],
+    // 'allowed_methods' => ['*'],
+    'allowed_mothods' => ['GET, POST, PUT, PATCH, DELETE, OPTIONS'],
 
     // 'allowed_origins' => ['*'],
-    'allowed_origins' => ['http://leliao.herokuapp.com/'],
+    'allowed_origins' => ['http://leliao.herokuapp.com/', 'http://leliao/'],
 
     'allowed_origins_patterns' => [],
 

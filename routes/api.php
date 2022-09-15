@@ -12,6 +12,9 @@ use App\Http\Controllers\Comment\CommentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+// middleware
+// use \Illuminate\Http\Middleware\HandleCors;
+// use \App\Http\Middleware\Cors;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -44,6 +47,8 @@ Route::prefix('/lel')->group(function () {
 
     // modal 單一類別的某篇文章，例如工作版內的文章C
     Route::get('/f/{category_id}/post/{post_id}', [PostController::class, 'show']);
+    // Route::options('/f/{category_id}/post/{post_id}', [PostController::class, 'show']);
+
     // modal 取單一文章的留言
     Route::get('/f/{category_id}/post/c/{post_id}', [CommentController::class, 'show']);
 
