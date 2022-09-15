@@ -10,9 +10,9 @@ import router from './router/router.js';
 import App from './components/app.vue';
 
 /* font-awesome */
-import '@fortawesome/fontawesome-free/css/all.min.css';
-import '@fortawesome/fontawesome-free/css/regular.min.css';
-import '@fortawesome/fontawesome-free/css/fontawesome.min.css';
+import '@fortawesome/fontawesome-free/css/all.css';
+import '@fortawesome/fontawesome-free/css/regular.css';
+import '@fortawesome/fontawesome-free/css/fontawesome.css';
 
 // import '@fortawesome/fontawesome-free/webfonts/regular.min.js';
 
@@ -24,8 +24,8 @@ import '@fortawesome/fontawesome-free/css/fontawesome.min.css';
 // import '@fortawesome/fontawesome-free/scss/v4-shims.scss';
 
 // import '@fortawesome/fontawesome-free/js/all';
-import '@fortawesome/fontawesome-free/js/all.min.js';
-import '@fortawesome/fontawesome-free/js/regular.min.js';
+import '@fortawesome/fontawesome-free/js/all.js';
+import '@fortawesome/fontawesome-free/js/regular.js';
 
 // import '../font-awesome/css/all.min.css';
 // import '../font-awesome/css/regular.min.css';
