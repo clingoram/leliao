@@ -257,7 +257,6 @@ export default {
       axios
         .get("api/lel/f/" + forumId + "/post/" + postId)
         .then((response) => {
-          // console.log(response.data.data_return);
           this.specificPostData.id = response.data.data_return.id;
           this.specificPostData.title = response.data.data_return.title;
           this.specificPostData.author = response.data.data_return.uName;
@@ -316,7 +315,6 @@ export default {
           }
         )
         .then((response) => {
-          // console.log(response);
           document.location.href = "/";
         })
         .catch((error) => {
