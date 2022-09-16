@@ -12,9 +12,6 @@ use App\Http\Controllers\Comment\CommentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-// middleware
-// use \Illuminate\Http\Middleware\HandleCors;
-// use \App\Http\Middleware\Cors;
 /*
 |--------------------------------------------------------------------------
 | API Routes
