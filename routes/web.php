@@ -15,8 +15,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     // 引導至views/index.blade
-    // return view('index');
-    return view('test');
+    return view('index');
+    // return view('test');
 });
 
 // Route::get('/{any}', function () {

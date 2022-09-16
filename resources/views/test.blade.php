@@ -21,7 +21,6 @@
 
 <body>
   <div id="app">
-    <!-- <p>Hello this is test.</p> -->
   </div>
 </body>
 
