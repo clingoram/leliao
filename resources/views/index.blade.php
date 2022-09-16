@@ -10,8 +10,6 @@
   <link href="../font-awesome/css/regular.css" rel="stylesheet"> -->
 
   @vite(['resources/css/app.css', 'resources/js/app.js'])
-  <!-- @vite(['resources/js/app.js']) -->
-
 
   <title>{{ config('app.name', 'Laravel') }}</title>
 </head>

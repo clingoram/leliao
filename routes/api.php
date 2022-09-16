@@ -63,6 +63,7 @@ Route::prefix('/lel')->group(function () {
 
         // modal 回覆(留言)該文章
         Route::post('/f/{category_id}/post/r/{post_id}', [CommentController::class, 'createReply']);
+
         // modal 針對留言按like(愛心)
         Route::put('/f/{category_id}/post/r/{post_id}/l/{comment_id}', [CommentController::class, 'update']);
 
