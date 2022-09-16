@@ -20,12 +20,12 @@ import App from './components/app.vue';
 // import '@fortawesome/fontawesome-free/scss/solid.scss';
 // import '@fortawesome/fontawesome-free/scss/v4-shims.scss';
 
+// import '@fortawesome/fontawesome-free/js/all';
 
-import '@fortawesome/fontawesome-free/js/all.js';
 import '@fortawesome/fontawesome-free/js/fontawesome.js';
+import '@fortawesome/fontawesome-free/js/all.js';
 import '@fortawesome/fontawesome-free/js/regular.js';
 import '@fortawesome/fontawesome-free/js/solid.js';
-// import '@fortawesome/fontawesome-free/webfonts/fa-regular-400.woff2';
 
 
 
