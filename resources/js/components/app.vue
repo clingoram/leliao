@@ -1,8 +1,9 @@
 <template>
   <!-- main Vue file -->
 
+  <p>Hello this is test.</p>
   <!-- 最上方navbar -->
-  <header-component />
+  <!-- <header-component /> -->
 </template>
 <script>
 import HeaderComponent from "./HeaderComponent.vue";
