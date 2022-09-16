@@ -25,8 +25,11 @@ import App from './components/app.vue';
 
 // import '@fortawesome/fontawesome-free/js/all';
 
+import '@fortawesome/fontawesome-free/js/fontawesome.js';
 import '@fortawesome/fontawesome-free/js/all.js';
 import '@fortawesome/fontawesome-free/js/regular.js';
+import '@fortawesome/fontawesome-free/js/solid.js';
+
 
 // import '../font-awesome/css/all.min.css';
 // import '../font-awesome/css/regular.min.css';
