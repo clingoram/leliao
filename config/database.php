@@ -73,6 +73,8 @@ return [
             'port' => env('DB_PORT', '5432'),
             'database' => env('DB_DATABASE', 'forge'),
 
+            // TO-DO : connect to database
+
             // 'host' => $DATABASE_URL["host"],
             // 'port' => $DATABASE_URL["port"],
             // 'database' => ltrim($DATABASE_URL["path"], "/"),
