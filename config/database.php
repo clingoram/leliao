@@ -117,7 +117,7 @@ return [
 
 
 
-            'url' => $url,
+            // 'url' => $url,
             'host' => $host,
             'port' => $port,
             'database' => $database,
