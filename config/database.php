@@ -12,7 +12,7 @@ $password = env('DB_PASSWORD', '');
 $sslmode = 'prefer';
 
 // $databaseUrl = env('DATABASE_URL');
-if (env('DATABASE_URL') === parse_url(getenv('DATABASE_URL'))) {
+if (env('DATABASE_URL') === getenv('DATABASE_URL')) {
 
     // connect to heroku postgres
     $url = parse_url(getenv('DATABASE_URL'));
