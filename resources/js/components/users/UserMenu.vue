@@ -93,6 +93,11 @@ export default {
      * 登出
      * */
     logout() {
+      if (sessionStorage.removeItem("token")) {
+        sessionStorage.removeItem("id");
+        sessionStorage.removeItem("name");
+        this.isLoggedIn = false;
+      }
       axios
         .post("api/lel/logout")
         .then((response) => {
