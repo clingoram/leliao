@@ -12,8 +12,8 @@
         {{ this.name }}
       </button>
       <ul class="dropdown-menu">
-        <li v-if="roleResult === true">
-          <router-link v-bind:to="{ name: 'management' }">管理頁面</router-link>
+        <li>
+          <router-link v-bind:to="{ name: 'management' }">帳號頁面</router-link>
         </li>
         <li>
           <router-link v-bind:to="{ name: 'add' }">新增文章</router-link>
@@ -53,7 +53,7 @@ export default {
       isLoggedIn: false,
       accessToken: "",
       name: "",
-      roleResult: false,
+      // roleResult: false,
     };
   },
   created() {
@@ -64,6 +64,7 @@ export default {
       this.accessToken = sessionStorage.getItem("token");
       this.name = sessionStorage.getItem("name");
       this.isLoggedIn = true;
+
       // this.checkRole();
     }
   },
@@ -71,20 +72,23 @@ export default {
     /**
      * 檢查登入者role
      */
-    checkRole() {
-      axios
-        .get("api/lel/check", {
-          id: sessionStorage.getItem("id"),
-          name: sessionStorage.getItem("name"),
-        })
-        .then((response) => {
-          console.log(response);
-          this.roleResult = response;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
+    // checkRole() {
+    //   // console.log(sessionStorage.getItem("name"));
+    //   axios
+    //     .get(
+    //       "api/lel/check/" +
+    //         sessionStorage.getItem("id") +
+    //         "/" +
+    //         sessionStorage.getItem("name")
+    //     )
+    //     .then((response) => {
+    //       console.log(response.data);
+    //       // this.roleResult = response.data === 1 ? true : false;
+    //     })
+    //     .catch((error) => {
+    //       console.log(error);
+    //     });
+    // },
     /**
      * 登出
      * */

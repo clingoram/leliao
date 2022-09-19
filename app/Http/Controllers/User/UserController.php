@@ -5,10 +5,12 @@ namespace App\Http\Controllers\User;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
+use App\Models\Auth;
 
 class UserController extends Controller
 {
     protected $secret;
+    public $checkResult;
 
     // public function __construct(Request $data)
     // {
@@ -17,30 +19,26 @@ class UserController extends Controller
     //     $this->password = $data->form['password'];
     // }
 
-    // public function index()
-    // {
-    //     $users = TableUser::all();
-    //     return response()->json(
-    //         [
-    //             'status' => 'success',
-    //             'users' => $users->toArray()
-    //         ],
-    //         200
-    //     );
-    // }
 
-    // public function show(Request $request, int $id)
-    // {
 
-    // $user = TableUser::find($id);
-    // return response()->json(
-    //     [
-    //         'status' => 'success',
-    //         'user' => $user->toArray()
-    //     ],
-    //     200
-    // );
-    // }
+    /**
+     * 檢查role
+     */
+    public function setCheckRole($data): void
+    {
+        $this->checkResult = Auth::select(
+            'users.name',
+            'users.email',
+            'users.role',
+            'users.created_at',
+            'users.updated_at'
+        )->where('id', '=', $data->id)->where('name', '=', $data->name)->get();
+    }
+
+    public function getCheckRole()
+    {
+        return $this->checkResult;
+    }
 
 
     /**
@@ -51,7 +49,8 @@ class UserController extends Controller
      */
     public function checkUserIsset(string $mail)
     {
-        return DB::table('users')->where('email', '=', $mail)->exists();
+        // return DB::table('users')->where('email', '=', $mail)->exists();
+        return Auth::where('email', '=', $mail)->exists();
     }
 
     /**

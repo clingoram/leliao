@@ -10,21 +10,34 @@ export default {
       isLoggedIn: false,
     };
   },
-  created() {},
+  created() {
+    if (
+      sessionStorage.getItem("token") !== null &&
+      sessionStorage.getItem("token") !== "undefined"
+    ) {
+      this.isLoggedIn = true;
+      this.management();
+    }
+  },
   methods: {
     management() {
-      if (this.isLoggedIn === true) {
-        axios
-          .get("api/lel/management", {
-            id: sessionStorage.getItem("id"),
-          })
-          .then((response) => {
-            console.log(response);
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      }
+      axios
+        .get(
+          "api/lel/management/" +
+            sessionStorage.getItem("id") +
+            "/" +
+            sessionStorage.getItem("name")
+        )
+        // .get("api/lel/management", {
+        //   id: sessionStorage.getItem("id"),
+        //   name: sessionStorage.getItem("name"),
+        // })
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
   },
 };

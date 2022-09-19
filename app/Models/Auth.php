@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 
 class Auth extends Authenticatable
@@ -14,6 +15,7 @@ class Auth extends Authenticatable
     use HasFactory;
     use HasApiTokens;
     use Notifiable;
+    use SoftDeletes;
     /**
      * The table associated with the model.
      *

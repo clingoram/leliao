@@ -13,11 +13,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+Route::get('/{any}', function () {
     // 引導至views/index.blade
     return view('index');
-    // return view('test');
-});
+})->where('any', '^((?!api).)*$');
+
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
 
 // Auth::routes();
 
