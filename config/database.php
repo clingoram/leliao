@@ -10,9 +10,9 @@ if (env('DATABASE_URL') === parse_url(getenv('DATABASE_URL'))) {
     $database = ltrim($url["path"], "/");
     $username = $url["user"];
     $passwrod = $url["pass"];
-    $charset = 'utf8';
-    $prefix = '';
-    $schema = 'public';
+    // $charset = 'utf8';
+    // $prefix = '';
+    // $schema = 'public';
     $sslmode = 'require';
 } else {
     // local

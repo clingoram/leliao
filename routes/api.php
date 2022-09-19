@@ -29,13 +29,6 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::prefix('/lel')->group(function () {
-    // Route::group([
-    //     'middleware' => ['api', 'cors'],
-    //     // 'namespace' => $this->namespace,
-    //     'prefix' => '/lel',
-    // ], function () {
-
-
     // Public routes
     // 首頁，所有分類看板
     Route::get('/f/all', [ForumController::class, 'index']);
