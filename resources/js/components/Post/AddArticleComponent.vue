@@ -49,8 +49,6 @@
       <button type="submit" class="btn btn-success" v-on:click="savePost()">
         儲存
       </button>
-    </div>
-    <div class="col-auto">
       <button type="button" class="btn btn-danger" v-on:click="clearAll()">
         清除
       </button>

@@ -13,7 +13,10 @@
       </button>
       <ul class="dropdown-menu">
         <li>
-          <router-link v-bind:to="{ name: 'management' }">帳號頁面</router-link>
+          <router-link v-bind:to="{ name: 'about' }">關於了聊</router-link>
+        </li>
+        <li>
+          <router-link v-bind:to="{ name: 'management' }">帳號資訊</router-link>
         </li>
         <li>
           <router-link v-bind:to="{ name: 'add' }">新增文章</router-link>
@@ -33,6 +36,9 @@
         註冊 / 登入
       </button>
       <ul class="dropdown-menu">
+        <li>
+          <router-link v-bind:to="{ name: 'about' }">關於了聊</router-link>
+        </li>
         <li v-if="!isLoggedIn">
           <router-link v-bind:to="{ name: 'login-page' }">登入</router-link>
         </li>
@@ -93,23 +99,20 @@ export default {
      * */
     logout() {
       if (sessionStorage.removeItem("token")) {
-        sessionStorage.removeItem("id");
-        sessionStorage.removeItem("name");
-        this.isLoggedIn = false;
+        axios
+          .post("api/lel/logout")
+          .then((response) => {
+            confirm("成功登出");
+            document.location.href = "/";
+            this.isLoggedIn = false;
+
+            sessionStorage.removeItem("id");
+            sessionStorage.removeItem("name");
+          })
+          .catch((error) => {
+            console.log(error);
+          });
       }
-      axios
-        .post("api/lel/logout")
-        .then((response) => {
-          confirm("成功登出");
-          document.location.href = "/";
-          this.isLoggedIn = false;
-          sessionStorage.removeItem("token");
-          sessionStorage.removeItem("id");
-          sessionStorage.removeItem("name");
-        })
-        .catch((error) => {
-          console.log(error);
-        });
     },
   },
 };

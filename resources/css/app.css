@@ -31,6 +31,11 @@ li {
   padding-top: 10px;
 }
 
+/* 關於 */
+#author {
+  text-align: right;
+}
+
 /* 看板區塊*/
 .forums {
   list-style: none;
