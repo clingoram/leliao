@@ -21,7 +21,7 @@ class LoginController extends UserController
     private function setAttempt(string $pwd1, string $pwd2): void
     {
         $this->combineString = sha1($pwd1 . $pwd2);
-        $this->check = Auth::where('password', '=', $this->combineString)->exists();
+        $this->check = Auth::where('password', '=', $this->combineString)->where('deleted_at', '=', null)->exists();
     }
 
     /**

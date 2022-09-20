@@ -22,14 +22,16 @@ class PostController extends Controller
     {
         $this->validateCheck($request);
 
-        $checkUser = DB::table('users')->where('id', '=', $request->post['writer_id'])->exists();
-        $checkCategory = DB::table('category')->where('id', '=', $request->post['category_id'])->exists();
+        $checkUser = Auth::where('id', '=', $request->post['writer_id'])->exists();
+        $checkCategory = Category::where('id', '=', $request->post['category_id'])->exists();
+        $checkPostId = Post::select('id')->get();
 
         // $user = Auth::find($request->post['id']);
         // $category = Forum::find($request->post['selected']);
 
         if ($checkCategory and $checkUser) {
             $post = new Post();
+            $post->id = $checkPostId->count() + 1;
             $post->title = $request->post['title'];
             $post->content = $request->post['content'];
             $post->category_id = $request->post['category_id'];

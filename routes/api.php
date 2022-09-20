@@ -38,7 +38,6 @@ Route::prefix('/lel')->group(function () {
 
     // modal 單一類別的某篇文章，例如工作版內的文章C
     Route::get('/f/{category_id}/post/{post_id}', [PostController::class, 'show']);
-    // Route::options('/f/{category_id}/post/{post_id}', [PostController::class, 'show']);
 
     // modal 取單一文章的留言
     Route::get('/f/{category_id}/post/c/{post_id}', [CommentController::class, 'show']);
@@ -49,7 +48,6 @@ Route::prefix('/lel')->group(function () {
     Route::post('/user/login', [LoginController::class, 'login']);
 
     // Protected routes
-    // Route::group(['middleware' => ['auth:sanctum', 'cors']], function () {
     Route::group(['middleware' => ['auth:sanctum']], function () {
 
         // 新增文章
@@ -61,10 +59,10 @@ Route::prefix('/lel')->group(function () {
         // modal 針對留言按like(愛心)
         Route::put('/f/{category_id}/post/r/{post_id}/l/{comment_id}', [CommentController::class, 'update']);
 
-        // Route::get('/check/{id}/{login_name}', [ManagementController::class, 'checkRole']);
+        // 帳號資訊頁面
         Route::get('/management/{id}/{name}', [ManagementController::class, 'checkRole']);
 
-
+        // 登出
         Route::post('/logout', [LogoutController::class, 'logout']);
     });
 });

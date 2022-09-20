@@ -4,7 +4,7 @@ import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router
 import UserMenu from '../components/users/UserMenu.vue';
 import LoginComponent from "../components/users/LoginComponent.vue";
 import RegisterComponent from "../components/users/RegisterComponent.vue";
-import Admin from "../components/Admin/ManagementComponent.vue";
+import Admin from "../components/Management/ManagementComponent.vue";
 
 import PostComponent from "../components/Post/PostComponent.vue";
 import AddArticleComponent from "../components/Post/AddArticleComponent.vue";

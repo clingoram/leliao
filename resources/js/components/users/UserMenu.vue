@@ -45,7 +45,7 @@
   <!-- <router-view /> -->
 </template>
 <script>
-// import $api from "../../api";
+import $api from "../../api/api";
 
 export default {
   data() {
@@ -64,8 +64,8 @@ export default {
       this.accessToken = sessionStorage.getItem("token");
       this.name = sessionStorage.getItem("name");
       this.isLoggedIn = true;
-
-      // this.checkRole();
+    } else {
+      this.isLoggedIn = false;
     }
   },
   methods: {

@@ -145,7 +145,6 @@
                         >
                           <i class="fa-regular fa-heart"></i
                           >{{ comments.heart }}
-                          <!-- Do you like it?  -->
                         </p>
                         <hr />
                       </li>

@@ -32,33 +32,30 @@ class ManagementController extends UserController
    * 
    * 管理員(role = 2)權限:
    * 可查看所有註冊會員資料(name、email、role、註冊時間、最近一次登入時間)
-   * 刪除使用者?
    * 
    * 可看所有文章
    */
-  public function admin(int $id, string $name)
+  protected function admin(int $id, string $name)
   {
-    // $allData = Auth::select(
-    //   'users.name',
-    //   'users.email',
-    //   'users.role',
-    //   'users.created_at',
-    //   'users.updated_at'
-    // )->where('id', '!=', $id)->where('name', '!=', $name)->get();
-
     $allData = Auth::select(
-      'users.id',
       'users.name',
       'users.email',
       'users.role',
       'users.created_at',
       'users.updated_at'
-    )->get();
+    )->where('id', '!=', $id)
+      ->where('name', '!=', $name)
+      ->where('deleted_at', '=', null)
+      ->get();
 
     if (count($allData) >= 1) {
       return response()->json([
         'status' => true,
-        'data' => $allData
+        'data_return' => $allData
+      ], 200);
+    } else {
+      return response()->json([
+        'status' => false,
       ], 200);
     }
   }
@@ -69,8 +66,27 @@ class ManagementController extends UserController
    * 會員權限:
    * 可查看自己的資料(註冊時間、帳號、email)、是否要刪除自己的帳號
    */
-  public function member(int $id)
+  protected function member(int $id)
   {
-    Auth::find($id);
+    $user = Auth::select(
+      'users.name',
+      'users.email',
+      'users.role',
+      'users.created_at',
+      'users.updated_at'
+    )->where('id', '=', $id)->get();
+
+    return response()->json([
+      'status' => true,
+      'data_return' => $user
+    ], 200);
+  }
+
+  /**
+   * 會員自行刪除自己的帳號
+   * soft delete
+   */
+  public function selfDestroy()
+  {
   }
 }

@@ -40,7 +40,6 @@
   </div>
 </template>
 <script>
-// import $api from "../../api";
 export default {
   data() {
     return {
@@ -76,7 +75,7 @@ export default {
       return this.login();
     },
     /**
-     * 註冊
+     * 登入
      */
     login() {
       axios.get("/sanctum/csrf-cookie").then((response) => {
@@ -88,11 +87,9 @@ export default {
             sessionStorage.setItem("token", response.data.accessToken);
             sessionStorage.setItem("id", response.data.user.id);
             sessionStorage.setItem("name", response.data.user.account);
-
             document.location.href = "/";
           })
           .catch(function (error) {
-            // console.log(error.response.data.error);
             alert(error.response.data.error);
           });
       });
