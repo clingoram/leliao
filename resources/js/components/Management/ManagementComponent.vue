@@ -1,7 +1,7 @@
 <template>
   <div class="container">
+    <h1>帳號資訊</h1>
     <div v-if="isLoggedIn === true">
-      <h1>帳號資訊</h1>
       <table class="table">
         <thead>
           <tr>

@@ -69,6 +69,8 @@ export default {
       this.accessToken = sessionStorage.getItem("token");
       this.name = sessionStorage.getItem("name");
       this.isLoggedIn = true;
+
+      // this.check();
     } else {
       this.isLoggedIn = false;
     }
@@ -97,22 +99,25 @@ export default {
     /**
      * 登出
      * */
+    // check() {
+    //   if (sessionStorage.removeItem("token")) {
+    //     this.logout();
+    //   }
+    // },
     logout() {
-      if (sessionStorage.removeItem("token")) {
-        axios
-          .post("api/lel/logout")
-          .then((response) => {
-            confirm("成功登出");
-            document.location.href = "/";
-            this.isLoggedIn = false;
-
-            sessionStorage.removeItem("id");
-            sessionStorage.removeItem("name");
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      }
+      axios
+        .post("api/lel/logout")
+        .then((response) => {
+          confirm("成功登出");
+          sessionStorage.removeItem("id");
+          sessionStorage.removeItem("name");
+          sessionStorage.removeItem("token");
+          document.location.href = "/";
+          this.isLoggedIn = false;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
   },
 };
