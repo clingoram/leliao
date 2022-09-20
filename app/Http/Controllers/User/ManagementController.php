@@ -15,9 +15,10 @@ class ManagementController extends UserController
    */
   public function checkRole(Request $request)
   {
+    // 檢查role
     parent::setCheckRole($request);
+    // 取得檢查結果
     $result = parent::getCheckRole();
-    // var_dump(json_decode(json_encode($result[0]), true));
     $checkRole = json_decode(json_encode($result[0]), true);
 
     if ($checkRole['role'] === 2) {
@@ -33,7 +34,6 @@ class ManagementController extends UserController
    * 管理員(role = 2)權限:
    * 可查看所有註冊會員資料(name、email、role、註冊時間、最近一次登入時間)
    * 
-   * 可看所有文章
    */
   protected function admin(int $id, string $name)
   {

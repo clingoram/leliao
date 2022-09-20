@@ -15,19 +15,6 @@
         required
       />
     </div>
-    <!-- <div class="mb-3">
-      <div>看板分類</div>
-      <select v-model="post.category_id">
-        <option disabled value="">請選擇看板分類</option>
-        <option
-          v-for="option in categoryOptions"
-          v-bind:key="option.id"
-          :value="option.id"
-        >
-          {{ option.name }}
-        </option>
-      </select>
-    </div> -->
 
     <div class="input-group mb-3">
       <span class="input-group-text">看板分類</span>
@@ -129,7 +116,6 @@ export default {
           post: this.post,
         })
         .then((response) => {
-          // console.log(response);
           confirm("新增成功");
           document.location.href = "/";
         })

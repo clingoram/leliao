@@ -1,7 +1,6 @@
 <template>
   <!-- main Vue file -->
 
-  <!-- <p>Hello this is test.</p> -->
   <!-- 最上方navbar -->
   <header-component />
 </template>

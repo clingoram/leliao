@@ -12,14 +12,6 @@ class UserController extends Controller
     protected $secret;
     public $checkResult;
 
-    // public function __construct(Request $data)
-    // {
-    //     $this->name = $data->form['name'];
-    //     $this->email = $data->form['email'];
-    //     $this->password = $data->form['password'];
-    // }
-
-
 
     /**
      * 檢查role
@@ -49,7 +41,6 @@ class UserController extends Controller
      */
     public function checkUserIsset(string $mail)
     {
-        // return DB::table('users')->where('email', '=', $mail)->exists();
         return Auth::where('email', '=', $mail)->exists();
     }
 
@@ -105,8 +96,7 @@ class UserController extends Controller
             if ($result->fails()) {
                 return response()->json([
                     'status' => false,
-                    'message' => 'Validator error',
-                    // 'errors' => $result->errors()
+                    'message' => 'Validator error'
                 ], 401);
             } else {
                 return response()->json(

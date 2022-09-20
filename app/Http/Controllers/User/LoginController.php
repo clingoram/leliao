@@ -15,7 +15,6 @@ class LoginController extends UserController
     const Message_Note = 'Logged in.';
 
     /**
-     * setter
      * 登入檢查
      */
     private function setAttempt(string $pwd1, string $pwd2): void
@@ -25,7 +24,6 @@ class LoginController extends UserController
     }
 
     /**
-     * getter
      * 登入檢查結果
      */
     private function getAttempt(): bool
@@ -41,7 +39,6 @@ class LoginController extends UserController
     public function login(Request $request)
     {
         $checkUserIsset = parent::checkUserIsset($request->loginForm['email']);
-        // $user = Auth::where('email', $request->email)->first();
 
         if ($checkUserIsset === true) {
             $user = Auth::where('email', $request->loginForm['email'])->first();

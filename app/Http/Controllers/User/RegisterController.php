@@ -18,7 +18,7 @@ class RegisterController extends UserController
     const Message_Note = 'Registered.';
 
     /**
-     * 使用封裝，隨機產生的數字+英文字母+特殊符號，送到HashController組成salt
+     * 隨機產生的數字+英文字母+特殊符號，送到HashController組成salt
      * 把從HashController得到的salt+使用者打上的密碼用sha1組合在一起
      */
     protected function generateHash(): string
@@ -40,10 +40,8 @@ class RegisterController extends UserController
      */
     public function create(Request $request)
     {
-        // parent::validatorData([$this->name, $this->email, $this->password]);
-        $check = parent::validatorData($request);
+        parent::validatorData($request);
 
-        // $checkUserIsset = parent::checkUserIsset($this->email);
         $checkUserIsset = parent::checkUserIsset($request->form['email']);
 
         $salt = $this->generateHash();
@@ -58,7 +56,6 @@ class RegisterController extends UserController
             $user = new Auth();
             $user->name = $request->form['name'];
             $user->email = $request->form['email'];
-            // $user->password = Hash::make($this->password);
             $user->password = $pwdwithHash;
             $user->salt = $salt;
             $user->created_at = date('Y/m/d H:i:s', time());

@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h1>帳號</h1>
+    <h1>帳號資訊</h1>
     <div v-if="isLoggedIn === true">
       <table class="table">
         <thead>
@@ -35,6 +35,9 @@
         </tbody>
       </table>
     </div>
+    <div v-else>
+      <p>請先登入。</p>
+    </div>
   </div>
 </template>
 <script>
@@ -53,7 +56,6 @@ export default {
       sessionStorage.getItem("token") !== "undefined"
     ) {
       this.isLoggedIn = true;
-
       this.management();
     }
   },

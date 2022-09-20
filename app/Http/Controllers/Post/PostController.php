@@ -8,7 +8,6 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\DB;
 
 /**
  * 針對單一文章的新增、編輯
@@ -25,9 +24,6 @@ class PostController extends Controller
         $checkUser = Auth::where('id', '=', $request->post['writer_id'])->exists();
         $checkCategory = Category::where('id', '=', $request->post['category_id'])->exists();
         $checkPostId = Post::select('id')->get();
-
-        // $user = Auth::find($request->post['id']);
-        // $category = Forum::find($request->post['selected']);
 
         if ($checkCategory and $checkUser) {
             $post = new Post();

@@ -7,14 +7,15 @@
   </nav>
 
   <router-view />
-  <!-- 註冊/登入頁面會出現在上面，分類和文章之上 -->
 </template>
 <script>
-import UserMenu from "./users/UserMenu.vue";
+import UserMenu from "./User/UserMenu.vue";
 
 export default {
   mounted() {
-    console.log("Header");
+    console.log(
+      "山前有個嚴圓眼，山後有個嚴眼圓，二人山前來比眼，不知是嚴圓眼的眼圓，還是嚴眼圓比嚴圓眼的眼圓?"
+    );
   },
   components: {
     UserMenu,
