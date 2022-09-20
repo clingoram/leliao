@@ -65,6 +65,6 @@ class CategoryTest extends TestCase
 
     public function test_database_count_data()
     {
-        $this->assertDatabaseCount('category', 6);
+        $this->assertDatabaseCount('category', 3);
     }
 }

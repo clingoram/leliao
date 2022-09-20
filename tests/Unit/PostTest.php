@@ -13,20 +13,6 @@ class PostTest extends TestCase
     use RefreshDatabase;
     use DatabaseMigrations;
 
-    // public function setUp(): void
-    // {
-    //     // 呼叫父類別的 setUp()
-    //     parent::setUp();
-    //     $this->initDatabase();
-    // }
-
-    // public function tearDown(): void
-    // {
-    //     $this->resetDatabase();
-    //     // 呼叫子類別的 tearDown()
-    //     parent::tearDown();
-    // }
-
     /**
      * A basic unit test example.
      *
@@ -56,6 +42,6 @@ class PostTest extends TestCase
 
     public function test_database_count_data()
     {
-        $this->assertDatabaseCount('posts', 6);
+        $this->assertDatabaseCount('posts', 1);
     }
 }

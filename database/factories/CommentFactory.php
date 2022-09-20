@@ -21,6 +21,7 @@ class CommentFactory extends Factory
     {
         return [
             'post_id' => Post::all()->random()->id,
+            'name' => Auth::all()->random()->name,
             'category_id' => Category::all()->random()->id,
             'user_id' => Auth::all()->random()->id,
             'content' => fake()->realText($maxNbChars = 120, $indexSize = 2),

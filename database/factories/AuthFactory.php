@@ -21,7 +21,7 @@ class AuthFactory extends Factory
         return [
             'name' => fake()->unique()->lastName(),
             'email' => fake()->unique()->safeEmail(),
-            'password' => fake()->unique()->password(), //'$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'password' => fake()->unique()->password(),
             'salt' => fake()->password(),
             'role' => 1
         ];
