@@ -1,7 +1,7 @@
 <template>
   <div class="container">
-    <h1>帳號資訊</h1>
     <div v-if="isLoggedIn === true">
+      <h1>帳號資訊</h1>
       <table class="table">
         <thead>
           <tr>
@@ -36,7 +36,7 @@
       </table>
     </div>
     <div v-else>
-      <p>請先登入。</p>
+      <p class="warning">請先登入。</p>
     </div>
   </div>
 </template>

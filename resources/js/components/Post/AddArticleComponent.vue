@@ -1,60 +1,62 @@
 <template>
   <!-- 新增文章，登入才能看到 -->
-  <div class="container" v-if="isLoggedIn">
-    <div class="input-group mb-3" style="padding-top: 20px">
-      <span class="input-group-text" id="title">文章標題</span>
-      <input
-        type="text"
-        class="form-control"
-        aria-describedby="articleTitle"
-        id="articleTitle"
-        v-model="post.title"
-        v-bind:max="max"
-        v-bind:min="min"
-        placeholder="這是文章標題喔!"
-        required
-      />
-    </div>
+  <div class="container">
+    <div v-if="isLoggedIn">
+      <div class="input-group mb-3" style="padding-top: 20px">
+        <span class="input-group-text" id="title">文章標題</span>
+        <input
+          type="text"
+          class="form-control"
+          aria-describedby="articleTitle"
+          id="articleTitle"
+          v-model="post.title"
+          v-bind:max="max"
+          v-bind:min="min"
+          placeholder="這是文章標題喔!"
+          required
+        />
+      </div>
 
-    <div class="input-group mb-3">
-      <span class="input-group-text">看板分類</span>
-      <select
-        class="form-select"
-        id="inputGroupSelect03"
-        v-model="post.category_id"
-      >
-        <option disabled value="">請選擇看板分類</option>
-        <option
-          v-for="option in categoryOptions"
-          v-bind:key="option.id"
-          v-bind:value="option.id"
+      <div class="input-group mb-3">
+        <span class="input-group-text">看板分類</span>
+        <select
+          class="form-select"
+          id="inputGroupSelect03"
+          v-model="post.category_id"
         >
-          {{ option.name }}
-        </option>
-      </select>
-    </div>
+          <option disabled value="">請選擇看板分類</option>
+          <option
+            v-for="option in categoryOptions"
+            v-bind:key="option.id"
+            v-bind:value="option.id"
+          >
+            {{ option.name }}
+          </option>
+        </select>
+      </div>
 
-    <div class="input-group mb-3">
-      <span class="input-group-text">內容</span>
-      <textarea
-        class="form-control"
-        id="articelContent"
-        rows="5"
-        v-model="post.content"
-        placeholder="在這打上內容!"
-        required
-      ></textarea>
+      <div class="input-group mb-3">
+        <span class="input-group-text">內容</span>
+        <textarea
+          class="form-control"
+          id="articelContent"
+          rows="5"
+          v-model="post.content"
+          placeholder="在這打上內容!"
+          required
+        ></textarea>
+      </div>
+      <div class="col-auto">
+        <button type="submit" class="btn btn-success" v-on:click="savePost()">
+          儲存
+        </button>
+        <button type="button" class="btn btn-danger" v-on:click="clearAll()">
+          清除
+        </button>
+      </div>
     </div>
-    <div class="col-auto">
-      <button type="submit" class="btn btn-success" v-on:click="savePost()">
-        儲存
-      </button>
-      <button type="button" class="btn btn-danger" v-on:click="clearAll()">
-        清除
-      </button>
-    </div>
+    <div class="warning" v-if="!isLoggedIn">請先登入。</div>
   </div>
-  <div class="warning" v-if="!isLoggedIn">你還沒登入喔!</div>
 </template>
 <script>
 export default {
