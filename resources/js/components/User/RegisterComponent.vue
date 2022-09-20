@@ -37,12 +37,18 @@
         required
       />
     </div>
+    <p class="form-text warning">
+      * 請記得註冊時的email和密碼，目前本網站尚未提供重設密碼功能。
+    </p>
     <button
       type="submit"
-      class="btn btn-primary"
+      class="btn btn-success"
       v-on:click="checkInputsValue()"
     >
       註冊
+    </button>
+    <button type="button" class="btn btn-danger" v-on:click="clear()">
+      清除
     </button>
   </div>
 </template>
@@ -114,6 +120,12 @@ export default {
         .catch((error) => {
           console.log(error);
         });
+    },
+    clear() {
+      this.form.name = "";
+      this.form.email = "";
+      this.form.password = "";
+      this.form.role = "";
     },
   },
 };

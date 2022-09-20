@@ -11,9 +11,6 @@
         v-model="loginForm.email"
         required
       />
-      <div id="emailHelp" class="form-text">
-        We'll never share your email with anyone else.
-      </div>
     </div>
     <div class="mb-3">
       <label for="input_pwd" class="form-label">密碼</label>
@@ -28,7 +25,7 @@
 
     <button
       type="submit"
-      class="btn btn-primary"
+      class="btn btn-success"
       v-on:click="checkInputsValue()"
       style="padding-right: 5px"
     >

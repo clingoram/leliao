@@ -46,8 +46,13 @@
       ></textarea>
     </div>
     <div class="col-auto">
-      <button type="submit" class="btn btn-primary" v-on:click="savePost()">
+      <button type="submit" class="btn btn-success" v-on:click="savePost()">
         儲存
+      </button>
+    </div>
+    <div class="col-auto">
+      <button type="button" class="btn btn-danger" v-on:click="clearAll()">
+        清除
       </button>
     </div>
   </div>
@@ -122,6 +127,14 @@ export default {
         .catch((error) => {
           console.log(error);
         });
+    },
+    /**
+     * 清除所有inputs值
+     *  */
+    clearAll() {
+      this.post.title = "";
+      this.post.category_id = "";
+      this.post.content = "";
     },
   },
 };
