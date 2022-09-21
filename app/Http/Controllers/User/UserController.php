@@ -4,8 +4,11 @@ namespace App\Http\Controllers\User;
 
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\DB;
+// use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
 use App\Models\Auth;
+
+use Illuminate\Support\Facades\Cookie;
 
 class UserController extends Controller
 {
@@ -44,6 +47,25 @@ class UserController extends Controller
         return Auth::where('email', '=', $mail)->exists();
     }
 
+    public function setCookie(string $data)
+    {
+        $minutes = 10;
+        // Cookie::queue('name', $data, $minutes);
+        // return response('Set cookie');
+
+        $cookie = cookie('name', $data, $minutes);
+        response()->cookie($cookie);
+    }
+
+    public function getCookie()
+    {
+        $data = 'TT';
+        $minutes = 60;
+        // return Cookie::get('name');
+        $cookie = cookie('name', $data, $minutes);
+        return response()->cookie($cookie);
+    }
+
     /**
      * 建立token
      * 
@@ -51,8 +73,13 @@ class UserController extends Controller
      */
     protected function createToken(object $user, int $statusCode, string $message)
     {
+
         if (isset($user) and !empty($user)) {
-            $token = $user->createToken($user->name)->plainTextToken;
+            $expires = date('Y/m/d H:i:s', time() + 10 * 60);
+            // $token = $user->createToken($user->name)->plainTextToken;
+            $token = $user->createToken($user->name);
+
+
             return response()->json(
                 [
                     'status' => 'success',
@@ -60,14 +87,24 @@ class UserController extends Controller
                         'id' => $user->id,
                         'account' => $user->name
                     ],
-                    'message' => $user->name . ' ' . $message,
-                    'accessToken' => $token,
-                    'expires_in' => date('Y/m/d H:i:s', time() + 10 * 60),
+                    // 'message' => $user->name . ' ' . $message,
+                    'accessToken' => $token->plainTextToken,
+                    'expires_at' => date('Y/m/d H:i:s', time() + 10 * 60),
                     'type' => 'Bearer',
                     'Accept' => 'application/json'
                 ],
                 $statusCode
             );
+
+            // $response = response()->json([
+            //     [
+            //         'message' => $message,
+            //         'access_token' => $token,
+            //         'type' => 'Bearer',
+            //         'Accept' => 'application/json'
+            //     ],
+            // ], $statusCode);
+            // return $response->headers->setCookie($cookie);
         } else {
             return response()->json(
                 [

@@ -48,6 +48,9 @@ class LoginController extends UserController
             $attempt = $this->getAttempt();
 
             if ($attempt === true) {
+                // $set = parent::setCookie($user['name']);
+                // $getCookie = parent::getCookie();
+
                 // updated_at更新為user登入時間
                 Auth::where('id', $user['id'])
                     ->where('email', $user['email'])

@@ -56,54 +56,42 @@ export default {
   data() {
     return {
       isLoggedIn: false,
-      accessToken: "",
+      // accessToken: "",
       name: "",
       // roleResult: false,
     };
   },
   created() {
-    if (
-      sessionStorage.getItem("token") !== null &&
-      sessionStorage.getItem("token") !== "undefined"
-    ) {
-      this.accessToken = sessionStorage.getItem("token");
+    // if (
+    //   sessionStorage.getItem("token") !== null &&
+    //   sessionStorage.getItem("token") !== "undefined"
+    // ) {
+    //   this.accessToken = sessionStorage.getItem("token");
+    //   this.name = sessionStorage.getItem("name");
+    //   this.isLoggedIn = true;
+    // } else {
+    //   this.isLoggedIn = false;
+    // }
+
+    if (sessionStorage.getItem("auth") === "success") {
       this.name = sessionStorage.getItem("name");
       this.isLoggedIn = true;
-
-      // this.check();
     } else {
       this.isLoggedIn = false;
     }
+
+    // if (
+    //   (axios.defaults.headers.common[
+    //     "Authorization"
+    //   ] = `Bearer ${this.accessToken}`)
+    // ) {
+    //   this.isLoggedIn = true;
+    // }
   },
   methods: {
     /**
-     * 檢查登入者role
-     */
-    // checkRole() {
-    //   // console.log(sessionStorage.getItem("name"));
-    //   axios
-    //     .get(
-    //       "api/lel/check/" +
-    //         sessionStorage.getItem("id") +
-    //         "/" +
-    //         sessionStorage.getItem("name")
-    //     )
-    //     .then((response) => {
-    //       console.log(response.data);
-    //       // this.roleResult = response.data === 1 ? true : false;
-    //     })
-    //     .catch((error) => {
-    //       console.log(error);
-    //     });
-    // },
-    /**
      * 登出
      * */
-    // check() {
-    //   if (sessionStorage.removeItem("token")) {
-    //     this.logout();
-    //   }
-    // },
     logout() {
       axios
         .post("api/lel/logout")
@@ -111,6 +99,7 @@ export default {
           confirm("成功登出");
           sessionStorage.removeItem("id");
           sessionStorage.removeItem("name");
+          sessionStorage.removeItem("auth");
           sessionStorage.removeItem("token");
           document.location.href = "/";
           this.isLoggedIn = false;

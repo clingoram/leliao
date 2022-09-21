@@ -53,6 +53,9 @@ class RegisterController extends UserController
 
 
         if ($checkUserIsset === false) {
+            // $set = parent::setCookie($request->form['name']);
+            // $getCookie = parent::getCookie($set);
+
             $user = new Auth();
             $user->name = $request->form['name'];
             $user->email = $request->form['email'];
