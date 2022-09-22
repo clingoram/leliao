@@ -146,8 +146,6 @@ export default {
         sessionStorage.removeItem("token");
         document.location.href = "/";
         this.isLoggedIn = false;
-      }else{
-        continue;
       }
     },
   },
