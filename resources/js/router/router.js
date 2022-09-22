@@ -1,20 +1,14 @@
 import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router';
 
-// import App from '../components/App.vue';
 
-import UserMenu from '../components/users/UserMenu.vue';
-import LoginComponent from "../components/users/LoginComponent.vue";
-import RegisterComponent from "../components/users/RegisterComponent.vue";
-// import LogoutComponent from "../components/users/LogoutComponent.vue";
+import LoginComponent from "../components/User/LoginComponent.vue";
+import RegisterComponent from "../components/User/RegisterComponent.vue";
+import Management from "../components/Management/ManagementComponent.vue";
+import Info from "../components/Info/InfoComponent.vue";
 
-// import Posts from "../components/Post/PostsComponent.vue";
-import PostComponent from "../components/Post/PostComponent.vue";
 import AddArticleComponent from "../components/Post/AddArticleComponent.vue";
-
-// import ForumComponent from "../components/Forum/ForumComponent.vue";
-
 import MainComponent from "../components/Content/MainContentComponent.vue";
-import NotFound from "../components/404.vue";
+// import NotFound from "../components/Error.vue";
 
 // Route 設定
 export const routes = [
@@ -23,27 +17,21 @@ export const routes = [
     path: "/:main(.*)*",
     name: "main",
     component: MainComponent,
-    // add 
-    // children: [
-    //   {
-    //     path: '/f/:category/p/:id',
-    //     name: "post",
-    //     component: PostComponent,
-    //   }
-    // ]
+  },
+  {
+    // 註冊
+    path: '/about',
+    name: "about",
+    component: Info,
   },
   {
     // 註冊
     path: '/register',
     name: "register-page",
     component: RegisterComponent,
-    // redirect: '/',
-
-    // 動態載入(不須載入API)
-    // component: () => import("../components/users/RegisterComponent.vue"),
     meta: {
       middleware: "guest",
-      title: `Register`
+      title: 'Register'
     }
   },
   {
@@ -51,10 +39,9 @@ export const routes = [
     path: '/login',
     name: "login-page",
     component: LoginComponent,
-    // component: () => import("../components/users/LoginComponent.vue"),
     meta: {
       middleware: "guest",
-      title: `Login`
+      title: 'Login'
     }
   },
   {
@@ -67,61 +54,30 @@ export const routes = [
     }
   },
   {
-    // 單一類別的某篇文章，例如工作版內的文章C
-    path: '/f/:categoryId/post/:id',
-    name: "post",
-    component: PostComponent,
-    props: true
-    // meta: {
-    //   // public routes
-    //   auth: undefined
-    // }
+    // 管理頁面
+    path: '/management',
+    name: "management",
+    component: Management,
+    meta: {
+      auth: true
+    }
   },
-  {
-    path: "/:domain(.*)*",
-    name: "NotFound",
-    // component: NotFound
-    component: () => import("../components/404.vue"),
-  },
-
-
   // {
-  //   path: '/',
-  //   name: 'home',
-  //   component: {
-  //     // default: App,
-  //     viewLeft: ForumComponent,
-  //     viewRight: ContentComponent
-  //   },
-  //   meta: {
-  //     // public routes
-  //     auth: undefined
-  //   }
-  // },
-
-  // {
-  //   // for user
-  //   path: '/dashboard',
-  //   name: 'dashboard',
-  //   component: Dashboard,
-  //    meta: {
-  //      middleware: "auth"
-  //    },
+  //   // 單一類別的某篇文章，例如工作版內的文章C
+  //   path: '/f/:categoryId/post/:id',
+  //   name: "post",
+  //   component: PostComponent,
+  //   props: true
+  //   // meta: {
+  //   //   // public routes
+  //   //   auth: undefined
+  //   // }
   // },
   // {
-  //   // for admin
-  //   path: '/admin',
-  //   name: 'admin.dashboard',
-  //   component: AdminDashboard,
-  //   meta: {
-  //     auth: { roles: 2, redirect: { name: 'login' }, forbiddenRedirect: '/403' }
-  //   }
-  // }
-  // {
-  // path: "/*",
-  // redirect: '/',
-  //   name: 'home',
-  //   component: App,
+  //   path: "/:domain(.*)*",
+  //   name: "NotFound",
+  //   // component: NotFound
+  //   component: () => import("../components/Error.vue"),
   // },
 ];
 

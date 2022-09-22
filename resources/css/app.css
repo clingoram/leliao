@@ -1,5 +1,3 @@
-@import "@fortawesome/fontawesome-free/css/all.css";
-
 * {
   color: #000;
   font-size: 14pt;
@@ -8,9 +6,8 @@
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
-/* header */
-.navbar {
-  background-color: rgb(44, 106, 148);
+a:href {
+  text-decoration: none;
 }
 
 ul,
@@ -18,36 +15,9 @@ li {
   list-style: none;
 }
 
-/* main vue file*/
-.mainarea {
-  padding-top: 10px;
-}
-
-/* 論壇分類 */
-.forums {
-  list-style: none;
-  width: 20%
-}
-
-.forumsButton {
-  border-style: none;
-  margin-bottom: 8px;
-  background-color: transparent;
-}
-
-/* 文章區塊 */
-.card {
-  width: 100%;
-  background-color: #fff;
-  margin-bottom: 10px;
-}
-
-.replyer {
-  font-size: smaller;
-}
-
-.fa-heart:hover {
-  color: red;
+/* header */
+.navbar {
+  background-color: rgb(44, 106, 148);
 }
 
 /* 註冊、登入 下拉式選單*/
@@ -56,11 +26,53 @@ li {
   width: 50px;
 }
 
-/*article*/
-.warning {
+/* main vue file*/
+.mainarea {
+  padding-top: 10px;
+}
+
+/* 關於 */
+#author {
+  text-align: right;
+}
+
+/* 看板區塊*/
+.forums {
+  list-style: none;
+  width: 20%
+}
+
+/*看板按鈕樣式*/
+.forumsButton {
+  border-style: none;
+  margin-bottom: 8px;
+  background-color: transparent;
+}
+
+/* 文章區塊 開始*/
+/* 文章區塊 */
+.card {
+  width: 100%;
+  background-color: #fff;
+  margin-bottom: 10px;
+}
+
+/*留言者名稱、時間*/
+.replyer {
+  font-size: smaller;
+}
+
+/*愛心圖示*/
+.fa-heart:hover {
   color: red;
 }
 
+/* 發送留言按鈕 */
+.replyButton {
+  margin: 5px;
+}
+
+/*分隔線*/
 hr {
   -moz-border-bottom-colors: none;
   -moz-border-image: none;
@@ -79,4 +91,11 @@ hr {
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   white-space: normal;
+}
+
+/* 文章區塊 結束*/
+
+/*新增文章*/
+.warning {
+  color: red;
 }

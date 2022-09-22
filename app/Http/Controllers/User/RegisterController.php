@@ -2,40 +2,27 @@
 
 namespace App\Http\Controllers\User;
 
+use App\Http\Controllers\ApiAuth\ApiAuthController;
 use App\Models\Auth;
-use App\Http\Controllers\Controller;
 use App\Http\Controllers\Hash\HashController;
-use HashContext;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-// use Illuminate\Support\Facades\Validator;
 
 /**
- * To register.
+ * 註冊
  */
 class RegisterController extends UserController
 {
-    // public string $name;
-    // protected string $email;
-    // protected string $password;
-
     private string $numbersAndAlphabets;
     private string $specialCharacters;
     private int $len;
 
     const Message_Note = 'Registered.';
 
-    // public function __construct(Request $request)
-    // {
-    //     $this->name = $request->form['name'];
-    //     $this->email = $request->form['email'];
-    //     $this->password = $request->form['password'];
-    // }
     /**
-     * 使用封裝，隨機產生的數字+英文字母+特殊符號，送到HashController組成salt
+     * 隨機產生的數字+英文字母+特殊符號，送到HashController組成salt
      * 把從HashController得到的salt+使用者打上的密碼用sha1組合在一起
      */
-    public function generateHash()
+    protected function generateHash(): string
     {
         $hash = new HashController();
         $this->numbersAndAlphabets = '0987654321abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -54,10 +41,12 @@ class RegisterController extends UserController
      */
     public function create(Request $request)
     {
-        // parent::validatorData([$this->name, $this->email, $this->password]);
-        $check = parent::validatorData($request);
+        // if (!$request->only('name', 'email', 'password')) {
+        //     abort(403);
+        // };
 
-        // $checkUserIsset = parent::checkUserIsset($this->email);
+        parent::validatorData($request);
+
         $checkUserIsset = parent::checkUserIsset($request->form['email']);
 
         $salt = $this->generateHash();
@@ -65,32 +54,21 @@ class RegisterController extends UserController
         $pwdwithHash = sha1($request->form['password'] . $salt);
 
         // 資料表內是否已有role = 2
-        // $roleIsset = Auth::where('email', $this->email)->where('role', 2)->get();
-        $roleIsset = Auth::where('email', $request->form['email'])->where('role', 2)->get();
+        $roleIsset = Auth::where('email', $request->form['email'])->where('role', '=', 2)->get();
 
 
         if ($checkUserIsset === false) {
-            // $user = new Auth();
-            // $user->name = $this->name;
-            // $user->email = $this->email;
-            // // $user->password = Hash::make($this->password);
-            // $user->password = $pwdwithHash;
-            // $user->salt = $salt;
-            // $user->created_at = date('Y/m/d H:i:s', time());
-            // $user->role = count($roleIsset) === 1 ? 1 : 2;
-            // $user->save();
-
             $user = new Auth();
             $user->name = $request->form['name'];
             $user->email = $request->form['email'];
-            // $user->password = Hash::make($this->password);
             $user->password = $pwdwithHash;
             $user->salt = $salt;
             $user->created_at = date('Y/m/d H:i:s', time());
-            $user->role = count($roleIsset) > 1 ? 1 : 2;
+            $user->role = $roleIsset->count() === 1 ? 1 : 2;
             $user->save();
 
-            return parent::createToken($user, 201, self::Message_Note);
+            $createToken = new ApiAuthController();
+            return $createToken->createToken($user, 201, self::Message_Note);
         } else {
             return response()->json([
                 'status' => 'error',

@@ -42,17 +42,17 @@
           <div class="card" v-for="item in wholeData" v-bind:key="item.cId">
             <div class="card-header">{{ item.title }}</div>
             <div class="card-body">
-              <h6 class="card-title">分類: {{ item.cName }}</h6>
-              <h7 class="card-title">{{ item.uName }}</h7>
+              <h6 class="replyer">{{ item.cName }} - {{ item.uName }}</h6>
+              <!-- <h7 class="card-title">{{ item.uName }}</h7> -->
               <p class="card-text ellipsis">
                 {{ item.content }}
               </p>
-
+              <!-- data-bs-target="#singlePost" -->
               <button
                 type="button"
                 class="btn btn-primary"
                 data-bs-toggle="modal"
-                data-bs-target="#singlePost"
+                data-bs-target="#staticBackdrop"
                 v-bind:id="item.id"
                 v-on:click="getSpecificPost(item.cId, item.id)"
               >
@@ -64,10 +64,12 @@
           <!-- modal start-->
           <div
             class="modal fade"
-            id="singlePost"
+            id="staticBackdrop"
             tabindex="-1"
-            aria-labelledby="modalLabel"
+            aria-labelledby="staticBackdropLabel"
             aria-hidden="true"
+            data-bs-backdrop="static"
+            data-bs-keyboard="false"
           >
             <div
               class="
@@ -79,21 +81,24 @@
             >
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="modalLabel">
+                  <h4 class="modal-title" id="modalLabel">
                     {{ specificPostData.title }}
-                  </h5>
+                  </h4>
 
                   <button
                     type="button"
                     class="btn-close"
                     data-bs-dismiss="modal"
                     aria-label="Close"
+                    v-on:click="clearModal()"
                   ></button>
                 </div>
                 <div class="modal-body">
-                  <!-- <p>文章ID:{{ specificPostData.id }}</p>
-                  <p>文章分類:{{ specificPostData.categoryName }}</p>
-                  <p>分類ID:{{ specificPostData.category_id }}</p> -->
+                  <p class="replyer">
+                    {{ specificPostData.categoryName }} -
+                    {{ specificPostData.author }} <br />更新於
+                    {{ timeLag(this.specificPostData.createdAt) }}
+                  </p>
                   {{ specificPostData.content }}
 
                   <hr />
@@ -102,7 +107,6 @@
                   </div>
                   <div v-if="isLoggedIn === true">
                     <div class="replyArea">
-                      <!-- <form> -->
                       <div class="mb-3">
                         <label for="message-text" class="col-form-label"
                           >回覆:</label
@@ -114,13 +118,12 @@
                         ></textarea>
                         <button
                           type="submit"
-                          class="btn btn-primary"
+                          class="btn btn-primary replyButton"
                           v-on:click="reply()"
                         >
                           發送
                         </button>
                       </div>
-                      <!-- </form> -->
                     </div>
                   </div>
                   <div>
@@ -131,11 +134,11 @@
                         v-for="comments in replyData"
                         v-bind:key="comments.id"
                       >
-                        <p class="replyer">{{ comments.replyName }}</p>
-                        {{ comments.content }}<br />
                         <p class="replyer">
-                          - {{ timeLag(comments.created_at) }}
+                          {{ comments.replyName }} -
+                          {{ timeLag(comments.created_at) }}
                         </p>
+                        {{ comments.content }}<br />
                         <p
                           class="heart"
                           v-on:click="likeit(comments.id, comments.heart)"
@@ -154,6 +157,7 @@
                     type="button"
                     class="btn btn-secondary"
                     data-bs-dismiss="modal"
+                    v-on:click="clearModal()"
                   >
                     關閉
                   </button>
@@ -191,7 +195,6 @@ export default {
         categoryName: "",
         cid: "",
         createdAt: "",
-        // othersEmoj: "",
       },
       // reply show with modal.
       replyData: [],
@@ -205,7 +208,9 @@ export default {
     };
   },
   async beforeMount() {
-    // get all forums.
+    /**
+     * 取得所有分類列表
+     */
     axios
       .get("api/lel/f/all")
       .then((response) => {
@@ -221,7 +226,11 @@ export default {
     this.getPosts(this.categoryId);
   },
   methods: {
-    // 取特定分類內所有文章
+    /**
+     * 取特定分類內所有文章
+     *
+     * @param forumId int
+     * */
     getPosts(forumId) {
       axios
         .get("api/lel/f/" + forumId + "/posts")
@@ -230,20 +239,24 @@ export default {
           this.wholeData = response.data.data_return;
         })
         .catch((error) => {
-          console.log(error);
+          alert("無文章");
+          console.log(error.message);
         });
     },
-    // 取得特定看板內的某文章
+    /**
+     *  取得特定看板內的某文章
+     * @param forumId int
+     * @param postId int
+     */
     getSpecificPost(forumId, postId) {
       // call table comments.
       this.getPostComments(forumId, postId);
       axios
         .get("api/lel/f/" + forumId + "/post/" + postId)
         .then((response) => {
-          // console.log(response.data.data_return);
           this.specificPostData.id = response.data.data_return.id;
           this.specificPostData.title = response.data.data_return.title;
-          this.specificPostData.author = response.data.data_return.wrtiter_id;
+          this.specificPostData.author = response.data.data_return.uName;
           this.specificPostData.content = response.data.data_return.content;
           this.specificPostData.cid = response.data.data_return.cId;
           this.specificPostData.categoryName = response.data.data_return.cName;
@@ -254,7 +267,11 @@ export default {
           console.log(error);
         });
     },
-    // 取得文章留言
+    /**
+     * 取得文章留言
+     * @param categortId int
+     * @param id int
+     *  */
     getPostComments(categoryId, id) {
       axios
         .get("api/lel/f/" + categoryId + "/post/c/" + id)
@@ -271,12 +288,15 @@ export default {
           console.log(error);
         });
     },
-    // 回覆該文章(需登入)
+    /**
+     * 回覆該文章(需登入)
+     */
     reply() {
-      /*
-      文章id,回覆者id,回覆內容,回覆時間
-      */
-      if (this.replyArea.replyContent.length < 2) {
+      if (
+        this.replyArea.replyContent.length < 2 ||
+        this.replyArea.replyContent.length > 200
+      ) {
+        alert("內容記得填寫。");
         return;
       }
       axios
@@ -292,13 +312,17 @@ export default {
           }
         )
         .then((response) => {
-          // console.log(response);
           document.location.href = "/";
         })
         .catch((error) => {
           console.log(error);
         });
     },
+    /**
+     * 對留言按愛心
+     * @param commentId int
+     * @param heart int
+     */
     likeit(commentId, heart) {
       // console.log(heart);
       if (this.isLoggedIn === false) {
@@ -327,7 +351,23 @@ export default {
           });
       }
     },
-    // 時間差
+    /**
+     * 關閉modal時清除modal內留言、該文章所有內容
+     * */
+    clearModal() {
+      this.replyData = [];
+      this.specificPostData.id = "";
+      this.specificPostData.title = "";
+      this.specificPostData.content = "";
+      this.specificPostData.author = "";
+      this.specificPostData.content = "";
+      this.specificPostData.cid = "";
+      this.specificPostData.categoryName = "";
+      this.specificPostData.createdAt = "";
+    },
+    /**
+     * 轉換時間格式
+     */
     timeLag(datetime) {
       const date = new Date(datetime);
       // 年份

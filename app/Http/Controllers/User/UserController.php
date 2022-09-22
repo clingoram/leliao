@@ -2,53 +2,36 @@
 
 namespace App\Http\Controllers\User;
 
-use App\Models\Auth as TableUser;
 use Illuminate\Support\Facades\Validator;
-
-// use Illuminate\Support\Facades\Auth as defaultAuth;
-use Exception;
-
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
+use App\Models\Auth;
+
+// use Illuminate\Support\Facades\Cookie;
 
 class UserController extends Controller
 {
     protected $secret;
+    public $checkResult;
 
-    // public function __construct(Request $data)
-    // {
-    //     $this->name = $data->form['name'];
-    //     $this->email = $data->form['email'];
-    //     $this->password = $data->form['password'];
-    // }
+    /**
+     * 檢查role
+     */
+    public function setCheckRole($data): void
+    {
+        $this->checkResult = Auth::select(
+            'users.name',
+            'users.email',
+            'users.role',
+            'users.created_at',
+            'users.updated_at'
+        )->where('id', '=', $data->id)->where('name', '=', $data->name)->get();
+    }
 
-    // public function index()
-    // {
-    //     $users = TableUser::all();
-    //     return response()->json(
-    //         [
-    //             'status' => 'success',
-    //             'users' => $users->toArray()
-    //         ],
-    //         200
-    //     );
-    // }
-
-    // public function show(Request $request, int $id)
-    // {
-
-    // $user = TableUser::find($id);
-    // return response()->json(
-    //     [
-    //         'status' => 'success',
-    //         'user' => $user->toArray()
-    //     ],
-    //     200
-    // );
-    // }
+    public function getCheckRole()
+    {
+        return $this->checkResult;
+    }
 
 
     /**
@@ -59,64 +42,7 @@ class UserController extends Controller
      */
     public function checkUserIsset(string $mail)
     {
-        // try {
-        return DB::table('users')->where('email', '=', $mail)->exists();
-
-
-        //     if ($check === true and $purpose === "login") {
-        //         // 資料表內有該筆資料且來源自登入
-        //         $user = TableUser::where('email', $mail)->first();
-
-        //         $this->secret = $user;
-        //         return $this->secret;
-        //     } else if ($check === false and $purpose === 'register') {
-        //         // 資料表內沒有該筆資料且來源自註冊
-
-        //         // return response()->json()([
-        //         //     'message' => 'Bad creds'
-        //         // ], 401);
-        //         echo 'Wrong';
-        //         die();
-        //     } else {
-        //     }
-        // } catch (Exception $e) {
-        //     dd($e);
-        // }
-    }
-
-    /**
-     * 建立token
-     * 
-     * @return json
-     */
-    protected function createToken(object $user, int $statusCode, string $message)
-    {
-        if (isset($user) and !empty($user)) {
-            $token = $user->createToken($user->name)->plainTextToken;
-            return response()->json(
-                [
-                    'status' => 'success',
-                    'user' => [
-                        'id' => $user->id,
-                        'account' => $user->name
-                    ],
-                    'message' => $user->name . ' ' . $message,
-                    'accessToken' => $token,
-                    'expires_in' => date('Y/m/d H:i:s', time() + 10 * 60),
-                    'type' => 'Bearer',
-                    'Accept' => 'application/json'
-
-                ],
-                $statusCode
-            );
-        } else {
-            return response()->json(
-                [
-                    'error' => 'token_error'
-                ],
-                401
-            );
-        }
+        return Auth::where('email', '=', $mail)->where('deleted_at', '=', null)->exists();
     }
 
     /**
@@ -131,14 +57,13 @@ class UserController extends Controller
             $result = Validator::make($data, [
                 'name' => ['required', 'string', 'max:30'],
                 'email' => ['required', 'string', 'email', 'max:30', 'unique:users'],
-                'password' => ['required', 'string', 'min:8', 'confirmed']
+                'password' => ['required', 'string', 'min:7', 'max:20', 'confirmed']
             ]);
 
             if ($result->fails()) {
                 return response()->json([
                     'status' => false,
-                    'message' => 'Validator error',
-                    'errors' => $result->errors()
+                    'message' => 'Validator error'
                 ], 401);
             } else {
                 return response()->json(
@@ -153,7 +78,6 @@ class UserController extends Controller
             return response()->json([
                 'status' => false,
                 'message' => $th->getMessage(),
-                // 'errors' => $result->errors()
             ], 500);
         }
     }

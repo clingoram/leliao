@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Forum;
+use App\Models\Category;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -15,6 +15,8 @@ class CategoryTableSeeder extends Seeder
      */
     public function run()
     {
+        // Category::factory()->count(6)->create();
+
         $data = [
             ['id' => 1, 'name' => '閒聊', 'created_at' => date('Y/m/d H:i:s', time()), 'updated_at' => date('Y/m/d H:i:s', time())],
             ['id' => 2, 'name' => '工作', 'created_at' => date('Y/m/d H:i:s', time()), 'updated_at' => date('Y/m/d H:i:s', time())],
@@ -22,7 +24,7 @@ class CategoryTableSeeder extends Seeder
 
         ];
         foreach ($data as $key) {
-            $category = new Forum();
+            $category = new Category();
             $category->id = $key['id'];
             $category->name = $key['name'];
             $category->created_at = $key['created_at'];

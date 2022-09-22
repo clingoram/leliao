@@ -37,20 +37,23 @@
         required
       />
     </div>
+    <p class="form-text warning">
+      * 請記得註冊時的email和密碼，目前本網站尚未提供重設密碼功能。
+    </p>
     <button
       type="submit"
-      class="btn btn-primary"
+      class="btn btn-success"
       v-on:click="checkInputsValue()"
     >
-      Submit
+      註冊
+    </button>
+    <button type="button" class="btn btn-danger" v-on:click="clear()">
+      清除
     </button>
   </div>
 </template>
 <script>
 export default {
-  mounted() {
-    console.log("register");
-  },
   data() {
     return {
       max: 20,
@@ -73,12 +76,13 @@ export default {
       const pwd = document.getElementById("inputPwd").value;
 
       // regex
-      let accountPattern = /^[0-9A-Za-z]+$/;
-      let passwordPattern = /^[0-9A-Za-z]\w{7,20}$/;
-      let emailPattern =
+      // input不能有單引號、OR、1 = 1和 --
+      const accountPattern = /^[0-9A-Za-z]+$/;
+      const passwordPattern = /^[0-9A-Za-z]\w{7,20}$/;
+      const emailPattern =
         /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 
-      if (accountPattern.test(name) === false || name.length < 5) {
+      if (accountPattern.test(name) === false || name.length < 3) {
         alert(`帳號長度請重設。`);
         return;
       }
@@ -86,10 +90,15 @@ export default {
         alert("email無效。");
         return;
       }
-      if (passwordPattern.test(pwd) === false || pwd.length < 7) {
+      if (
+        passwordPattern.test(pwd) === false ||
+        pwd.length < 7 ||
+        pwd.length > 20
+      ) {
         alert("請重設密碼。");
         return;
       }
+
       return this.register();
     },
     /**
@@ -97,15 +106,13 @@ export default {
      * 把接收到的值傳到後端處理
      * */
     register() {
-      // console.log(this.form);
       axios
         .post("api/lel/user/register", {
           form: this.form,
         })
         .then((response) => {
-          // console.log(response.data);
-          // if (response.status === 201) {
           confirm("註冊成功");
+          // console.log(response);
           sessionStorage.setItem("token", response.data.accessToken);
           sessionStorage.setItem("id", response.data.user.id);
           sessionStorage.setItem("name", this.form.name);
@@ -114,6 +121,12 @@ export default {
         .catch((error) => {
           console.log(error);
         });
+    },
+    clear() {
+      this.form.name = "";
+      this.form.email = "";
+      this.form.password = "";
+      this.form.role = "";
     },
   },
 };

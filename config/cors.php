@@ -16,22 +16,25 @@ return [
     */
 
     'paths' => ['api/*', 'sanctum/csrf-cookie'],
+    // 'paths' => ['api/*', '/login', '/logout', 'sanctum/csrf-cookie'],
 
-    'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['*'],
+    // 'allowed_methods' => ['*'],
+    'allowed_mothods' => ['GET, POST, PUT, PATCH, DELETE, OPTIONS'],
+
+    // 'allowed_origins' => ['*'],
+    'allowed_origins' => ['http://leliao.herokuapp.com/', 'http://leliao/'],
 
     'allowed_origins_patterns' => [],
 
     'allowed_headers' => ['*'],
 
-    'exposed_headers' => [],
+    // 'exposed_headers' => [],
+    'exposed_headers' => ['Access-Control-Allow-Origin'],
 
     'max_age' => 0,
 
     // 'supports_credentials' => false,
     'supports_credentials' => true,
-
-
 
 ];

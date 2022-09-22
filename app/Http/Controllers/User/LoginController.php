@@ -4,18 +4,10 @@ namespace App\Http\Controllers\User;
 
 use App\Models\Auth;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use DateTime;
-use Illuminate\Support\Facades\Hash;
-use App\Providers\RouteServiceProvider;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
-
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\DB;
-
+use App\Http\Controllers\ApiAuth\ApiAuthController;
 
 /**
- * User loggin.
+ * 使用者登入
  */
 class LoginController extends UserController
 {
@@ -24,18 +16,15 @@ class LoginController extends UserController
     const Message_Note = 'Logged in.';
 
     /**
-     * setter
      * 登入檢查
      */
     private function setAttempt(string $pwd1, string $pwd2): void
     {
         $this->combineString = sha1($pwd1 . $pwd2);
-        // $this->check = DB::table('users')->where('password', '=', $this->combineString)->exists();
-        $this->check = Auth::where('password', '=', $this->combineString)->exists();
+        $this->check = Auth::where('password', '=', $this->combineString)->where('deleted_at', '=', null)->exists();
     }
 
     /**
-     * getter
      * 登入檢查結果
      */
     private function getAttempt(): bool
@@ -50,8 +39,11 @@ class LoginController extends UserController
      */
     public function login(Request $request)
     {
+        // if (!$request->only(['email', 'password'])) {
+        //     abort(403);
+        // };
+
         $checkUserIsset = parent::checkUserIsset($request->loginForm['email']);
-        // $user = Auth::where('email', $request->email)->first();
 
         if ($checkUserIsset === true) {
             $user = Auth::where('email', $request->loginForm['email'])->first();
@@ -61,12 +53,23 @@ class LoginController extends UserController
             $attempt = $this->getAttempt();
 
             if ($attempt === true) {
-                return parent::createToken($user, 200, self::Message_Note);
+                // updated_at更新為user登入時間
+                Auth::where('id', $user['id'])
+                    ->where('email', $user['email'])
+                    ->update(['updated_at' => date('Y/m/d H:i:s', time())]);
+
+                $createToken = new ApiAuthController();
+                return $createToken->createToken($user, 200, self::Message_Note);
+            } else {
+                return;
             }
         }
 
         return response()->json(
-            ['error' => 'login_error'],
+            [
+                'status' => false,
+                'error' => '登入發生一些問題。'
+            ],
             401
         );
     }

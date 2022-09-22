@@ -39,10 +39,6 @@ class Post extends Model
         'others'
     ];
 
-    // protected $casts = [
-    //     'reply' => 'array',
-    // ];
-
     // table users
     public function user()
     {
@@ -52,9 +48,10 @@ class Post extends Model
     // table category
     public function category()
     {
-        return $this->belongsTo(Forum::class, 'foreign_key');
+        return $this->belongsTo(Category::class, 'foreign_key');
     }
 
+    // table comments
     public function comments()
     {
         return $this->hasMany(Comment::class, 'foreign_key');

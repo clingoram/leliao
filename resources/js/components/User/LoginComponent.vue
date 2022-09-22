@@ -9,11 +9,8 @@
         class="form-control"
         id="email_address"
         v-model="loginForm.email"
-        aria-describedby="emailHelp"
+        required
       />
-      <div id="emailHelp" class="form-text">
-        We'll never share your email with anyone else.
-      </div>
     </div>
     <div class="mb-3">
       <label for="input_pwd" class="form-label">密碼</label>
@@ -22,49 +19,38 @@
         class="form-control"
         id="input_pwd"
         v-model="loginForm.password"
+        required
       />
     </div>
-    <!-- <div class="mb-3 form-check">
-        <input type="checkbox" class="form-check-input" id="exampleCheck1" />
-        <label class="form-check-label" for="exampleCheck1">Check me out</label>
-      </div> -->
+
     <button
       type="submit"
-      class="btn btn-primary"
+      class="btn btn-success"
       v-on:click="checkInputsValue()"
+      style="padding-right: 5px"
     >
-      Submit
+      登入
     </button>
-    <!-- <button v-on:click="removeToken()">Clear</button> -->
+    <button type="button" class="btn btn-danger" v-on:click="clearAll()">
+      清除
+    </button>
   </div>
 </template>
 <script>
-// import $api from "../../api";
 export default {
-  mounted() {
-    console.log("login");
-  },
   data() {
     return {
       loginForm: {
         email: "",
         password: "",
       },
-      name: "",
+      // name: "",
     };
   },
-  // async beforeMount() {
-  //   let resUser = await $api.get("/f/all");
-  //   this.userData = resUser.data;
-
-  //   let res = await $api.get("/login");
-  //   this.isLoggedIn = true;
-  //   localStorage.setItem("token", res.data.accessToken);
-  // },
   methods: {
     /**
      * 檢查inputs值。
-     * 若檢查通過，則把值傳給function
+     * 若檢查通過，則把值傳給login
      * */
     checkInputsValue() {
       const email = document.getElementById("email_address").value;
@@ -75,14 +61,19 @@ export default {
         /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 
       if (
-        emailPattern.test(email) === false &&
+        email.search("@") === -1 ||
+        emailPattern.test(email) === false ||
         passwordPattern.test(pwd) === false
       ) {
-        alert("email密碼不能為空");
+        alert("email密碼不能為空。");
         return;
       }
+
       return this.login();
     },
+    /**
+     * 登入
+     */
     login() {
       axios.get("/sanctum/csrf-cookie").then((response) => {
         axios
@@ -90,17 +81,23 @@ export default {
             loginForm: this.loginForm,
           })
           .then((response) => {
-            // console.log(response);
-            sessionStorage.setItem("token", response.data.accessToken);
+            // console.log(response.data);
             sessionStorage.setItem("id", response.data.user.id);
             sessionStorage.setItem("name", response.data.user.account);
-
+            sessionStorage.setItem("token", response.data.accessToken);
             document.location.href = "/";
           })
           .catch(function (error) {
-            console.error(error);
+            alert(error.response.data);
           });
       });
+    },
+    /**
+     * 清除所有inputs值
+     *  */
+    clearAll() {
+      this.loginForm.email = "";
+      this.loginForm.password = "";
     },
   },
 };

@@ -7,7 +7,8 @@ export default defineConfig({
     server: {
         hmr: {
             host: 'localhost',
-            // https: true,
+            https: true,
+            // host: '0.0.0.0'
         },
     },
     plugins: [
@@ -31,7 +32,8 @@ export default defineConfig({
     resolve: {
         alias: {
             '~bootstrap': path.resolve(__dirname, 'node_modules/bootstrap'),
-            '@': '/resources/js'
+            '@': '/resources/js',
+
         }
     },
 

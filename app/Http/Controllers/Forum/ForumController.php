@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Forum;
 
-use App\Models\Forum;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -19,7 +19,7 @@ class ForumController extends Controller
     public function index()
     {
         $array = [];
-        foreach (Forum::all() as $category) {
+        foreach (Category::all() as $category) {
             array_push($array, $category);
         }
         return $array;
@@ -30,7 +30,7 @@ class ForumController extends Controller
      */
     public function defaultAllposts()
     {
-        $all = Forum::select(
+        $all = Category::select(
             'posts.id',
             'posts.title',
             'posts.writer_id',
@@ -42,7 +42,10 @@ class ForumController extends Controller
             'category.id AS cId',
             'users.name AS uName'
         )->join('posts', 'posts.category_id', '=', 'category.id')
-            ->join('users', 'users.id', '=', 'posts.writer_id')->get();
+            ->join('users', 'users.id', '=', 'posts.writer_id')
+            ->orderBy('pin', 'DESC')
+            ->orderby('posts.created_at', 'ASC')
+            ->get();
         return $all;
     }
 
@@ -76,8 +79,8 @@ class ForumController extends Controller
      */
     public function show(int $categoryId)
     {
-        if ($categoryId !== 0) {
-            $all = Forum::select(
+        if (isset($categoryId) and $categoryId !== 0) {
+            $all = Category::select(
                 'posts.id',
                 'posts.title',
                 'posts.writer_id',
@@ -89,7 +92,11 @@ class ForumController extends Controller
                 'category.id AS cId',
                 'users.name AS uName'
             )->join('posts', 'posts.category_id', '=', 'category.id')
-                ->join('users', 'users.id', '=', 'posts.writer_id')->where('category.id', $categoryId)->get();
+                ->join('users', 'users.id', '=', 'posts.writer_id')
+                ->where('category.id', $categoryId)
+                ->orderBy('pin', 'DESC')
+                ->orderby('posts.created_at', 'ASC')
+                ->get();
         } else {
             $all = $this->defaultAllposts();
         }
@@ -115,7 +122,7 @@ class ForumController extends Controller
      * @param  \App\Models\Forum  $forum
      * @return \Illuminate\Http\Response
      */
-    public function edit(Forum $forum)
+    public function edit(Category $forum)
     {
         //
     }
@@ -127,7 +134,7 @@ class ForumController extends Controller
      * @param  \App\Models\Forum  $forum
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Forum $forum)
+    public function update(Request $request, Category $forum)
     {
         //
     }
@@ -138,7 +145,7 @@ class ForumController extends Controller
      * @param  \App\Models\Forum  $forum
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Forum $forum)
+    public function destroy(Category $forum)
     {
         //
     }
