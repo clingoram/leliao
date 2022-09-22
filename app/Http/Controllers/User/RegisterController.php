@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\User;
 
+use App\Http\Controllers\ApiAuth\ApiAuthController;
 use App\Models\Auth;
 use App\Http\Controllers\Hash\HashController;
 use Illuminate\Http\Request;
 
 /**
- * To register.
+ * 註冊
  */
 class RegisterController extends UserController
 {
@@ -40,6 +41,10 @@ class RegisterController extends UserController
      */
     public function create(Request $request)
     {
+        // if (!$request->only('name', 'email', 'password')) {
+        //     abort(403);
+        // };
+
         parent::validatorData($request);
 
         $checkUserIsset = parent::checkUserIsset($request->form['email']);
@@ -53,19 +58,17 @@ class RegisterController extends UserController
 
 
         if ($checkUserIsset === false) {
-            // $set = parent::setCookie($request->form['name']);
-            // $getCookie = parent::getCookie($set);
-
             $user = new Auth();
             $user->name = $request->form['name'];
             $user->email = $request->form['email'];
             $user->password = $pwdwithHash;
             $user->salt = $salt;
             $user->created_at = date('Y/m/d H:i:s', time());
-            $user->role = $roleIsset->count() >= 1 ? 1 : 2;
+            $user->role = $roleIsset->count() === 1 ? 1 : 2;
             $user->save();
 
-            return parent::createToken($user, 201, self::Message_Note);
+            $createToken = new ApiAuthController();
+            return $createToken->createToken($user, 201, self::Message_Note);
         } else {
             return response()->json([
                 'status' => 'error',

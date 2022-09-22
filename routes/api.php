@@ -6,7 +6,6 @@ use App\Http\Controllers\User\LogoutController;
 use App\Http\Controllers\User\ManagementController;
 
 use App\Http\Controllers\Forum\ForumController;
-
 use App\Http\Controllers\Post\PostController;
 use App\Http\Controllers\Comment\CommentController;
 
@@ -62,7 +61,9 @@ Route::prefix('/lel')->group(function () {
         // 帳號資訊頁面
         Route::get('/management/{id}/{name}', [ManagementController::class, 'checkRole']);
 
-        // 登出
+        // 登出(token未過期)
         Route::post('/logout', [LogoutController::class, 'logout']);
     });
+    // 在token過期狀況下，刪除token
+    Route::post('/logout/d', [LogoutController::class, 'destroy']);
 });

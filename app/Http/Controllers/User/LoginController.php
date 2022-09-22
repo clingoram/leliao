@@ -4,9 +4,10 @@ namespace App\Http\Controllers\User;
 
 use App\Models\Auth;
 use Illuminate\Http\Request;
+use App\Http\Controllers\ApiAuth\ApiAuthController;
 
 /**
- * User loggin.
+ * 使用者登入
  */
 class LoginController extends UserController
 {
@@ -38,6 +39,10 @@ class LoginController extends UserController
      */
     public function login(Request $request)
     {
+        // if (!$request->only(['email', 'password'])) {
+        //     abort(403);
+        // };
+
         $checkUserIsset = parent::checkUserIsset($request->loginForm['email']);
 
         if ($checkUserIsset === true) {
@@ -48,15 +53,13 @@ class LoginController extends UserController
             $attempt = $this->getAttempt();
 
             if ($attempt === true) {
-                // $set = parent::setCookie($user['name']);
-                // $getCookie = parent::getCookie();
-
                 // updated_at更新為user登入時間
                 Auth::where('id', $user['id'])
                     ->where('email', $user['email'])
                     ->update(['updated_at' => date('Y/m/d H:i:s', time())]);
 
-                return parent::createToken($user, 200, self::Message_Note);
+                $createToken = new ApiAuthController();
+                return $createToken->createToken($user, 200, self::Message_Note);
             } else {
                 return;
             }

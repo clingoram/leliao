@@ -9,6 +9,8 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+use Laravel\Sanctum\NewAccessToken;
+use Illuminate\Support\Str;
 
 class Auth extends Authenticatable
 {
@@ -52,4 +54,20 @@ class Auth extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    // 複寫HasAccessToken createToken
+    public function createToken(string $name, $abilities = ['*'], $expires_at = null)
+    {
+        $expires_at = $expires_at ?: config('sanctum.expiration');
+        // $expires_at = $expires_at ?: env("SANCTUM_TTL");
+
+
+        $token = $this->tokens()->create([
+            'name' => $name,
+            'token' => hash('sha256', $plainTextToken = Str::random(40)),
+            'abilities' => $abilities,
+            'expires_at' => now()->addHours($expires_at) // token過期時間為登入時間-2小時
+        ]);
+        return new NewAccessToken($token, $token->getKey() . '|' . $plainTextToken);
+    }
 }

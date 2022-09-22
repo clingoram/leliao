@@ -62,23 +62,24 @@ export default {
     };
   },
   created() {
-    // if (
-    //   sessionStorage.getItem("token") !== null &&
-    //   sessionStorage.getItem("token") !== "undefined"
-    // ) {
-    //   this.accessToken = sessionStorage.getItem("token");
+    if (
+      sessionStorage.getItem("token") !== null &&
+      sessionStorage.getItem("token") !== "undefined"
+    ) {
+      // this.accessToken = sessionStorage.getItem("token");
+      this.name = sessionStorage.getItem("name");
+      this.isLoggedIn = true;
+      this.checkExpiresTime();
+    } else {
+      this.isLoggedIn = false;
+    }
+
+    // if (sessionStorage.getItem("auth") === "success") {
     //   this.name = sessionStorage.getItem("name");
     //   this.isLoggedIn = true;
     // } else {
     //   this.isLoggedIn = false;
     // }
-
-    if (sessionStorage.getItem("auth") === "success") {
-      this.name = sessionStorage.getItem("name");
-      this.isLoggedIn = true;
-    } else {
-      this.isLoggedIn = false;
-    }
 
     // if (
     //   (axios.defaults.headers.common[
@@ -90,7 +91,8 @@ export default {
   },
   methods: {
     /**
-     * 登出
+     * 在token還沒過期狀況下登出(自行按登出按鈕)
+     *
      * */
     logout() {
       axios
@@ -107,6 +109,44 @@ export default {
         .catch((error) => {
           console.log(error);
         });
+    },
+    /**
+     * 如果現在的時間 > expire_at的時間，remove items(id,name,token)
+     */
+    checkExpiresTime() {
+      const current = new Date();
+      // current.toISOString().split("T")[0];
+
+      const expire = new Date("2022-09-22 12:13:59");
+
+      let ONE_HOUR = 1000 * 60 * 60; // 1小時的毫秒數
+      let ONE_MIN = 1000 * 60; // 1分鐘的毫秒數
+      let ONE_SEC = 1000; // 1秒的毫秒數
+
+      let diff = current - expire;
+
+      let leftHours = Math.floor(diff / ONE_HOUR);
+      if (leftHours > 0) {
+        diff = diff - leftHours * ONE_HOUR;
+      }
+      let leftMins = Math.floor(diff / ONE_MIN);
+      if (leftMins > 0) {
+        diff = diff - leftMins * ONE_MIN;
+      }
+
+      let leftSecs = Math.floor(diff / ONE_SEC);
+
+      console.log(`兩個時間差距為 ${leftHours}小時${leftMins}分${leftSecs}秒`);
+      if (leftHours >= 1) {
+        // this.logout();
+
+        sessionStorage.removeItem("id");
+        sessionStorage.removeItem("name");
+        // sessionStorage.removeItem("auth");
+        sessionStorage.removeItem("token");
+        // document.location.href = "/";
+        this.isLoggedIn = false;
+      }
     },
   },
 };

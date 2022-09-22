@@ -114,17 +114,11 @@ export default {
           confirm("註冊成功");
           // console.log(response);
           if (response.data.status === "success") {
-            sessionStorage.setItem("auth", response.data.status);
             sessionStorage.setItem("token", response.data.accessToken);
             sessionStorage.setItem("id", response.data.user.id);
             sessionStorage.setItem("name", this.form.name);
             document.location.href = "/";
           }
-
-          // sessionStorage.setItem("token", response.data.accessToken);
-          // sessionStorage.setItem("id", response.data.user.id);
-          // sessionStorage.setItem("name", this.form.name);
-          // document.location.href = "/";
         })
         .catch((error) => {
           console.log(error);

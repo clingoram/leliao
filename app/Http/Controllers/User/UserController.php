@@ -4,17 +4,15 @@ namespace App\Http\Controllers\User;
 
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
-// use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Models\Auth;
 
-use Illuminate\Support\Facades\Cookie;
+// use Illuminate\Support\Facades\Cookie;
 
 class UserController extends Controller
 {
     protected $secret;
     public $checkResult;
-
 
     /**
      * 檢查role
@@ -44,75 +42,7 @@ class UserController extends Controller
      */
     public function checkUserIsset(string $mail)
     {
-        return Auth::where('email', '=', $mail)->exists();
-    }
-
-    public function setCookie(string $data)
-    {
-        $minutes = 10;
-        // Cookie::queue('name', $data, $minutes);
-        // return response('Set cookie');
-
-        $cookie = cookie('name', $data, $minutes);
-        response()->cookie($cookie);
-    }
-
-    public function getCookie()
-    {
-        $data = 'TT';
-        $minutes = 60;
-        // return Cookie::get('name');
-        $cookie = cookie('name', $data, $minutes);
-        return response()->cookie($cookie);
-    }
-
-    /**
-     * 建立token
-     * 
-     * @return json
-     */
-    protected function createToken(object $user, int $statusCode, string $message)
-    {
-
-        if (isset($user) and !empty($user)) {
-            $expires = date('Y/m/d H:i:s', time() + 10 * 60);
-            // $token = $user->createToken($user->name)->plainTextToken;
-            $token = $user->createToken($user->name);
-
-
-            return response()->json(
-                [
-                    'status' => 'success',
-                    'user' => [
-                        'id' => $user->id,
-                        'account' => $user->name
-                    ],
-                    // 'message' => $user->name . ' ' . $message,
-                    'accessToken' => $token->plainTextToken,
-                    'expires_at' => date('Y/m/d H:i:s', time() + 10 * 60),
-                    'type' => 'Bearer',
-                    'Accept' => 'application/json'
-                ],
-                $statusCode
-            );
-
-            // $response = response()->json([
-            //     [
-            //         'message' => $message,
-            //         'access_token' => $token,
-            //         'type' => 'Bearer',
-            //         'Accept' => 'application/json'
-            //     ],
-            // ], $statusCode);
-            // return $response->headers->setCookie($cookie);
-        } else {
-            return response()->json(
-                [
-                    'error' => 'token_error'
-                ],
-                401
-            );
-        }
+        return Auth::where('email', '=', $mail)->where('deleted_at', '=', null)->exists();
     }
 
     /**

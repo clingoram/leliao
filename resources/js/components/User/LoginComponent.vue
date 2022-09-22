@@ -81,8 +81,9 @@ export default {
             loginForm: this.loginForm,
           })
           .then((response) => {
+            // console.log(response);
             if (response.data.status === "success") {
-              sessionStorage.setItem("auth", response.data.status);
+              // sessionStorage.setItem("auth", response.data.status);
               sessionStorage.setItem("id", response.data.user.id);
               sessionStorage.setItem("name", response.data.user.account);
               sessionStorage.setItem("token", response.data.accessToken);
@@ -90,7 +91,7 @@ export default {
             }
           })
           .catch(function (error) {
-            alert(error.response.data.error);
+            alert(error.response.data);
           });
       });
     },

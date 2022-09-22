@@ -6,11 +6,16 @@ namespace App\Http\Controllers\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
+use Illuminate\Support\Facades\DB;
+
 /**
- * Logout user.
+ * 使用者登出
  */
 class LogoutController extends Controller
 {
+    /**
+     * token 未過期
+     */
     public function logout(Request $request)
     {
         try {
@@ -26,5 +31,13 @@ class LogoutController extends Controller
                 'error' => $th->getMessage()
             ], 401);
         }
+    }
+
+    /**
+     * 過期token 
+     */
+    public function destroy()
+    {
+        $deleted = DB::table('personal_access_tokens')->where('id', '=', 100)->delete();
     }
 }
