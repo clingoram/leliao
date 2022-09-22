@@ -65,5 +65,5 @@ Route::prefix('/lel')->group(function () {
         Route::post('/logout', [LogoutController::class, 'logout']);
     });
     // 在token過期狀況下，刪除token
-    Route::post('/logout/d', [LogoutController::class, 'destroy']);
+    // Route::post('/logout/d', [LogoutController::class, 'destroy']);
 });

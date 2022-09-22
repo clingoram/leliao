@@ -69,7 +69,7 @@ export default {
       // this.accessToken = sessionStorage.getItem("token");
       this.name = sessionStorage.getItem("name");
       this.isLoggedIn = true;
-      this.checkExpiresTime();
+      // this.checkExpiresTime();
     } else {
       this.isLoggedIn = false;
     }
@@ -101,7 +101,6 @@ export default {
           confirm("成功登出");
           sessionStorage.removeItem("id");
           sessionStorage.removeItem("name");
-          sessionStorage.removeItem("auth");
           sessionStorage.removeItem("token");
           document.location.href = "/";
           this.isLoggedIn = false;
@@ -112,6 +111,8 @@ export default {
     },
     /**
      * 如果現在的時間 > expire_at的時間，remove items(id,name,token)
+     *
+     * !--這個可能會導致無法正確在網頁登入
      */
     checkExpiresTime() {
       const current = new Date();
@@ -137,14 +138,13 @@ export default {
       let leftSecs = Math.floor(diff / ONE_SEC);
 
       console.log(`兩個時間差距為 ${leftHours}小時${leftMins}分${leftSecs}秒`);
-      if (leftHours >= 1) {
+      if (leftHours >= 2) {
         // this.logout();
 
         sessionStorage.removeItem("id");
         sessionStorage.removeItem("name");
-        // sessionStorage.removeItem("auth");
         sessionStorage.removeItem("token");
-        // document.location.href = "/";
+        document.location.href = "/";
         this.isLoggedIn = false;
       }
     },

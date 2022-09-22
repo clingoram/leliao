@@ -11,7 +11,7 @@ class ApiAuthController
     public function createToken(object $user, int $statusCode, string $message)
     {
         if (isset($user) and !empty($user)) {
-            $token = $user->createToken('authToken' . $user->name, ['*'], 2);
+            $token = $user->createToken($user->name, ['*'], 2);
             return response()->json(
                 [
                     'status' => 'success',
