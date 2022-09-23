@@ -42,9 +42,9 @@
         <li v-if="!isLoggedIn">
           <router-link v-bind:to="{ name: 'login-page' }">登入</router-link>
         </li>
-        <li v-if="!isLoggedIn">
+        <!-- <li v-if="!isLoggedIn">
           <router-link v-bind:to="{ name: 'register-page' }">註冊</router-link>
-        </li>
+        </li> -->
       </ul>
     </div>
   </div>
@@ -56,30 +56,23 @@ export default {
   data() {
     return {
       isLoggedIn: false,
-      // accessToken: "",
       name: "",
       // roleResult: false,
     };
   },
   created() {
     if (
-      sessionStorage.getItem("token") !== null &&
-      sessionStorage.getItem("token") !== "undefined"
+      sessionStorage.getItem("identity") !== null &&
+      sessionStorage.getItem("identity") !== "undefined"
     ) {
-      // this.accessToken = sessionStorage.getItem("token");
+      //       JSON.parse(sessionStorage.getItem("branch")) !== null
       this.name = sessionStorage.getItem("name");
+
       this.isLoggedIn = true;
-      // this.checkExpiresTime();
+      this.checkExpiresTime(sessionStorage.getItem("expires"));
     } else {
       this.isLoggedIn = false;
     }
-
-    // if (sessionStorage.getItem("auth") === "success") {
-    //   this.name = sessionStorage.getItem("name");
-    //   this.isLoggedIn = true;
-    // } else {
-    //   this.isLoggedIn = false;
-    // }
 
     // if (
     //   (axios.defaults.headers.common[
@@ -101,7 +94,10 @@ export default {
           confirm("成功登出");
           sessionStorage.removeItem("id");
           sessionStorage.removeItem("name");
-          sessionStorage.removeItem("token");
+          sessionStorage.removeItem("identity");
+          sessionStorage.removeItem("expires");
+          // sessionStorage.removeItem("branch");
+
           document.location.href = "/";
           this.isLoggedIn = false;
         })
@@ -114,11 +110,12 @@ export default {
      *
      * !--這個可能會導致無法正確在網頁登入
      */
-    checkExpiresTime() {
+    checkExpiresTime(expires) {
       const current = new Date();
       // current.toISOString().split("T")[0];
 
-      const expire = new Date("2022-09-22 12:13:59");
+      const convertTIme = this.timeLag(expires);
+      const expire = new Date(convertTIme);
 
       let ONE_HOUR = 1000 * 60 * 60; // 1小時的毫秒數
       let ONE_MIN = 1000 * 60; // 1分鐘的毫秒數
@@ -138,15 +135,42 @@ export default {
       let leftSecs = Math.floor(diff / ONE_SEC);
 
       console.log(`兩個時間差距為 ${leftHours}小時${leftMins}分${leftSecs}秒`);
-      if (leftHours >= 2) {
+      if (leftHours >= 1 || leftMins >= 30) {
         // this.logout();
-
         sessionStorage.removeItem("id");
         sessionStorage.removeItem("name");
-        sessionStorage.removeItem("token");
+        sessionStorage.removeItem("identity");
+        sessionStorage.removeItem("expires");
+
         document.location.href = "/";
         this.isLoggedIn = false;
       }
+    },
+    timeLag(datetime) {
+      const date = new Date(datetime);
+      // 年份
+      const year = date.getFullYear();
+      // 月份
+      const month =
+        date.getMonth() + 1 < 10 ? date.getMonth() + 1 : date.getMonth() + 1;
+      // 日期
+      const day = date.getDate() < 9 ? "0" + date.getDate() : date.getDate();
+      // 時
+      const hours =
+        date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
+      // 分
+      const minutes =
+        date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
+      // 秒
+      const sec =
+        date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
+      // 毫秒
+      const millSec =
+        date.getMilliseconds() < 9
+          ? "0" + date.getMilliseconds()
+          : date.getMilliseconds();
+
+      return year + "-" + month + "-" + day + " " + hours + ":" + minutes;
     },
   },
 };

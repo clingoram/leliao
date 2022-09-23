@@ -82,9 +82,12 @@ export default {
           })
           .then((response) => {
             // console.log(response.data);
+            // sessionStorage.setItem("branch", JSON.stringify(response.data));
+
             sessionStorage.setItem("id", response.data.user.id);
             sessionStorage.setItem("name", response.data.user.account);
-            sessionStorage.setItem("token", response.data.accessToken);
+            sessionStorage.setItem("identity", response.data.identity);
+            sessionStorage.setItem("expires", response.data.expires_at);
             document.location.href = "/";
           })
           .catch(function (error) {

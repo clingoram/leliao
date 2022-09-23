@@ -16,7 +16,7 @@ class RegisterController extends UserController
     private string $specialCharacters;
     private int $len;
 
-    const Message_Note = 'Registered.';
+    // const Message_Note = 'Registered.';
 
     /**
      * 隨機產生的數字+英文字母+特殊符號，送到HashController組成salt
@@ -54,8 +54,7 @@ class RegisterController extends UserController
         $pwdwithHash = sha1($request->form['password'] . $salt);
 
         // 資料表內是否已有role = 2
-        $roleIsset = Auth::where('email', $request->form['email'])->where('role', '=', 2)->get();
-
+        $roleIsset = Auth::where('email', $request->form['email'])->where('role', '=', 2)->exists();
 
         if ($checkUserIsset === false) {
             $user = new Auth();
@@ -64,11 +63,11 @@ class RegisterController extends UserController
             $user->password = $pwdwithHash;
             $user->salt = $salt;
             $user->created_at = date('Y/m/d H:i:s', time());
-            $user->role = $roleIsset->count() === 1 ? 1 : 2;
+            $user->role = $roleIsset === 1 or $roleIsset === true ? 1 : 2;
             $user->save();
 
             $createToken = new ApiAuthController();
-            return $createToken->createToken($user, 201, self::Message_Note);
+            return $createToken->createToken($user, 201);
         } else {
             return response()->json([
                 'status' => 'error',

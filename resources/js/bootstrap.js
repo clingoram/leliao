@@ -21,8 +21,8 @@ window.axios = axios;
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 // 把token加到header內
-window.axios.defaults.headers.common['Authorization'] = `Bearer ${sessionStorage.getItem("token")}`;
-
+window.axios.defaults.headers.common['Authorization'] = `Bearer ${sessionStorage.getItem("identity")}`;
+// window.axios.defaults.headers.common['Authorization'] = `Bearer ${JSON.parse(sessionStorage.getItem("branch"))["identity"]}`;
 window.axios.defaults.withCredentials = true;
 
 // window.interceptors.request.use(function (config) {

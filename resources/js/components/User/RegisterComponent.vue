@@ -78,7 +78,7 @@ export default {
       // regex
       // input不能有單引號、OR、1 = 1和 --
       const accountPattern = /^[0-9A-Za-z]+$/;
-      const passwordPattern = /^[0-9A-Za-z]\w{7,20}$/;
+      const passwordPattern = /^[0-9A-Za-z]\w{8,20}$/;
       const emailPattern =
         /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 
@@ -92,7 +92,7 @@ export default {
       }
       if (
         passwordPattern.test(pwd) === false ||
-        pwd.length < 7 ||
+        pwd.length < 8 ||
         pwd.length > 20
       ) {
         alert("請重設密碼。");
@@ -112,8 +112,12 @@ export default {
         })
         .then((response) => {
           confirm("註冊成功");
-          // console.log(response);
-          sessionStorage.setItem("token", response.data.accessToken);
+          console.log(response);
+          // sessionStorage.setItem("branch", JSON.stringify(response.data));
+
+          sessionStorage.setItem("identity", response.data.identity);
+          sessionStorage.setItem("expires", response.data.expires_at);
+
           sessionStorage.setItem("id", response.data.user.id);
           sessionStorage.setItem("name", this.form.name);
           document.location.href = "/";

@@ -13,7 +13,7 @@ class LoginController extends UserController
 {
     private $check;
     private $combineString;
-    const Message_Note = 'Logged in.';
+    // const Message_Note = 'Logged in.';
 
     /**
      * 登入檢查
@@ -59,7 +59,7 @@ class LoginController extends UserController
                     ->update(['updated_at' => date('Y/m/d H:i:s', time())]);
 
                 $createToken = new ApiAuthController();
-                return $createToken->createToken($user, 200, self::Message_Note);
+                return $createToken->createToken($user, 200);
             } else {
                 return;
             }

@@ -2,13 +2,12 @@ import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router
 
 
 import LoginComponent from "../components/User/LoginComponent.vue";
-import RegisterComponent from "../components/User/RegisterComponent.vue";
+// import RegisterComponent from "../components/User/RegisterComponent.vue";
 import Management from "../components/Management/ManagementComponent.vue";
 import Info from "../components/Info/InfoComponent.vue";
 
 import AddArticleComponent from "../components/Post/AddArticleComponent.vue";
 import MainComponent from "../components/Content/MainContentComponent.vue";
-// import NotFound from "../components/Error.vue";
 
 // Route 設定
 export const routes = [
@@ -24,16 +23,16 @@ export const routes = [
     name: "about",
     component: Info,
   },
-  {
-    // 註冊
-    path: '/register',
-    name: "register-page",
-    component: RegisterComponent,
-    meta: {
-      middleware: "guest",
-      title: 'Register'
-    }
-  },
+  // {
+  //   // 註冊
+  //   path: '/register',
+  //   name: "register-page",
+  //   component: RegisterComponent,
+  //   meta: {
+  //     middleware: "guest",
+  //     title: 'Register'
+  //   }
+  // },
   {
     // 登入
     path: '/login',
@@ -62,23 +61,6 @@ export const routes = [
       auth: true
     }
   },
-  // {
-  //   // 單一類別的某篇文章，例如工作版內的文章C
-  //   path: '/f/:categoryId/post/:id',
-  //   name: "post",
-  //   component: PostComponent,
-  //   props: true
-  //   // meta: {
-  //   //   // public routes
-  //   //   auth: undefined
-  //   // }
-  // },
-  // {
-  //   path: "/:domain(.*)*",
-  //   name: "NotFound",
-  //   // component: NotFound
-  //   component: () => import("../components/Error.vue"),
-  // },
 ];
 
 const router = createRouter({
