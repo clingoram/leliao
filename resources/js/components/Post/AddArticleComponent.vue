@@ -64,7 +64,7 @@ export default {
       min: 5,
       isLoggedIn: true,
       post: {
-        writer_id: sessionStorage.getItem("id"),
+        writer_id: sessionStorage.getItem("id"), // JSON.parse(sessionStorage.getItem("branch"))["user"]["id"],
         // 文章標題
         title: "",
         // 文章內容
@@ -77,9 +77,10 @@ export default {
   },
   async beforeMount() {
     if (
-      sessionStorage.getItem("token") === null ||
-      sessionStorage.getItem("token") === "undefined"
+      sessionStorage.getItem("identity") === null ||
+      sessionStorage.getItem("identity") === "undefined"
     ) {
+      // JSON.parse(sessionStorage.getItem("branch")) !== null
       this.isLoggedIn = false;
     }
   },

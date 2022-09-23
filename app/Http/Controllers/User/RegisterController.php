@@ -16,7 +16,7 @@ class RegisterController extends UserController
     private string $specialCharacters;
     private int $len;
 
-    const Message_Note = 'Registered.';
+    // const Message_Note = 'Registered.';
 
     /**
      * 隨機產生的數字+英文字母+特殊符號，送到HashController組成salt
@@ -68,7 +68,7 @@ class RegisterController extends UserController
             $user->save();
 
             $createToken = new ApiAuthController();
-            return $createToken->createToken($user, 201, self::Message_Note);
+            return $createToken->createToken($user, 201);
         } else {
             return response()->json([
                 'status' => 'error',

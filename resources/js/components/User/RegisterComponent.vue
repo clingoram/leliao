@@ -112,11 +112,15 @@ export default {
         })
         .then((response) => {
           confirm("註冊成功");
-          // console.log(response);
-          sessionStorage.setItem("token", response.data.accessToken);
+          console.log(response);
+          // sessionStorage.setItem("branch", JSON.stringify(response.data));
+
+          sessionStorage.setItem("identity", response.data.identity);
+          sessionStorage.setItem("expires", response.data.expires_at);
+
           sessionStorage.setItem("id", response.data.user.id);
           sessionStorage.setItem("name", this.form.name);
-          document.location.href = "/";
+          // document.location.href = "/";
         })
         .catch((error) => {
           console.log(error);

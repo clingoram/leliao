@@ -52,9 +52,10 @@ export default {
   },
   created() {
     if (
-      sessionStorage.getItem("token") !== null &&
-      sessionStorage.getItem("token") !== "undefined"
+      sessionStorage.getItem("identity") !== null &&
+      sessionStorage.getItem("identity") !== "undefined"
     ) {
+      //     JSON.parse(sessionStorage.getItem("branch")) !== null
       this.isLoggedIn = true;
       this.management();
     }
@@ -71,6 +72,12 @@ export default {
             "/" +
             sessionStorage.getItem("name")
         )
+        // .get(
+        //   "api/lel/management/" +
+        //     JSON.parse(sessionStorage.getItem("branch"))["user"]["id"] +
+        //     "/" +
+        //     JSON.parse(sessionStorage.getItem("branch"))["user"]["account"]
+        // )
         .then((response) => {
           this.members = response.data.data_return;
           // for (let j = 1; j <= response.data.data_return.length; j++) {

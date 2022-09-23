@@ -8,22 +8,22 @@ namespace App\Http\Controllers\ApiAuth;
  */
 class ApiAuthController
 {
-    public function createToken(object $user, int $statusCode, string $message)
+    public function createToken(object $user, int $statusCode)
     {
         if (isset($user) and !empty($user)) {
             $token = $user->createToken($user->name, ['*'], 2);
             return response()->json(
                 [
-                    'status' => 'success',
+                    'status' => true,
                     'user' => [
                         'id' => $user->id,
                         'account' => $user->name
                     ],
                     // 'message' => $user->name . ' ' . $message,
-                    'accessToken' => $token->plainTextToken,
+                    'identity' => $token->plainTextToken,
                     'expires_at' => $token->accessToken->expires_at,
-                    'type' => 'Bearer',
-                    'Accept' => 'application/json'
+                    // 'type' => 'Bearer',
+                    // 'Accept' => 'application/json'
                 ],
                 $statusCode
             );
