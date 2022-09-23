@@ -42,9 +42,9 @@
         <li v-if="!isLoggedIn">
           <router-link v-bind:to="{ name: 'login-page' }">登入</router-link>
         </li>
-        <!-- <li v-if="!isLoggedIn">
+        <li v-if="!isLoggedIn">
           <router-link v-bind:to="{ name: 'register-page' }">註冊</router-link>
-        </li> -->
+        </li>
       </ul>
     </div>
   </div>
