@@ -8,7 +8,16 @@
 計畫:
 除了基本註冊和登入外，內建數個討論版，點進討論版可看見相關文章，已登入的使用者可以對文章進行回覆、發送表情符號(愛心)。
 
-<br>
+<hr>
+
+- [Laravel](https://laravel.com/docs/9.x).
+- [PostgreSQL](https://www.postgresql.org/).
+- [Vue](https://vuejs.org/).
+- [Vite](https://vitejs.dev/).
+- [Heroku](https://www.heroku.com/).
+- [Sanctum](https://github.com/laravel/sanctum).
+
+<hr>
 2022-9-23 更新:<br>
 目前功能:<br>
 註冊、登入、登出、發表文章、回應、按LIKE(愛心)。<br>
@@ -30,9 +39,3 @@ account: guestThree<br>
 email: guestThree_test@gamil.com<br>
 pwd: d3r7ayjw<br>
 
-- [Laravel](https://laravel.com/docs/9.x).
-- [PostgreSQL](https://www.postgresql.org/).
-- [Vue](https://vuejs.org/).
-- [Vite](https://vitejs.dev/).
-- [Heroku](https://www.heroku.com/).
-- [Sanctum](https://github.com/laravel/sanctum).
