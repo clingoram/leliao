@@ -15,9 +15,6 @@ class RegisterController extends UserController
     private string $numbersAndAlphabets;
     private string $specialCharacters;
     private int $len;
-
-    // const Message_Note = 'Registered.';
-
     /**
      * 隨機產生的數字+英文字母+特殊符號，送到HashController組成salt
      * 把從HashController得到的salt+使用者打上的密碼用sha1組合在一起
@@ -41,16 +38,11 @@ class RegisterController extends UserController
      */
     public function create(Request $request)
     {
-        // if (!$request->only('name', 'email', 'password')) {
-        //     abort(403);
-        // };
-
         parent::validatorData($request);
 
         $checkUserIsset = parent::checkUserIsset($request->form['email']);
 
         $salt = $this->generateHash();
-        // $pwdwithHash = sha1($this->password . $salt);
         $pwdwithHash = sha1($request->form['password'] . $salt);
 
         // 資料表內是否已有role = 2

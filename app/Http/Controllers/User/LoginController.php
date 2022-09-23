@@ -13,7 +13,6 @@ class LoginController extends UserController
 {
     private $check;
     private $combineString;
-    // const Message_Note = 'Logged in.';
 
     /**
      * 登入檢查
@@ -39,16 +38,12 @@ class LoginController extends UserController
      */
     public function login(Request $request)
     {
-        // if (!$request->only(['email', 'password'])) {
-        //     abort(403);
-        // };
 
         $checkUserIsset = parent::checkUserIsset($request->loginForm['email']);
 
         if ($checkUserIsset === true) {
             $user = Auth::where('email', $request->loginForm['email'])->first();
 
-            // parent::validatorData($request);
             $this->setAttempt($request->loginForm['password'], $user['salt']);
             $attempt = $this->getAttempt();
 

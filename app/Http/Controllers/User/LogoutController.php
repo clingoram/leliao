@@ -36,8 +36,8 @@ class LogoutController extends Controller
     /**
      * 過期token 
      */
-    public function destroy()
-    {
-        $deleted = DB::table('personal_access_tokens')->where('id', '=', 100)->delete();
-    }
+    // public function destroy()
+    // {
+    //     $deleted = DB::table('personal_access_tokens')->where('id', '=', 1)->delete();
+    // }
 }

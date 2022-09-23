@@ -4,10 +4,7 @@ namespace App\Http\Controllers\User;
 
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\Auth;
-
-// use Illuminate\Support\Facades\Cookie;
 
 class UserController extends Controller
 {
