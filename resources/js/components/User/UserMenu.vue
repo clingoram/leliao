@@ -134,7 +134,7 @@ export default {
 
       let leftSecs = Math.floor(diff / ONE_SEC);
 
-      console.log(`兩個時間差距為 ${leftHours}小時${leftMins}分${leftSecs}秒`);
+      // console.log(`兩個時間差距為 ${leftHours}小時${leftMins}分${leftSecs}秒`);
       if (leftHours >= 2) {
         // this.logout();
         sessionStorage.removeItem("id");

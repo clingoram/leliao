@@ -120,7 +120,7 @@ export default {
 
           sessionStorage.setItem("id", response.data.user.id);
           sessionStorage.setItem("name", this.form.name);
-          // document.location.href = "/";
+          document.location.href = "/";
         })
         .catch((error) => {
           console.log(error);
