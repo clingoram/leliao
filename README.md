@@ -15,20 +15,20 @@
 為方便管理，註冊功能暫時關閉，僅提供預設3組測試帳號。<br>
 測試帳號:
 
-1. 第一組
-account: guestOne
-email: guestOne_test@gamil.com
-pwd: cap5bjst
+1. 第一組<br>
+account: guestOne<br>
+email: guestOne_test@gamil.com<br>
+pwd: cap5bjst<br>
 
-2. 第二組
-account:guestTwo
-email:guestTwo_test@gamil.com
-pwd: kg27strp8
+2. 第二組<br>
+account:guestTwo<br>
+email:guestTwo_test@gamil.com<br>
+pwd: kg27strp8<br>
 
-3. 第三組
-account: guestThree
-email: guestThree_test@gamil.com
-pwd: d3r7ayjw
+3. 第三組<br>
+account: guestThree<br>
+email: guestThree_test@gamil.com<br>
+pwd: d3r7ayjw<br>
 
 - [Laravel](https://laravel.com/docs/9.x).
 - [PostgreSQL](https://www.postgresql.org/).
