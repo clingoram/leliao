@@ -39,3 +39,26 @@ account: guestThree<br>
 email: guestThree_test@gamil.com<br>
 pwd: d3r7ayjw<br>
 
+<hr>
+
+<h2>首頁</h2>
+<p>點擊「繼續閱讀」按鈕，跳出該文章完整內容。</p>
+
+![social](/images/leliao 2.jpg)
+![social](/images/leliao 1.jpg)
+
+<h2>帳號資訊</h2>
+<p>登入後依據權限不同，顯示不同內容，圖為網站上所有帳號清單</p>
+
+![social](/images/leliao 3.jpg)
+
+<h2>新增文章</h2>
+<p>登入後可新增文章</p>
+
+![social](/images/leliao 4.jpg)
+![social](/images/leliao 5.jpg)
+
+<h2>網站簡介</h2>
+
+![social](/images/leliao 6.jpg)
+
