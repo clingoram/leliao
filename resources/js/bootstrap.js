@@ -1,6 +1,3 @@
-// import _ from 'lodash';
-// window._ = _;
-
 import loadash from 'lodash'
 window._ = loadash
 
@@ -24,31 +21,6 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 window.axios.defaults.headers.common['Authorization'] = `Bearer ${sessionStorage.getItem("identity")}`;
 // window.axios.defaults.headers.common['Authorization'] = `Bearer ${JSON.parse(sessionStorage.getItem("branch"))["identity"]}`;
 window.axios.defaults.withCredentials = true;
-
-// window.interceptors.request.use(function (config) {
-//   const token = sessionStorage.setItem("token", response.data.accessToken);
-//   // config.headers.Authorization = `Bearer ${sessionStorage.getItem("token")}`
-//   config.headers.common['Authorization'] = `Bearer ${token}`
-
-//   return config;
-// }, function (error) {
-//   return Promise.reject(error);
-// })
-
-// window.interceptors.response.use(undefined, function (error) {
-//   switch (error.response.status) {
-//     case 404:
-//     case 419:
-//     case 503:
-//       window.location.reload();
-//       break;
-//     case 500:
-//       alert("Something wrong");
-//       break;
-//     default:
-//       return Promise.reject(error);
-//   }
-// });
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening

@@ -86,7 +86,7 @@ class ManagementController extends UserController
    * 會員自行刪除自己的帳號
    * soft delete
    */
-  public function selfDestroy()
-  {
-  }
+  // public function selfDestroy()
+  // {
+  // }
 }

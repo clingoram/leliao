@@ -24,7 +24,7 @@ export const routes = [
     component: Info,
   },
   // {
-  //   // 註冊
+  //   // 註冊，暫時註解
   //   path: '/register',
   //   name: "register-page",
   //   component: RegisterComponent,
