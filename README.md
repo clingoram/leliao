@@ -8,6 +8,25 @@
 計畫:
 除了基本註冊和登入外，內建數個討論版，點進討論版可看見相關文章，已登入的使用者可以對文章進行回覆、發送表情符號。
 
+2022-9-23 更新:
+目前功能:
+註冊、登入、登出、發表文章、回應、按LIKE(愛心)。
+但為方便管理，註冊功能暫時關閉，僅提供預設3組測試帳號。
+測試帳號:
+1. 
+account: guestOne
+email: guestOne_test@gamil.com
+pwd: cap5bjst
+
+2. 
+account:guestTwo
+email:guestTwo_test@gamil.com
+pwd: kg27strp8
+
+3. 
+account: guestThree
+email: guestThree_test@gamil.com
+pwd: d3r7ayjw
 
 - [Laravel](https://laravel.com/docs/9.x).
 - [PostgreSQL](https://www.postgresql.org/).

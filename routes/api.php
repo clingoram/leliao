@@ -41,8 +41,8 @@ Route::prefix('/lel')->group(function () {
     // modal 取單一文章的留言
     Route::get('/f/{category_id}/post/c/{post_id}', [CommentController::class, 'show']);
 
-    // 註冊
-    Route::post('/user/register', [RegisterController::class, 'create']);
+    // 註冊，功能OK，但先暫時註解
+    // Route::post('/user/register', [RegisterController::class, 'create']);
     // 登入
     Route::post('/user/login', [LoginController::class, 'login']);
 

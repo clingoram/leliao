@@ -42,9 +42,9 @@
         <li v-if="!isLoggedIn">
           <router-link v-bind:to="{ name: 'login-page' }">登入</router-link>
         </li>
-        <li v-if="!isLoggedIn">
+        <!-- <li v-if="!isLoggedIn">
           <router-link v-bind:to="{ name: 'register-page' }">註冊</router-link>
-        </li>
+        </li> -->
       </ul>
     </div>
   </div>
@@ -134,8 +134,8 @@ export default {
 
       let leftSecs = Math.floor(diff / ONE_SEC);
 
-      // console.log(`兩個時間差距為 ${leftHours}小時${leftMins}分${leftSecs}秒`);
-      if (leftHours >= 2) {
+      console.log(`兩個時間差距為 ${leftHours}小時${leftMins}分${leftSecs}秒`);
+      if (leftHours >= 1 || leftMins >= 30) {
         // this.logout();
         sessionStorage.removeItem("id");
         sessionStorage.removeItem("name");

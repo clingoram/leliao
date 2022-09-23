@@ -19,11 +19,8 @@ class ApiAuthController
                         'id' => $user->id,
                         'account' => $user->name
                     ],
-                    // 'message' => $user->name . ' ' . $message,
                     'identity' => $token->plainTextToken,
                     'expires_at' => $token->accessToken->expires_at,
-                    // 'type' => 'Bearer',
-                    // 'Accept' => 'application/json'
                 ],
                 $statusCode
             );
