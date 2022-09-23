@@ -10,7 +10,7 @@
             <th scope="col">電子信箱</th>
             <th scope="col">註冊時間</th>
             <th scope="col">最近登入時間</th>
-            <th scope="col">詳細</th>
+            <!-- <th scope="col">詳細</th> -->
           </tr>
         </thead>
         <tbody>
@@ -21,7 +21,7 @@
               <td>{{ user.email }}</td>
               <td>{{ timeLag(user.created_at) }}</td>
               <td>{{ timeLag(user.updated_at) }}</td>
-              <td>
+              <!-- <td>
                 <button
                   type="button"
                   class="btn btn-info"
@@ -29,7 +29,7 @@
                 >
                   詳細內容
                 </button>
-              </td>
+              </td> -->
             </tr>
           </template>
         </tbody>
@@ -55,7 +55,6 @@ export default {
       sessionStorage.getItem("identity") !== null &&
       sessionStorage.getItem("identity") !== "undefined"
     ) {
-      //     JSON.parse(sessionStorage.getItem("branch")) !== null
       this.isLoggedIn = true;
       this.management();
     }
@@ -72,21 +71,9 @@ export default {
             "/" +
             sessionStorage.getItem("name")
         )
-        // .get(
-        //   "api/lel/management/" +
-        //     JSON.parse(sessionStorage.getItem("branch"))["user"]["id"] +
-        //     "/" +
-        //     JSON.parse(sessionStorage.getItem("branch"))["user"]["account"]
-        // )
+
         .then((response) => {
           this.members = response.data.data_return;
-          // for (let j = 1; j <= response.data.data_return.length; j++) {
-          //   // this.count = j;
-          //   this.count.push(j);
-          // }
-          // this.combine = this.members.concat(this.count);
-          // // console.log(this.count);
-          // console.log(this.combine);
         })
         .catch((error) => {
           console.log(error);
