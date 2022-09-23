@@ -9,22 +9,23 @@
 除了基本註冊和登入外，內建數個討論版，點進討論版可看見相關文章，已登入的使用者可以對文章進行回覆、發送表情符號(愛心)。
 
 <br>
-2022-9-23 更新:
-目前功能:
-註冊、登入、登出、發表文章、回應、按LIKE(愛心)。
-為方便管理，註冊功能暫時關閉，僅提供預設3組測試帳號。
+2022-9-23 更新:<br>
+目前功能:<br>
+註冊、登入、登出、發表文章、回應、按LIKE(愛心)。<br>
+為方便管理，註冊功能暫時關閉，僅提供預設3組測試帳號。<br>
 測試帳號:
-1. 
+
+1. 第一組
 account: guestOne
 email: guestOne_test@gamil.com
 pwd: cap5bjst
 
-2. 
+2. 第二組
 account:guestTwo
 email:guestTwo_test@gamil.com
 pwd: kg27strp8
 
-3. 
+3. 第三組
 account: guestThree
 email: guestThree_test@gamil.com
 pwd: d3r7ayjw
