@@ -57,7 +57,6 @@ export default {
     return {
       isLoggedIn: false,
       name: "",
-      // roleResult: false,
     };
   },
   created() {
@@ -108,7 +107,6 @@ export default {
     /**
      * 如果現在的時間 > expire_at的時間，remove items(id,name,token)
      *
-     * !--這個可能會導致無法正確在網頁登入
      */
     checkExpiresTime(expires) {
       const current = new Date();
@@ -134,7 +132,7 @@ export default {
 
       let leftSecs = Math.floor(diff / ONE_SEC);
 
-      console.log(`兩個時間差距為 ${leftHours}小時${leftMins}分${leftSecs}秒`);
+      // console.log(`兩個時間差距為 ${leftHours}小時${leftMins}分${leftSecs}秒`);
       if (leftHours >= 1 || leftMins >= 30) {
         // this.logout();
         sessionStorage.removeItem("id");
