@@ -22,7 +22,11 @@
         required
       />
     </div>
-
+    <p class="form-text warning">
+      * 目前註冊功能暫時關閉。<br />
+      * 若需登入，請至<a href="https://github.com/clingoram/leliao">GitHub</a
+      >，內有預設3組帳密可供測試。
+    </p>
     <button
       type="submit"
       class="btn btn-success"

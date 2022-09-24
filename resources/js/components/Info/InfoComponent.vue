@@ -17,7 +17,7 @@
       <li>{{ item.id }}. {{ item.text }}</li>
     </ol>
     <p>
-      詳細請至我的<a href="https://github.com/clingoram">GitHub</a>。
+      詳細請至我的<a href="https://github.com/clingoram/leliao">GitHub</a>。
       <br />
     </p>
     <p id="author">Mavis</p>
