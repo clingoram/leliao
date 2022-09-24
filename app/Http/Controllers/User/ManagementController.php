@@ -21,7 +21,7 @@ class ManagementController extends UserController
     $result = parent::getCheckRole();
     $checkRole = json_decode(json_encode($result[0]), true);
 
-    if ($checkRole['role'] === 2) {
+    if ($checkRole['role'] === 2 and ($checkRole['role'] !== 0 or $checkRole['role'] !== 1)) {
       return $this->admin($request->id, $request->name);
     } else {
       return $this->member($request->id);
