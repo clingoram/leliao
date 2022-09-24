@@ -55,7 +55,7 @@ class RegisterController extends UserController
             $user->password = $pwdwithHash;
             $user->salt = $salt;
             $user->created_at = date('Y/m/d H:i:s', time());
-            $user->role = $roleIsset === 1 or $roleIsset === true ? 1 : 2;
+            $user->role = $roleIsset === 1 ? 1 : 2;
             $user->save();
 
             $createToken = new ApiAuthController();
