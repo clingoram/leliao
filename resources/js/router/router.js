@@ -2,7 +2,7 @@ import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router
 
 
 import LoginComponent from "../components/User/LoginComponent.vue";
-// import RegisterComponent from "../components/User/RegisterComponent.vue";
+import RegisterComponent from "../components/User/RegisterComponent.vue";
 import Management from "../components/Management/ManagementComponent.vue";
 import Info from "../components/Info/InfoComponent.vue";
 
@@ -23,16 +23,16 @@ export const routes = [
     name: "about",
     component: Info,
   },
-  // {
-  //   // 註冊，暫時註解
-  //   path: '/register',
-  //   name: "register-page",
-  //   component: RegisterComponent,
-  //   meta: {
-  //     middleware: "guest",
-  //     title: 'Register'
-  //   }
-  // },
+  {
+    // 註冊，暫時註解
+    path: '/register',
+    name: "register-page",
+    component: RegisterComponent,
+    meta: {
+      middleware: "guest",
+      title: 'Register'
+    }
+  },
   {
     // 登入
     path: '/login',
