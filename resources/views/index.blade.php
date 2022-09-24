@@ -15,5 +15,16 @@
   <div id="app"></div>
   <router-view />
 </body>
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
+
+<script>
+  // $(function() {
+  //   let ip_address = '127.0.0.1';
+  //   let socket_port = '3000';
+  //   let socket = io(ip_address + ':' + socket_port);
+  //   socket.on('connection');
+  // });
+</script>
 
 </html>
