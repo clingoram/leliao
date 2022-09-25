@@ -50,7 +50,6 @@ export default {
   },
   created() {
     if (
-      // JSON.parse(sessionStorage.getItem("branch")) !== null
       sessionStorage.getItem("identity") !== null &&
       sessionStorage.getItem("identity") !== "undefined"
     ) {
@@ -70,13 +69,6 @@ export default {
             "/" +
             sessionStorage.getItem("name")
         )
-
-        // .get(
-        //   "api/lel/management/" +
-        //     JSON.parse(sessionStorage.getItem("branch"))["udata"]["uid"] +
-        //     "/" +
-        //     JSON.parse(sessionStorage.getItem("branch"))["udata"]["uac"]
-        // )
         .then((response) => {
           this.members = response.data.data_return;
         })

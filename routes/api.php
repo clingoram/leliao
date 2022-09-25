@@ -43,23 +43,11 @@ Route::prefix('/lel')->group(function () {
 
     // 註冊，功能OK，但先暫時註解(相關檔案:router.js、UserMenu router)
     Route::post('/user/register', [RegisterController::class, 'create']);
-<<<<<<< HEAD
-
-=======
->>>>>>> cbd65d1 (正在做realtime)
     // 登入
     Route::post('/user/login', [LoginController::class, 'login']);
 
     // Protected routes
     Route::group(['middleware' => ['auth:sanctum']], function () {
-
-<<<<<<< HEAD
-        // cookie
-
-=======
-        // realtime chat
-        // Route::get('/messages', []);
->>>>>>> cbd65d1 (正在做realtime)
 
         // 新增文章
         Route::post('/add_post', [PostController::class, 'create']);
