@@ -178,7 +178,7 @@ export default {
   data() {
     return {
       // checked is loggin or not.
-      isLoggedIn: sessionStorage.getItem("identity") ? true : false,
+      isLoggedIn: sessionStorage.getItem("identity") ? true : false, // JSON.parse(sessionStorage.getItem("branch"))["identity"]? true: false,
       // 所有看板(只顯示現有看板)
       forumOptions: [],
       showForum: false,
@@ -201,8 +201,9 @@ export default {
       // floor: [],
       // 回應區，insert into table.
       replyArea: {
-        replyUserId: sessionStorage.getItem("id"), //JSON.parse(sessionStorage.getItem("branch"))["user"]["id"],
-        replyUserName: sessionStorage.getItem("name"), //JSON.parse(sessionStorage.getItem("branch"))["user"]["account"],
+        replyUserId: sessionStorage.getItem("id"),
+        // JSON.parse(sessionStorage.getItem("branch"))["udata"]["uid"],
+        replyUserName: sessionStorage.getItem("name"), //  JSON.parse(sessionStorage.getItem("branch"))["udata"]["uac"],
         replyContent: "",
       },
     };

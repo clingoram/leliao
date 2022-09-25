@@ -118,7 +118,7 @@ export default {
           sessionStorage.setItem("identity", response.data.identity);
           sessionStorage.setItem("expires", response.data.expires_at);
 
-          sessionStorage.setItem("id", response.data.user.id);
+          sessionStorage.setItem("id", response.data.udata.uid);
           sessionStorage.setItem("name", this.form.name);
           document.location.href = "/";
         })

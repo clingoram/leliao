@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Models\Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\ApiAuth\ApiAuthController;
+use App\Http\Controllers\Cookie\CookieController;
 
 /**
  * 使用者登入

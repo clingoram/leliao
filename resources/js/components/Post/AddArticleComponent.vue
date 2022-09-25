@@ -64,7 +64,7 @@ export default {
       min: 5,
       isLoggedIn: true,
       post: {
-        writer_id: sessionStorage.getItem("id"), // JSON.parse(sessionStorage.getItem("branch"))["user"]["id"],
+        writer_id: SessionStorage.getItem("id"), //JSON.parse(sessionStorage.getItem("branch"))["udata"]["uid"],
         // 文章標題
         title: "",
         // 文章內容
@@ -77,6 +77,7 @@ export default {
   },
   async beforeMount() {
     if (
+      // JSON.parse(sessionStorage.getItem("branch")) !== null
       sessionStorage.getItem("identity") === null ||
       sessionStorage.getItem("identity") === "undefined"
     ) {

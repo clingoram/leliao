@@ -88,8 +88,8 @@ export default {
             // console.log(response.data);
             // sessionStorage.setItem("branch", JSON.stringify(response.data));
 
-            sessionStorage.setItem("id", response.data.user.id);
-            sessionStorage.setItem("name", response.data.user.account);
+            sessionStorage.setItem("id", response.data.udata.uid);
+            sessionStorage.setItem("name", response.data.udata.uac);
             sessionStorage.setItem("identity", response.data.identity);
             sessionStorage.setItem("expires", response.data.expires_at);
             document.location.href = "/";
