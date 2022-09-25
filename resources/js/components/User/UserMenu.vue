@@ -42,9 +42,9 @@
         <li v-if="!isLoggedIn">
           <router-link v-bind:to="{ name: 'login-page' }">登入</router-link>
         </li>
-        <!-- <li v-if="!isLoggedIn">
+        <li v-if="!isLoggedIn">
           <router-link v-bind:to="{ name: 'register-page' }">註冊</router-link>
-        </li> -->
+        </li>
       </ul>
     </div>
   </div>
@@ -61,25 +61,22 @@ export default {
   },
   created() {
     if (
+      // JSON.parse(sessionStorage.getItem("branch")) !== null
       sessionStorage.getItem("identity") !== null &&
       sessionStorage.getItem("identity") !== "undefined"
     ) {
       //       JSON.parse(sessionStorage.getItem("branch")) !== null
       this.name = sessionStorage.getItem("name");
+      // this.name = JSON.parse(sessionStorage.getItem("branch"))["udata"]["uac"];
 
       this.isLoggedIn = true;
       this.checkExpiresTime(sessionStorage.getItem("expires"));
+      // this.checkExpiresTime(
+      // JSON.parse(sessionStorage.getItem("branch"))["expires_at"]
+      // );
     } else {
       this.isLoggedIn = false;
     }
-
-    // if (
-    //   (axios.defaults.headers.common[
-    //     "Authorization"
-    //   ] = `Bearer ${this.accessToken}`)
-    // ) {
-    //   this.isLoggedIn = true;
-    // }
   },
   methods: {
     /**
@@ -95,6 +92,7 @@ export default {
           sessionStorage.removeItem("name");
           sessionStorage.removeItem("identity");
           sessionStorage.removeItem("expires");
+
           // sessionStorage.removeItem("branch");
 
           document.location.href = "/";
@@ -135,10 +133,11 @@ export default {
       // console.log(`兩個時間差距為 ${leftHours}小時${leftMins}分${leftSecs}秒`);
       if (leftHours >= 1 || leftMins >= 30) {
         // this.logout();
-        sessionStorage.removeItem("id");
-        sessionStorage.removeItem("name");
-        sessionStorage.removeItem("identity");
-        sessionStorage.removeItem("expires");
+        // sessionStorage.removeItem("id");
+        // sessionStorage.removeItem("name");
+        // sessionStorage.removeItem("identity");
+        // sessionStorage.removeItem("expires");
+        sessionStorage.removeItem("branch");
 
         document.location.href = "/";
         this.isLoggedIn = false;

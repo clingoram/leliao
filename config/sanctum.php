@@ -47,7 +47,6 @@ return [
     */
 
     'expiration'  => env("SANCTUM_TTL",  7200), // 2 hours
-    // 'expiration'  => env("SANCTUM_TTL",  600), // 10 minutes
 
     // 'expiration' => null,
 

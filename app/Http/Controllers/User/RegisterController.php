@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\User;
 
-use App\Http\Controllers\ApiAuth\ApiAuthController;
 use App\Models\Auth;
-use App\Http\Controllers\Hash\HashController;
 use Illuminate\Http\Request;
+use App\Http\Controllers\ApiAuth\ApiAuthController;
+use App\Http\Controllers\Cookie\CookieController;
+use App\Http\Controllers\Hash\HashController;
 
 /**
  * 註冊
@@ -57,6 +58,11 @@ class RegisterController extends UserController
             $user->created_at = date('Y/m/d H:i:s', time());
             $user->role = $roleIsset === 1 ? 1 : 2;
             $user->save();
+
+
+            // $setCookie = new CookieController();
+            // $cc = $setCookie->setCookie($user->name);
+            // echo $cc->getCookie();
 
             $createToken = new ApiAuthController();
             return $createToken->createToken($user, 201);
