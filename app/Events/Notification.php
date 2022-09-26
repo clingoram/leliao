@@ -42,6 +42,6 @@ class Notification implements ShouldBroadcast
 
         // 廣播頻道有三種可以選: Channel/PrivateChannel/PresenceChannel
         // Channel 代表任何使用者都可以訂閱的公共頻道，而 PrivateChannel 和 PresenceChannel 則代表需要授權的私人頻道。
-        return new PrivateChannel('notification', $this->receiverId);
+        return new PrivateChannel('notification.', $this->receiverId);
     }
 }
