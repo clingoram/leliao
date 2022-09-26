@@ -1,13 +1,12 @@
 import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router';
 
-
 import LoginComponent from "../components/User/LoginComponent.vue";
 import RegisterComponent from "../components/User/RegisterComponent.vue";
 import Management from "../components/Management/ManagementComponent.vue";
 import Info from "../components/Info/InfoComponent.vue";
-
 import AddArticleComponent from "../components/Post/AddArticleComponent.vue";
 import MainComponent from "../components/Content/MainContentComponent.vue";
+import Chat from "../components/Message/MessageComponent.vue";
 
 // Route 設定
 export const routes = [
@@ -22,6 +21,12 @@ export const routes = [
     path: '/about',
     name: "about",
     component: Info,
+  },
+  {
+    // 聊天(需登入)
+    path: '/message',
+    name: "message",
+    component: Chat,
   },
   {
     // 註冊，暫時註解

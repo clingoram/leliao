@@ -40,6 +40,9 @@
           <router-link v-bind:to="{ name: 'about' }">關於了聊</router-link>
         </li>
         <li v-if="!isLoggedIn">
+          <router-link v-bind:to="{ name: 'message' }">聊天室</router-link>
+        </li>
+        <li v-if="!isLoggedIn">
           <router-link v-bind:to="{ name: 'login-page' }">登入</router-link>
         </li>
         <li v-if="!isLoggedIn">

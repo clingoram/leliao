@@ -8,6 +8,7 @@ use App\Http\Controllers\User\ManagementController;
 use App\Http\Controllers\Forum\ForumController;
 use App\Http\Controllers\Post\PostController;
 use App\Http\Controllers\Comment\CommentController;
+use App\Http\Controllers\Chat\ContactController;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -46,11 +47,13 @@ Route::prefix('/lel')->group(function () {
     // 登入
     Route::post('/user/login', [LoginController::class, 'login']);
 
+    // realtime chat
+    // Route::get('/messages/{id}/{name}', [ContactController::class, 'check']);
+    Route::get('/messages', [ContactController::class, 'check']);
+
+
     // Protected routes
     Route::group(['middleware' => ['auth:sanctum']], function () {
-
-        // realtime chat
-        // Route::get('/messages', []);
 
         // 新增文章
         Route::post('/add_post', [PostController::class, 'create']);
