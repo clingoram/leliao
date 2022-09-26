@@ -5,7 +5,6 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="csrf-token" content="{{ csrf_token() }}">
-
   @vite(['resources/css/app.css', 'resources/js/app.js'])
 
   <title>{{ config('app.name', 'Laravel') }}</title>
@@ -24,6 +23,16 @@
   //   let socket_port = '3000';
   //   let socket = io(ip_address + ':' + socket_port);
   //   socket.on('connection');
+  // });
+  // var sock = io("{{env('PUBLISHER_URL')}}: {{env('BROADCAST_PORT')}}");
+  // sock.on('action - channel - one: App\\ Events\\ ActionEvent', function(data) {
+  //   //data.actionId and data.actionData hold the data that was broadcast
+  //   //process the data, add needed functionality here
+  //   var action = data.actionId;
+  //   var actionData = data.actionData;
+  //   if (action == "score_update" && actionData.team1_score) {
+  //     $("#team1_score").html(actionData.team1_score);
+  //   }
   // });
 </script>
 

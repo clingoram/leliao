@@ -77,13 +77,13 @@ export default {
      */
     contactPerson() {
       axios
-        // .get(
-        //   "api/lel/messages/" +
-        //     sessionStorage.getItem("id") +
-        //     "/" +
-        //     sessionStorage.getItem("name")
-        // )
-        .get("api/lel/messages")
+        .get(
+          "api/lel/messages/" +
+            sessionStorage.getItem("id") +
+            "/" +
+            sessionStorage.getItem("name")
+        )
+        // .get("api/lel/messages")
         .then((response) => {
           console.log(response.data.data_return);
           this.contactNames = response.data.data_return;

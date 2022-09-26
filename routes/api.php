@@ -47,13 +47,13 @@ Route::prefix('/lel')->group(function () {
     // 登入
     Route::post('/user/login', [LoginController::class, 'login']);
 
-    // realtime chat
-    // Route::get('/messages/{id}/{name}', [ContactController::class, 'check']);
-    Route::get('/messages', [ContactController::class, 'check']);
-
 
     // Protected routes
     Route::group(['middleware' => ['auth:sanctum']], function () {
+
+        // realtime chat
+        Route::get('/messages/{id}/{name}', [ContactController::class, 'check']);
+        // Route::get('/messages', [ContactController::class, 'check']);
 
         // 新增文章
         Route::post('/add_post', [PostController::class, 'create']);

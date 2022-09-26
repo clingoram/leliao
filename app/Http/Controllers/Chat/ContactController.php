@@ -10,25 +10,25 @@ use App\Http\Controllers\User\UserController;
 /**
  * 取得目前會員名單
  */
-class ContactController extends Controller
+class ContactController
 {
     /**
      * 檢查目前登入者role
      */
-    function check()
+    public function check(Request $request)
     {
         // 檢查role
-        // $role = new UserController();
-        // $role->setCheckRole($request);
-        // // 取得檢查結果
-        // $result = $role->getCheckRole();
-        // $checkRole = json_decode(json_encode($result[0]), true);
+        $role = new UserController();
+        $role->setCheckRole($request);
+        // 取得檢查結果
+        $result = $role->getCheckRole();
+        $checkRole = json_decode(json_encode($result[0]), true);
 
-        // if ($checkRole['role'] === 2 and ($checkRole['role'] !== 0 or $checkRole['role'] !== 1)) {
-        //     return $this->adminRole($request->id, $request->name);
-        // } else {
-        return $this->memberRole();
-        // }
+        if ($checkRole['role'] === 2 and ($checkRole['role'] !== 0 or $checkRole['role'] !== 1)) {
+            return $this->adminRole($request->id, $request->name);
+        } else {
+            return $this->memberRole();
+        }
     }
 
     /**
