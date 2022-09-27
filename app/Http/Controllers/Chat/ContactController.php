@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\User\UserController;
 
 /**
- * 取得目前會員名單
+ * 聊天室，取得目前會員名單
  */
 class ContactController
 {
@@ -27,7 +27,7 @@ class ContactController
         if ($checkRole['role'] === 2 and ($checkRole['role'] !== 0 or $checkRole['role'] !== 1)) {
             return $this->adminRole($request->id, $request->name);
         } else {
-            return $this->memberRole();
+            return $this->memberRole($request->id);
         }
     }
 
@@ -37,11 +37,12 @@ class ContactController
     public function adminRole(int $id, string $name)
     {
         $allData = Auth::select(
-            'users.name',
-            'users.email',
-            'users.role',
-            'users.created_at',
-            'users.updated_at'
+            'users.id',
+            'users.name'
+            // 'users.email',
+            // 'users.role',
+            // 'users.created_at',
+            // 'users.updated_at'
         )->where('id', '!=', $id)
             ->where('name', '!=', $name)
             ->where('deleted_at', '=', null)
@@ -62,12 +63,12 @@ class ContactController
     /**
      * 會員只可取得同樣是會員的名單，不能看到管理員有誰
      */
-    public function memberRole()
+    public function memberRole(int $id)
     {
         $user = Auth::select(
             'users.id',
             'users.name'
-        )->where('role', '!=', 2)->get();
+        )->where('role', '!=', 2)->where('id', '!=', $id)->get();
 
         return response()->json([
             'status' => true,

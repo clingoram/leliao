@@ -6,7 +6,7 @@ import Management from "../components/Management/ManagementComponent.vue";
 import Info from "../components/Info/InfoComponent.vue";
 import AddArticleComponent from "../components/Post/AddArticleComponent.vue";
 import MainComponent from "../components/Content/MainContentComponent.vue";
-import Chat from "../components/Message/MessageComponent.vue";
+import Chat from "../components/Chat/MessageComponent.vue";
 
 // Route 設定
 export const routes = [

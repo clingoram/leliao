@@ -52,33 +52,12 @@ window.axios.defaults.withCredentials = true;
 //   enabledTransports: ['ws', 'wss'],
 // });
 
+// client-side
 import Echo from 'laravel-echo';
 import socket from 'socket.io-client';
 
 window.io = socket;
 window.Echo = new Echo({
   broadcaster: 'socket.io',
-  // host: window.location.hostname + ':6001'
-  host: window.location.hostname + ':3000'
-
+  host: window.location.hostname + ':6001'
 });
-
-// window.Echo = new Echo({
-//   // ...
-//   authorizer: (channel, options) => {
-//     return {
-//       authorize: (socketId, callback) => {
-//         axios.post('/api/broadcasting/auth', {
-//           socket_id: socketId,
-//           channel_name: channel.name
-//         })
-//           .then(response => {
-//             callback(null, response.data);
-//           })
-//           .catch(error => {
-//             callback(error);
-//           });
-//       }
-//     };
-//   },
-// })
