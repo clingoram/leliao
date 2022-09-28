@@ -38,4 +38,13 @@ class MessagePublic implements ShouldBroadcast
         // return new PrivateChannel('channel-name');
         return new Channel('public-chat');
     }
+
+    // add
+    public function broadcastWith()
+    {
+        return [
+            'user' => $this->username,
+            'message' => $this->message
+        ];
+    }
 }

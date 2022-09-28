@@ -15,7 +15,8 @@
       <div class="col-8 px-0 shadow">
         <!-- 聊天視窗 -->
         <table class="chatTable">
-          <tr>
+          <receiver-component></receiver-component>
+          <!-- <tr>
             <td>
               <div class="rightChatContent">
                 <div class="other">
@@ -33,26 +34,34 @@
                 </div>
               </div>
             </td>
-          </tr>
-          <tr>
-            <td>
-              <div class="msg">
+          </tr> -->
+          <!-- <tr> -->
+          <!-- <td>
+              <div class="msg" id="msg">
                 <input
                   type="text"
                   placeholder="輸入訊息"
                   class="form-control"
-                  onchange="tt(this.value)"
                 />
               </div>
-            </td>
-          </tr>
+            </td> -->
+          <sender></sender>
+          <!-- </tr> -->
         </table>
       </div>
     </div>
   </div>
 </template>
+
 <script>
+// socket io - client side
+import ReceiverComponent from "./ReceiverComponent.vue";
+import Sender from "./SendComponent.vue";
 export default {
+  components: {
+    ReceiverComponent,
+    Sender,
+  },
   data() {
     return {
       isLoggedIn: false,
@@ -72,6 +81,7 @@ export default {
     this.contactPerson();
   },
   methods: {
+    sendChat() {},
     /**
      * 聯絡人
      */
@@ -83,9 +93,8 @@ export default {
             "/" +
             sessionStorage.getItem("name")
         )
-        // .get("api/lel/messages")
         .then((response) => {
-          console.log(response.data.data_return);
+          // console.log(response.data.data_return);
           this.contactNames = response.data.data_return;
         })
         .catch((error) => {

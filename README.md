@@ -16,6 +16,8 @@
 - [Vite](https://vitejs.dev/).
 - [Heroku](https://www.heroku.com/).
 - [Sanctum](https://github.com/laravel/sanctum).
+- [PHPredis](https://github.com/phpredis/phpredis).
+- [Laravel-echo-server](https://github.com/tlaverdure/laravel-echo-server).
 
 <hr>
 2022-9-23 更新:<br>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Events\MessagePublic;
 use App\Http\Controllers\User\RegisterController;
 use App\Http\Controllers\User\LoginController;
 use App\Http\Controllers\User\LogoutController;
@@ -9,7 +10,7 @@ use App\Http\Controllers\Forum\ForumController;
 use App\Http\Controllers\Post\PostController;
 use App\Http\Controllers\Comment\CommentController;
 use App\Http\Controllers\Chat\ContactController;
-
+use App\Models\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -53,7 +54,11 @@ Route::prefix('/lel')->group(function () {
 
         // realtime chat
         Route::get('/messages/{id}/{name}', [ContactController::class, 'check']);
-        // Route::get('/messages', [ContactController::class, 'check']);
+        // test
+        Route::post('/message', function ($request) {
+            // broadcast(new MessagePublic(auth()->user(), $request->input('message')));
+            return $request->input('message');
+        });
 
         // 新增文章
         Route::post('/add_post', [PostController::class, 'create']);

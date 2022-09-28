@@ -25,8 +25,8 @@ class MessagePrivate implements ShouldBroadcast
      */
     public function __construct(string $message, int $senderId, int $conversationId)
     {
-        $this->message = $message;
         $this->senderId = $senderId;
+        $this->message = $message;
         $this->conversationId = $conversationId;
     }
 
