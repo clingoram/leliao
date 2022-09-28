@@ -125,7 +125,7 @@ export default {
       let leftSecs = Math.floor(diff / ONE_SEC);
 
       // console.log(`兩個時間差距為 ${leftHours}小時${leftMins}分${leftSecs}秒`);
-      if (leftHours >= 1 || leftMins >= 30) {
+      if (leftHours >= 1 || leftMins >= 10) {
         sessionStorage.removeItem("id");
         sessionStorage.removeItem("name");
         sessionStorage.removeItem("identity");
