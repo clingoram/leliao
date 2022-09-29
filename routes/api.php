@@ -60,6 +60,8 @@ Route::prefix('/lel')->group(function () {
 
         // 帳號資訊頁面
         Route::get('/management/{id}/{name}', [ManagementController::class, 'checkRole']);
+        // 取得該帳號所有留言
+        Route::get('/allreplies/{id}/{name}', [PostController::class, 'getAllReplies']);
 
         // 登出(token未過期)
         Route::post('/logout', [LogoutController::class, 'logout']);
