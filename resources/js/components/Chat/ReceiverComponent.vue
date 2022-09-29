@@ -28,8 +28,24 @@ export default {
   data() {
     return {
       messages: ["Hello"],
+      // messages: [],
     };
   },
-  mounted() {},
+  created() {
+    this.receiveMessages();
+  },
+  methods: {
+    receiveMessages() {
+      let ip_address = "127.0.0.1";
+      let socket_port = "3000";
+      let socket = io(ip_address + ":" + socket_port);
+      socket.on("connection");
+
+      socket.on("sendChatToClient", function (message) {
+        $(".chat-content ul").append(`<li>${message}</li>`);
+        // this.messages = message;
+      });
+    },
+  },
 };
 </script>

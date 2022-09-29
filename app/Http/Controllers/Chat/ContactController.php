@@ -68,7 +68,7 @@ class ContactController
         $user = Auth::select(
             'users.id',
             'users.name'
-        )->where('role', '!=', 2)->where('id', '!=', $id)->get();
+        )->where('id', '!=', $id)->get();
 
         return response()->json([
             'status' => true,

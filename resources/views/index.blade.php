@@ -64,7 +64,6 @@
 </body>
 <!-- jQuery -->
 <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
-<!-- <script src="https://cdn.socket.io/4.5.0/socket.io.min.js"></script> -->
 <script>
   // client side
   // $(function() {

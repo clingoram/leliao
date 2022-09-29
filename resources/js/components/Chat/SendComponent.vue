@@ -9,7 +9,7 @@
       <div class="msg" id="msg">
         <input
           type="text"
-          v-model="message"
+          v-model="inputMessage"
           placeholder="輸入訊息"
           class="form-control"
         />
@@ -28,17 +28,35 @@
   </tr>
 </template>
 <script>
+// import io from "socket.io-client";
 export default {
   data() {
     return {
-      message: "",
+      inputMessage: "",
     };
   },
+  created() {},
   methods: {
     submit() {
-      axios.post("api/lel/message", {
-        message: this.message,
-      });
+      console.log("chat");
+
+      let ip_address = "127.0.0.1";
+      let socket_port = "3000";
+      let socket = io(ip_address + ":" + socket_port);
+      socket.on("connection");
+
+      if (this.inputMessage !== null) {
+        // 觸發事件，把訊息傳到server.js
+        socket.emit("sendChatToServer", this.inputMessage);
+
+        // socket.on("sendChatToClient", function (message) {
+        //   $(".chat-content ul").append(`<li>${message}</li>`);
+        // });
+      }
+
+      // axios.post("api/lel/message", {
+      //   message: this.message,
+      // });
     },
   },
 };

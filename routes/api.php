@@ -55,10 +55,10 @@ Route::prefix('/lel')->group(function () {
         // realtime chat
         Route::get('/messages/{id}/{name}', [ContactController::class, 'check']);
         // test
-        Route::post('/message', function ($request) {
-            // broadcast(new MessagePublic(auth()->user(), $request->input('message')));
-            return $request->input('message');
-        });
+        // Route::post('/message', function ($request) {
+        //     // broadcast(new MessagePublic(auth()->user(), $request->input('message')));
+        //     return $request->input('message');
+        // });
 
         // 新增文章
         Route::post('/add_post', [PostController::class, 'create']);

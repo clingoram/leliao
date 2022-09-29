@@ -15,8 +15,8 @@
       <div class="col-8 px-0 shadow">
         <!-- 聊天視窗 -->
         <table class="chatTable">
-          <receiver-component></receiver-component>
-          <!-- <tr>
+          <!-- <receiver-component></receiver-component> -->
+          <tr>
             <td>
               <div class="rightChatContent">
                 <div class="other">
@@ -34,19 +34,23 @@
                 </div>
               </div>
             </td>
-          </tr> -->
-          <!-- <tr> -->
-          <!-- <td>
+          </tr>
+          <tr>
+            <td>
               <div class="msg" id="msg">
                 <input
                   type="text"
                   placeholder="輸入訊息"
                   class="form-control"
+                  v-model="inputMessage"
                 />
+                <button type="button" v-on:click="submit">
+                  <i class="fa-regular fa-paper-plane"></i>
+                </button>
               </div>
-            </td> -->
-          <sender></sender>
-          <!-- </tr> -->
+            </td>
+            <!-- <sender></sender> -->
+          </tr>
         </table>
       </div>
     </div>
@@ -55,17 +59,21 @@
 
 <script>
 // socket io - client side
+
 import ReceiverComponent from "./ReceiverComponent.vue";
 import Sender from "./SendComponent.vue";
+
 export default {
   components: {
-    ReceiverComponent,
-    Sender,
+    // ReceiverComponent,
+    // Sender,
   },
   data() {
     return {
       isLoggedIn: false,
       contactNames: [],
+      inputMessage: "",
+      messages: [],
     };
   },
   created() {
@@ -81,7 +89,29 @@ export default {
     this.contactPerson();
   },
   methods: {
-    sendChat() {},
+    submit() {
+      console.log("chat");
+
+      let ip_address = "127.0.0.1";
+      let socket_port = "3000";
+      let socket = io(ip_address + ":" + socket_port);
+      socket.on("connection");
+
+      if (this.inputMessage !== null) {
+        console.log(`Me: ` + this.inputMessage);
+
+        // 觸發事件，把訊息傳到server.js
+        socket.emit("sendChatToServer", this.inputMessage);
+        // 清空
+        this.inputMessage = "";
+      }
+      // receive
+      socket.on("sendChatToClient", function (message) {
+        // $(".chat-content ul").append(`<li>${message}</li>`);
+        console.log("Other:" + message);
+        // this.messages = message;
+      });
+    },
     /**
      * 聯絡人
      */
@@ -93,6 +123,7 @@ export default {
             "/" +
             sessionStorage.getItem("name")
         )
+        // .get("api/lel/messages/" + sessionStorage.getItem("id"))
         .then((response) => {
           // console.log(response.data.data_return);
           this.contactNames = response.data.data_return;
