@@ -34,6 +34,26 @@
           </template>
         </tbody>
       </table>
+      <br />
+      <h1>我創造的回覆</h1>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">時間</th>
+            <th scope="col">文章標題</th>
+            <th scope="col">留言內容</th>
+          </tr>
+        </thead>
+        <tbody>
+          <template v-for="reply in posts" v-bind:key="reply.id">
+            <tr>
+              <td>{{ timeLag(reply.created_at) }}</td>
+              <td>{{ reply.title }}</td>
+              <td>{{ reply.content }}</td>
+            </tr>
+          </template>
+        </tbody>
+      </table>
     </div>
     <div v-else>
       <p class="warning">請先登入。</p>
@@ -46,6 +66,7 @@ export default {
     return {
       isLoggedIn: false,
       members: [],
+      posts: [],
     };
   },
   created() {
@@ -55,6 +76,7 @@ export default {
     ) {
       this.isLoggedIn = true;
       this.management();
+      this.getPostsReply();
     }
   },
   methods: {
@@ -81,6 +103,25 @@ export default {
      */
     details() {
       alert("目前這功能還沒開發完喔");
+    },
+    /**
+     * 取得該帳號所有留言(留言時間、留言的文章標題、留言內容)
+     */
+    getPostsReply() {
+      axios
+        .get(
+          "api/lel/allreplies/" +
+            sessionStorage.getItem("id") +
+            "/" +
+            sessionStorage.getItem("name")
+        )
+        .then((response) => {
+          // console.log(response);
+          this.posts = response.data.data_return;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
     /**
      * 轉換時間格式

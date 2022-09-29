@@ -7,6 +7,7 @@ use App\Models\Auth;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Comment;
 use Illuminate\Support\Facades\Validator;
 
 /**
@@ -81,6 +82,28 @@ class PostController extends Controller
                 'data_return' => null,
             ], 400);
         }
+    }
+
+    /**
+     * 取得該帳號所有留言
+     * 回傳留言的文章標題、留言內容、留言時間
+     */
+    public function getAllReplies(int $id, string $name)
+    {
+        $all = Comment::select(
+            'comments.id',
+            'comments.content',
+            'comments.created_at',
+            'posts.title'
+        )->join('posts', 'posts.id', '=', 'comments.post_id')
+            ->where('user_id', $id)
+            ->where('name', $name)
+            ->get();
+        return response()->json([
+            'status' => true,
+            'message' => 'Success',
+            'data_return' => $all
+        ], 200);
     }
 
     /**

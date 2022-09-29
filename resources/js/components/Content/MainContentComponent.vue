@@ -134,10 +134,18 @@
                         v-for="comments in replyData"
                         v-bind:key="comments.id"
                       >
+                        <!-- <p
+                          class="replyer"
+                          v-on:click="
+                            editContent(comments.id, comments.replyName)
+                          "
+                        > -->
                         <p class="replyer">
                           {{ comments.replyName }} -
                           {{ timeLag(comments.created_at) }}
+                          <!-- <i class="fa-solid fa-pen"></i> -->
                         </p>
+
                         {{ comments.content }}<br />
                         <p
                           class="heart"
@@ -351,6 +359,17 @@ export default {
           });
       }
     },
+    /**
+     * 編輯回應內容
+     * 只能編輯自己的回應內容
+     * */
+    // editContent(id, name) {
+    //   console.log("edit");
+    //   if (name === sessionStorage.getItem("name")) {
+    //   } else {
+    //     return;
+    //   }
+    // },
     /**
      * 關閉modal時清除modal內留言、該文章所有內容
      * */
