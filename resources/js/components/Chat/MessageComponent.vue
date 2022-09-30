@@ -1,26 +1,37 @@
 <template>
   <!-- 聊天，需登入 -->
-  <div class="container chatarea">
+  <div class="container text-center mainarea">
     <div class="row">
-      <div class="col-2 py-3 px-0 contact_person">
-        <!-- 聯絡人 -->
-        <table class="chatTable">
-          <template v-for="user in contactNames" v-bind:key="user.id">
-            <tr>
-              <td>{{ user.name }}</td>
-            </tr>
-          </template>
-        </table>
+      <div class="col-3">
+        <div class="messages" v-for="m in room" v-bind:key="m.id">
+          <button
+            class="messagesButton"
+            name="{{m.text}}"
+            type="submit"
+            value="{{m.id}}"
+            v-on:click="contactPerson(m.id)"
+          >
+            {{ m.name }}
+          </button>
+        </div>
       </div>
-      <div class="col-8 px-0 shadow">
-        <!-- 聊天視窗 -->
-        <table class="chatTable">
-          <!-- <receiver-component></receiver-component> -->
+      <div class="col-6">
+        <table class="chatTable" v-if="contactNames.length !== 0">
+          <select
+            class="form-select"
+            aria-label="Default select example"
+            v-for="user in contactNames"
+            v-bind:key="user.id"
+          >
+            <option selected>聯絡人</option>
+            <option value="1">{{ user.name }}</option>
+          </select>
+          <!-- 聊天視窗 -->
           <tr>
             <td>
               <div class="rightChatContent">
-                <div class="other">
-                  <div class="dialog">對方說什麼</div>
+                <!-- <div class="other">
+                  <div class="dialog"></div>
                   <p>12:34</p>
                 </div>
                 <div class="self">
@@ -31,7 +42,7 @@
                 <div class="other">
                   <div class="dialog">對方再說甚麼</div>
                   <p>12:34</p>
-                </div>
+                </div> -->
               </div>
             </td>
           </tr>
@@ -54,6 +65,7 @@
         </table>
       </div>
     </div>
+    <div class="col-1"></div>
   </div>
 </template>
 
@@ -73,7 +85,11 @@ export default {
       isLoggedIn: false,
       contactNames: [],
       inputMessage: "",
-      messages: [],
+      room: [
+        { id: 1, name: "私人訊息", text: "privateChat" },
+        { id: 2, name: "群組", text: "groupChat" },
+      ],
+      chats: "",
     };
   },
   created() {
@@ -86,7 +102,7 @@ export default {
     } else {
       this.isLoggedIn = false;
     }
-    this.contactPerson();
+    // this.contactPerson();
   },
   methods: {
     submit() {
@@ -98,7 +114,7 @@ export default {
       socket.on("connection");
 
       if (this.inputMessage !== null) {
-        console.log(`Me: ` + this.inputMessage);
+        console.log("Me: " + this.inputMessage);
 
         // 觸發事件，把訊息傳到server.js
         socket.emit("sendChatToServer", this.inputMessage);
@@ -107,30 +123,45 @@ export default {
       }
       // receive
       socket.on("sendChatToClient", function (message) {
-        // $(".chat-content ul").append(`<li>${message}</li>`);
+        // $(".rightChatContent ul").append(`<p>${message}</p>`);
         console.log("Other:" + message);
-        // this.messages = message;
+        // this.chats = message;
       });
     },
     /**
      * 聯絡人
      */
-    contactPerson() {
-      axios
-        .get(
-          "api/lel/messages/" +
-            sessionStorage.getItem("id") +
-            "/" +
-            sessionStorage.getItem("name")
-        )
-        // .get("api/lel/messages/" + sessionStorage.getItem("id"))
-        .then((response) => {
-          // console.log(response.data.data_return);
-          this.contactNames = response.data.data_return;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+    contactPerson(chatRoomId) {
+      if (chatRoomId !== 2) {
+        axios
+          .get(
+            "api/lel/messages/privatechat/" +
+              sessionStorage.getItem("id") +
+              "/" +
+              sessionStorage.getItem("name")
+          )
+          // .get("api/lel/messages/" + sessionStorage.getItem("id"))
+          .then((response) => {
+            console.log(response.data.data_return);
+            this.contactNames = response.data.data_return;
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      } else {
+        console.log("群組");
+        this.contactNames = "";
+        // axios
+        //   .get("api/lel/messages/public")
+        //   // .get("api/lel/messages/" + sessionStorage.getItem("id"))
+        //   .then((response) => {
+        //     console.log(response.data.data_return);
+        //     this.contactNames = response.data.data_return;
+        //   })
+        //   .catch((error) => {
+        //     console.log(error);
+        //   });
+      }
     },
   },
 };

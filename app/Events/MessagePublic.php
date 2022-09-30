@@ -10,12 +10,15 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
+/**
+ * 群組
+ */
 class MessagePublic implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $username;
-    public $message;
+    public $username; // 發訊息人姓名
+    public $message; // 訊息內容
 
     /**
      * Create a new event instance.

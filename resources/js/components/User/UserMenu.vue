@@ -1,6 +1,11 @@
 <template>
   <!-- 使用者資訊(登出、登入、註冊) -->
   <!-- 判斷是否有登入，依據狀況在dropdown顯示不同頁面連結 -->
+  <span v-if="isLoggedIn === true">
+    <router-link v-bind:to="{ name: 'message' }"
+      ><i class="fa-regular fa-envelope"></i
+    ></router-link>
+  </span>
   <div class="dropdown">
     <div v-if="isLoggedIn === true">
       <button
@@ -11,13 +16,14 @@
       >
         {{ this.name }}
       </button>
+
       <ul class="dropdown-menu">
         <li>
           <router-link v-bind:to="{ name: 'about' }">關於了聊</router-link>
         </li>
-        <li>
-          <router-link v-bind:to="{ name: 'message' }">聊天室</router-link>
-        </li>
+        <!-- <li>
+          <router-link v-bind:to="{ name: 'message' }">訊息</router-link>
+        </li> -->
         <li>
           <router-link v-bind:to="{ name: 'management' }">帳號資訊</router-link>
         </li>

@@ -52,8 +52,12 @@ Route::prefix('/lel')->group(function () {
     // Protected routes
     Route::group(['middleware' => ['auth:sanctum']], function () {
 
-        // realtime chat
-        Route::get('/messages/{id}/{name}', [ContactController::class, 'check']);
+        // Realtime Chat:
+        // private chat
+        Route::get('/messages/privatechat/{id}/{name}', [ContactController::class, 'check']);
+        // public chat
+        // Route::get('/messages/public', [ContactController::class, 'check']);
+
         // test
         // Route::post('/message', function ($request) {
         //     // broadcast(new MessagePublic(auth()->user(), $request->input('message')));
