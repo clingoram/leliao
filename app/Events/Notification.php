@@ -21,16 +21,23 @@ class Notification implements ShouldBroadcast
     public $senderUserName; // 寄件人姓名
     public $receiverId; // 收件人ID
 
+    public $message;
+
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(int $senderId, string $senderName, int $receiverId)
+    // public function __construct(int $senderId, string $senderName, int $receiverId)
+    // {
+    //     $this->senderId = $senderId;
+    //     $this->senderUserName = $senderName;
+    //     $this->receiverId = $receiverId;
+    // }
+
+    public function __construct()
     {
-        $this->senderId = $senderId;
-        $this->senderUserName = $senderName;
-        $this->receiverId = $receiverId;
+        $this->message = "Test New Message.";
     }
 
     /**
@@ -46,5 +53,13 @@ class Notification implements ShouldBroadcast
         // 廣播頻道有三種可以選: Channel/PrivateChannel/PresenceChannel
         // Channel 代表任何使用者都可以訂閱的公共頻道，而 PrivateChannel 和 PresenceChannel 則代表需要授權的私人頻道。
         return new PrivateChannel('notification.', $this->receiverId);
+    }
+
+    /**
+     * 自訂廣播名稱
+     */
+    public function broadcastAs()
+    {
+        return 'NewMessage';
     }
 }

@@ -108,31 +108,32 @@ export default {
     submit() {
       console.log("chat");
 
-      let ip_address = "127.0.0.1";
-      let socket_port = "3000";
-      let socket = io(ip_address + ":" + socket_port);
-      socket.on("connection");
+      // let ip_address = "127.0.0.1";
+      // let socket_port = "3000";
+      // let socket = io(ip_address + ":" + socket_port);
+      // socket.on("connection");
 
-      if (this.inputMessage !== null) {
-        console.log("Me: " + this.inputMessage);
+      // if (this.inputMessage !== null) {
+      //   console.log("Me: " + this.inputMessage);
 
-        // 觸發事件，把訊息傳到server.js
-        socket.emit("sendChatToServer", this.inputMessage);
-        // 清空
-        this.inputMessage = "";
-      }
-      // receive
-      socket.on("sendChatToClient", function (message) {
-        // $(".rightChatContent ul").append(`<p>${message}</p>`);
-        console.log("Other:" + message);
-        // this.chats = message;
-      });
+      //   // 觸發事件，把訊息傳到server.js
+      //   socket.emit("sendChatToServer", this.inputMessage);
+      //   // 清空
+      //   this.inputMessage = "";
+      // }
+      // // receive
+      // socket.on("sendChatToClient", function (message) {
+      //   // $(".rightChatContent ul").append(`<p>${message}</p>`);
+      //   console.log("Other:" + message);
+      //   // this.chats = message;
+      // });
     },
     /**
      * 聯絡人
      */
     contactPerson(chatRoomId) {
       if (chatRoomId !== 2) {
+        // 和特定聯絡人傳訊息
         axios
           .get(
             "api/lel/messages/privatechat/" +
@@ -142,8 +143,12 @@ export default {
           )
           // .get("api/lel/messages/" + sessionStorage.getItem("id"))
           .then((response) => {
-            console.log(response.data.data_return);
-            this.contactNames = response.data.data_return;
+            // console.log(response.data.data_return);
+            if (response.data.data_return !== "undefined") {
+              this.contactNames = response.data.data_return;
+            } else {
+              this.contactNames = [];
+            }
           })
           .catch((error) => {
             console.log(error);
