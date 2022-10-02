@@ -64,8 +64,8 @@ class RegisterController extends UserController
             // $cc = $setCookie->setCookie($user->name);
             // echo $cc->getCookie();
 
-            $createToken = new ApiAuthController();
-            return $createToken->createToken($user, 201);
+            // $createToken = new ApiAuthController();
+            // return $createToken->createToken($user, 201);
         } else {
             return response()->json([
                 'status' => 'error',

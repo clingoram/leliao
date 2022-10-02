@@ -17,15 +17,17 @@
       </div>
       <div class="col-6">
         <table class="chatTable" v-if="contactNames.length !== 0">
-          <select
-            class="form-select"
-            aria-label="Default select example"
-            v-for="user in contactNames"
-            v-bind:key="user.id"
-          >
+          <select class="form-select" aria-label="Default select example">
             <option selected>聯絡人</option>
-            <option value="1">{{ user.name }}</option>
+            <option
+              v-for="user in contactNames"
+              v-bind:key="user.id"
+              v-bind:value="user.id"
+            >
+              {{ user.name }}
+            </option>
           </select>
+
           <!-- 聊天視窗 -->
           <tr>
             <td>
