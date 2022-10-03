@@ -1,4 +1,31 @@
 // // socket io - server side.
+var app = require('express')();
+var server = require('http').Server(app);
+var io = require('socket.io')(server);
+var Redis = require('ioredis');
+const redis = new Redis();
+
+
+var redisClient = redis.createClient();
+io.on('connection', function (socket) {
+
+  console.log('Redis client connected');
+
+  redisClient.subscribe('message');
+
+  redisClient.on("message", function (channel, data) {
+    socket.emit(channel, data);
+  });
+
+  socket.on('disconnect', function () {
+    redisClient.quit();
+  });
+});
+
+server.listen(3000, function () {
+  console.log('Server is running.Listening on *:3000');
+});
+
 // 'use strict';
 // const express = require('express');
 // const app = express();

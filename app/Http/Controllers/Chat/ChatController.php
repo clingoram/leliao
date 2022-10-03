@@ -10,7 +10,7 @@ use App\Http\Controllers\User\UserController;
 /**
  * 聊天室，取得目前會員名單
  */
-class ContactController
+class ChatController
 {
     /**
      * 檢查目前登入者role
@@ -74,5 +74,13 @@ class ContactController
             'status' => true,
             'data_return' => $user
         ], 200);
+    }
+
+    /**
+     * 是否有這收信人
+     */
+    public function checkIsset(int $id)
+    {
+        return Auth::where('id', $id)->exists();
     }
 }

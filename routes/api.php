@@ -9,8 +9,11 @@ use App\Http\Controllers\User\ManagementController;
 use App\Http\Controllers\Forum\ForumController;
 use App\Http\Controllers\Post\PostController;
 use App\Http\Controllers\Comment\CommentController;
-use App\Http\Controllers\Chat\ContactController;
-use App\Models\Auth;
+use App\Http\Controllers\Chat\ChatController;
+use App\Http\Controllers\Chat\PrivateMessageController;
+
+// use App\Models\Auth;
+// use App\Models\PrivateMessage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -54,7 +57,9 @@ Route::prefix('/lel')->group(function () {
 
         // Realtime Chat:
         // private chat
-        Route::get('/messages/privatechat/{id}/{name}', [ContactController::class, 'check']);
+        Route::get('/messages/contact/{id}/{name}', [ChatController::class, 'check']);
+        Route::post('/messages/privatechat', [PrivateMessageController::class, 'sendMessage']);
+
         // public chat
         // Route::get('/messages/public', [ContactController::class, 'check']);
 

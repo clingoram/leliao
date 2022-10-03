@@ -17,7 +17,11 @@
       </div>
       <div class="col-6">
         <table class="chatTable" v-if="contactNames.length !== 0">
-          <select class="form-select" aria-label="Default select example">
+          <select
+            class="form-select"
+            aria-label="Default select example"
+            v-model="inputMessage.receiver"
+          >
             <option selected>聯絡人</option>
             <option
               v-for="user in contactNames"
@@ -32,6 +36,10 @@
           <tr>
             <td>
               <div class="rightChatContent">
+                <div class="chat-content">
+                  <ul></ul>
+                </div>
+
                 <!-- <div class="other">
                   <div class="dialog"></div>
                   <p>12:34</p>
@@ -55,7 +63,7 @@
                   type="text"
                   placeholder="輸入訊息"
                   class="form-control"
-                  v-model="inputMessage"
+                  v-model="inputMessage.message"
                 />
                 <button type="button" v-on:click="submit">
                   <i class="fa-regular fa-paper-plane"></i>
@@ -86,7 +94,11 @@ export default {
     return {
       isLoggedIn: false,
       contactNames: [],
-      inputMessage: "",
+      inputMessage: {
+        sender: sessionStorage.getItem("id"),
+        receiver: "",
+        message: "",
+      },
       room: [
         { id: 1, name: "私人訊息", text: "privateChat" },
         { id: 2, name: "群組", text: "groupChat" },
@@ -101,14 +113,41 @@ export default {
     ) {
       this.name = sessionStorage.getItem("name");
       this.isLoggedIn = true;
+      this.contactPerson();
     } else {
       this.isLoggedIn = false;
     }
-    // this.contactPerson();
   },
   methods: {
     submit() {
       console.log("chat");
+      // console.log(this.inputMessage);
+
+      // let socket = io.connect("http://localhost:3000");
+      let ip_address = "127.0.0.1";
+      let socket_port = "3000";
+      let socket = io(ip_address + ":" + socket_port);
+      socket.on("connection");
+
+      socket.on("message", function (data) {
+        data = jQuery.parseJSON(data);
+        $(".chat-content ul").append(
+          "<strong>" + data.user + ":</strong><li>" + data.message + "</li>"
+        );
+      });
+
+      if (this.inputMessage.message !== null) {
+        axios
+          .post("api/lel/messages/privatechat", {
+            inputMessage: this.inputMessage,
+          })
+          .then((response) => {
+            console.log(response);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
 
       // let ip_address = "127.0.0.1";
       // let socket_port = "3000";
@@ -125,7 +164,7 @@ export default {
       // }
       // // receive
       // socket.on("sendChatToClient", function (message) {
-      //   // $(".rightChatContent ul").append(`<p>${message}</p>`);
+      //   // $(".rightChatContent ul").append(`<li>${message}</li>`);
       //   console.log("Other:" + message);
       //   // this.chats = message;
       // });
@@ -138,7 +177,7 @@ export default {
         // 和特定聯絡人傳訊息
         axios
           .get(
-            "api/lel/messages/privatechat/" +
+            "api/lel/messages/contact/" +
               sessionStorage.getItem("id") +
               "/" +
               sessionStorage.getItem("name")
