@@ -106,6 +106,11 @@ export default {
       chats: "",
     };
   },
+  // mounted: function () {
+  //   window.Echo.channel("channel-name").listen("Testevent", (d) =>
+  //     console.log(d)
+  //   );
+  // },
   created() {
     if (
       sessionStorage.getItem("identity") !== null &&
@@ -124,30 +129,49 @@ export default {
       // console.log(this.inputMessage);
 
       // let socket = io.connect("http://localhost:3000");
-      let ip_address = "127.0.0.1";
-      let socket_port = "3000";
-      let socket = io(ip_address + ":" + socket_port);
-      socket.on("connection");
+      // let ip_address = "127.0.0.1";
+      // let socket_port = "3000";
+      // let socket = io(ip_address + ":" + socket_port);
+      // socket.on("connection");
 
-      socket.on("message", function (data) {
-        data = jQuery.parseJSON(data);
-        $(".chat-content ul").append(
-          "<strong>" + data.user + ":</strong><li>" + data.message + "</li>"
-        );
-      });
+      // socket.on("message", function (data) {
+      //   data = jQuery.parseJSON(data);
+      //   $(".chat-content ul").append(
+      //     "<strong>" + data.user + ":</strong><li>" + data.message + "</li>"
+      //   );
+      // });
 
-      if (this.inputMessage.message !== null) {
-        axios
-          .post("api/lel/messages/privatechat", {
-            inputMessage: this.inputMessage,
-          })
-          .then((response) => {
-            console.log(response);
-          })
-          .catch((error) => {
-            console.log(error);
-          });
+      if (
+        this.inputMessage.message !== null &&
+        this.inputMessage.sender !== null
+      ) {
+        // axios
+        //   .post("api/lel/messages/privatechat", {
+        //     inputMessage: this.inputMessage,
+        //   })
+        //   .then((response) => {
+        //     console.log(response);
+        //   })
+        //   .catch((error) => {
+        //     console.log(error);
+        //   });
+
+        // 建立 socket.io 的連線
+        var notification = io.connect("http://localhost:6379");
+        // 當從 socket.io server 收到 notification 時將訊息印在 console 上
+        notification.on("notification", function (message) {
+          console.log(message);
+        });
+
+        // console.log("Me: " + this.inputMessage.message);
+        // socket.emit("sendChatToServer", this.inputMessage.message);
+        // this.inputMessage.message = "";
       }
+      // socket.on("sendChatToClient", function (message) {
+      //   // $(".rightChatContent ul").append(`<li>${message}</li>`);
+      //   console.log("Other:" + message);
+      //   // this.chats = message;
+      // });
 
       // let ip_address = "127.0.0.1";
       // let socket_port = "3000";

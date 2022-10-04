@@ -58,7 +58,7 @@ Route::prefix('/lel')->group(function () {
         // Realtime Chat:
         // private chat
         Route::get('/messages/contact/{id}/{name}', [ChatController::class, 'check']);
-        Route::post('/messages/privatechat', [PrivateMessageController::class, 'sendMessage']);
+        // Route::post('/messages/privatechat', [PrivateMessageController::class, 'sendMessage']);
 
         // public chat
         // Route::get('/messages/public', [ContactController::class, 'check']);
