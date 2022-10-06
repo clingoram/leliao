@@ -145,33 +145,11 @@ export default {
         this.inputMessage.message !== null &&
         this.inputMessage.sender !== null
       ) {
-        // axios
-        //   .post("api/lel/messages/privatechat", {
-        //     inputMessage: this.inputMessage,
-        //   })
-        //   .then((response) => {
-        //     console.log(response);
-        //   })
-        //   .catch((error) => {
-        //     console.log(error);
-        //   });
-
-        // 建立 socket.io 的連線
-        var notification = io.connect("http://localhost:6379");
-        // 當從 socket.io server 收到 notification 時將訊息印在 console 上
-        notification.on("notification", function (message) {
-          console.log(message);
-        });
-
-        // console.log("Me: " + this.inputMessage.message);
-        // socket.emit("sendChatToServer", this.inputMessage.message);
-        // this.inputMessage.message = "";
+        // 觸發事件，把訊息傳到server.js
+        // socket.emit("message", this.inputMessage);
+        // // 清空
+        // this.inputMessage = "";
       }
-      // socket.on("sendChatToClient", function (message) {
-      //   // $(".rightChatContent ul").append(`<li>${message}</li>`);
-      //   console.log("Other:" + message);
-      //   // this.chats = message;
-      // });
 
       // let ip_address = "127.0.0.1";
       // let socket_port = "3000";

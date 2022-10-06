@@ -18,6 +18,10 @@ Route::get('/{any}', function () {
     return view('index');
 })->where('any', '^((?!api).)*$');
 
+Route::get('/fire', function () {
+    event(new \App\Events\TestEvent("Hello Test", 2));
+    return 'ok';
+});
 
 // Auth::routes();
 
