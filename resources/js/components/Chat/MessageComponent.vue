@@ -149,6 +149,16 @@ export default {
         // socket.emit("message", this.inputMessage);
         // // 清空
         // this.inputMessage = "";
+        // axios
+        //   .post("api/lel/messages/privatechat", {
+        //     inputMessage: this.inputMessage,
+        //   })
+        //   .then((response) => {
+        //     console.log(response);
+        //   })
+        //   .catch((error) => {
+        //     console.log(error);
+        //   });
       }
 
       // let ip_address = "127.0.0.1";
