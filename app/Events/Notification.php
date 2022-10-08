@@ -10,6 +10,8 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
+use App\Models\Conversation;
+
 /**
  * 通知
  */
@@ -21,24 +23,24 @@ class Notification implements ShouldBroadcast
     public $senderUserName; // 寄件人姓名
     public $receiverId; // 收件人ID
 
-    public $message;
+    // public $message;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    // public function __construct(int $senderId, string $senderName, int $receiverId)
-    // {
-    //     $this->senderId = $senderId;
-    //     $this->senderUserName = $senderName;
-    //     $this->receiverId = $receiverId;
-    // }
-
-    public function __construct()
+    public function __construct(int $senderId, string $senderName, int $receiverId)
     {
-        $this->message = "Test New Message.";
+        $this->senderId = $senderId;
+        $this->senderUserName = $senderName;
+        $this->receiverId = $receiverId;
     }
+
+    // public function __construct()
+    // {
+    //     $this->message = "Test New Message.";
+    // }
 
     /**
      * Get the channels the event should broadcast on.

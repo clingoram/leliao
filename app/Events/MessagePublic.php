@@ -10,6 +10,8 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
+use App\Models\PublicMessage;
+
 /**
  * 群組
  */
@@ -43,11 +45,11 @@ class MessagePublic implements ShouldBroadcast
     }
 
     // add
-    public function broadcastWith()
-    {
-        return [
-            'user' => $this->username,
-            'message' => $this->message
-        ];
-    }
+    // public function broadcastWith()
+    // {
+    //     return [
+    //         'user' => $this->username,
+    //         'message' => $this->message
+    //     ];
+    // }
 }
