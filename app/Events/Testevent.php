@@ -15,16 +15,22 @@ class Testevent implements ShouldBroadcast
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $message;
-    public $receiver;
+    public $receiverId;
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(string $message, int $receiver)
+    // public function __construct(string $message, int $receiver)
+    // {
+    //     $this->message = $message;
+    //     $this->receiverId = $receiver;
+    // }
+
+    public function __construct()
     {
-        $this->message = $message;
-        $this->receivers = $receiver;
+        $this->receiverId = 2;
+        $this->message = "Test New Message.";
     }
 
     /**
@@ -34,6 +40,6 @@ class Testevent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel('my-channel');
+        return new Channel('my-testchannel');
     }
 }

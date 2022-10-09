@@ -36,3 +36,8 @@ Broadcast::channel('notification.{id}', function ($senderId, $senderName, $recei
 //     // return true;
 //     return $user->id === PublicMessage::findOrNew($receiverUser)->user_id;
 // });
+
+// test
+Broadcast::channel('my-testchannel.{id}', function ($userid, $message) {
+    return true;
+});
