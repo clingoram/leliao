@@ -11,6 +11,8 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
 use App\Models\PrivateMessage;
+use App\Models\Auth;
+use App\Models\Conversation;
 
 /**
  * 私人訊息
@@ -28,9 +30,9 @@ class MessagePrivate implements ShouldBroadcast
      *
      * @return void
      */
-    public function __construct(string $message, int $senderId, int $conversationId)
+    public function __construct(string $message, Auth $user, int $conversationId)
     {
-        $this->senderId = $senderId;
+        $this->senderId = $user;
         $this->message = $message;
         $this->conversationId = $conversationId;
     }
@@ -43,15 +45,5 @@ class MessagePrivate implements ShouldBroadcast
     public function broadcastOn()
     {
         return new PrivateChannel('private-chat.' . $this->conversationId);
-    }
-
-    // add
-    public function broadcastWith()
-    {
-        return [
-            'senderId' => $this->senderId,
-            'conversationId' => $this->conversationId,
-            'message' => $this->message
-        ];
     }
 }

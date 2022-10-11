@@ -11,6 +11,7 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
 use App\Models\PublicMessage;
+use App\Models\Auth;
 
 /**
  * 群組
@@ -19,7 +20,7 @@ class MessagePublic implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $username; // 發訊息人姓名
+    public $user; // 發訊息人姓名
     public $message; // 訊息內容
 
     /**
@@ -27,9 +28,9 @@ class MessagePublic implements ShouldBroadcast
      *
      * @return void
      */
-    public function __construct(string $userName, string $message)
+    public function __construct(Auth $user, string $message)
     {
-        $this->username = $userName;
+        $this->user = $user;
         $this->message = $message;
     }
 
@@ -41,15 +42,6 @@ class MessagePublic implements ShouldBroadcast
     public function broadcastOn()
     {
         // return new PrivateChannel('channel-name');
-        return new Channel('public-chat');
+        return new Channel('public-chat' . $this->user->name);
     }
-
-    // add
-    // public function broadcastWith()
-    // {
-    //     return [
-    //         'user' => $this->username,
-    //         'message' => $this->message
-    //     ];
-    // }
 }

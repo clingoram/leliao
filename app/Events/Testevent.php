@@ -10,12 +10,17 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
+// test
+use App\Models\Auth;
+
 class Testevent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $message;
     public $receiverId;
+
+    public $loginUser;
     /**
      * Create a new event instance.
      *
@@ -27,9 +32,10 @@ class Testevent implements ShouldBroadcast
     //     $this->receiverId = $receiver;
     // }
 
-    public function __construct()
+    public function __construct(Auth $user)
     {
-        $this->receiverId = 2;
+        $this->loginUser = $user;
+        // $this->receiverId = 2;
         $this->message = "Test New Message.";
     }
 
@@ -40,6 +46,12 @@ class Testevent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel('my-testchannel');
+        return new PrivateChannel('my-testchannel' . $this->loginUser->id);
+    }
+
+    public function broadcastAs()
+    {
+        //命名推播的事件
+        return 'new-event';
     }
 }

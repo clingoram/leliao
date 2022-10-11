@@ -11,6 +11,7 @@ use App\Http\Controllers\Post\PostController;
 use App\Http\Controllers\Comment\CommentController;
 use App\Http\Controllers\Chat\ChatController;
 use App\Http\Controllers\Chat\PrivateMessageController;
+use App\Http\Controllers\Chat\PublicMessageController;
 
 // use App\Models\Auth;
 // use App\Models\PrivateMessage;
@@ -56,18 +57,12 @@ Route::prefix('/lel')->group(function () {
     Route::group(['middleware' => ['auth:sanctum']], function () {
 
         // Realtime Chat:
-        // private chat
+        // contact list
         Route::get('/messages/contact/{id}/{name}', [ChatController::class, 'check']);
-        // Route::post('/messages/privatechat', [PrivateMessageController::class, 'sendMessage']);
-
+        // private chat
+        Route::post('/messages/privatechat', [PrivateMessageController::class, 'sendMessage']);
         // public chat
-        // Route::get('/messages/public', [ContactController::class, 'check']);
-
-        // test
-        // Route::post('/message', function ($request) {
-        //     // broadcast(new MessagePublic(auth()->user(), $request->input('message')));
-        //     return $request->input('message');
-        // });
+        Route::get('/messages/publicchat', [PublicMessageController::class, 'sendMessage']);
 
         // 新增文章
         Route::post('/add_post', [PostController::class, 'create']);
