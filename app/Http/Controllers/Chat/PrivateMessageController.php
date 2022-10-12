@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Redis;
 
 use Illuminate\Http\Request;
 use Illuminate\Notifications\Notification as NotificationsNotification;
+use PhpParser\Node\Expr\Cast\Object_;
 
 /**
  * private 聊天
@@ -21,10 +22,10 @@ class PrivateMessageController extends ChatController
 {
     public $conversations;
 
-    public function index(Auth $user)
+    public function index(Object $user)
     {
-        $userOne = Auth::find($user->id); // 寄
-        $userTwo = $user->id; // 收
+        $userOne = Auth::find($user['sender']); // 寄
+        $userTwo = $user['receiver']; // 收
 
         if ($userOne === $userTwo) {
             abort(404);
@@ -84,11 +85,16 @@ class PrivateMessageController extends ChatController
             //     ['status' => true]
             // );
 
+            $chat = self::index($request);
+
             $data = [
-                'conversation_id' => $request->inputMessage['conversation_id'],
+                'conversationId' => $chat['conversationId'], //$request->inputMessage['conversationId'],
                 'userId' => $request->inputMessage['sender'],
                 'message' => $request->inputMessage['message']
             ];
+
+            // $redis->publish('message', json_encode($data));
+            // $redis->publish('sendPrivateChatToServer', json_encode($data));
 
             PrivateMessage::create($data);
 
@@ -96,8 +102,7 @@ class PrivateMessageController extends ChatController
             event(new Notification($request->inputMessage['sender'], $request->inputMessage['senderName'], $request->inputMessage['receiver']));
 
             // 每當新訊息時，會觸發MessagePrivate事件，發送推播通知訂閱該群組的頻道
-            event(new MessagePrivate($request->inputMessage['message'], $request->inputMessage['sender'], $request->inputMessage['receiver']));
-            // return response()->json($tt, 200);
+            event(new MessagePrivate($request->inputMessage['message'], $request->inputMessage['sender'], $request->inputMessage['conversationId']));
             return response()->json(
                 [
                     'status' => true

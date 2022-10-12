@@ -95,6 +95,7 @@ export default {
       isLoggedIn: false,
       contactNames: [],
       inputMessage: {
+        conversationId: "",
         sender: sessionStorage.getItem("id"),
         receiver: "",
         message: "",
