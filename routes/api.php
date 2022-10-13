@@ -60,8 +60,8 @@ Route::prefix('/lel')->group(function () {
         // contact list
         Route::get('/messages/contact/{id}/{name}', [ChatController::class, 'check']);
         // private chat
-        // Route::post('/messages/privatechat', [PrivateMessageController::class, 'sendMessage']);
-        Route::post('/messages/privatechat', [PrivateMessageController::class, 'index']);
+        Route::post('/messages/privatechat', [PrivateMessageController::class, 'sendMessage']);
+        // Route::post('/messages/privatechat', [PrivateMessageController::class, 'index']);
 
         // public chat
         Route::get('/messages/publicchat', [PublicMessageController::class, 'sendMessage']);
