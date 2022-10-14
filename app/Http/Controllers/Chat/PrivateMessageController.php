@@ -10,6 +10,7 @@ use App\Models\PrivateMessage;
 use App\Models\Conversation;
 
 use Illuminate\Support\Facades\Redis;
+use Illuminate\Support\Redis\Connectors\PhpRedisConnector;
 
 use Illuminate\Http\Request;
 use Illuminate\Notifications\Notification as NotificationsNotification;
@@ -80,6 +81,7 @@ class PrivateMessageController extends ChatController
         if ($checkReceiver === true) {
 
             $redis = Redis::connection(); // 從原先的port6379 改為6360
+
             // $data = [
             //     'sender' => $request->inputMessage['sender'],
             //     'message' => $request->inputMessage['message'],

@@ -22,12 +22,6 @@ class Cors
     // add
     public function handle(Request $request, Closure $next)
     {
-        // var_dump($request);
-        // return $next($request)
-        //     ->header('Access-Control-Allow-Origin', '*')
-        //     ->header('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS')
-        //     ->header('Access-Control-Allow-Headers', 'Content-Type, Authorizations');
-
         /* @var $response Response */
         $response = $next($request);
         if (!$request->isMethod('OPTIONS')) {
