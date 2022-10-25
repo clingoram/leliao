@@ -1,10 +1,12 @@
 <?php
 
+use App\Models\Auth;
 use Illuminate\Support\Facades\Broadcast;
 
 use App\Models\PrivateMessage;
 use App\Models\PublicMessage;
 use App\Models\Conversation;
+use App\Models\Post;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,6 +40,6 @@ Broadcast::channel('notification.{id}', function ($user, $id) {
 // });
 
 // test
-// Broadcast::channel('my-testchannel.{id}', function ($userid, $message) {
-//     return true;
-// });
+Broadcast::channel('orders.{orderId}', function ($user, $orderId) {
+    return $user->id === Post::findOrNew($orderId)->user_id;
+});

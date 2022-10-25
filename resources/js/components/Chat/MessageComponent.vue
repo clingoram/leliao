@@ -82,8 +82,8 @@
 <script>
 // socket io - client side
 
-import ReceiverComponent from "./ReceiverComponent.vue";
-import Sender from "./SendComponent.vue";
+// import ReceiverComponent from "./ReceiverComponent.vue";
+// import Sender from "./SendComponent.vue";
 
 export default {
   components: {
@@ -127,6 +127,7 @@ export default {
   methods: {
     submit() {
       console.log("chat");
+
       // console.log(this.inputMessage);
 
       // let socket = io.connect("http://localhost:3000");
@@ -150,37 +151,39 @@ export default {
         // socket.emit("message", this.inputMessage);
         // // 清空
         // this.inputMessage = "";
-        axios
-          .post("api/lel/messages/privatechat", {
-            inputMessage: this.inputMessage,
-          })
-          .then((response) => {
-            console.log(response);
-          })
-          .catch((error) => {
-            console.log(error);
-          });
+        // axios
+        //   .post("api/lel/messages/privatechat", {
+        //     inputMessage: this.inputMessage,
+        //   })
+        //   .then((response) => {
+        //     console.log(response);
+        //   })
+        //   .catch((error) => {
+        //     console.log(error);
+        //   });
+        // test
+        window.Echo.channel("orders").listen(".OrderUpdated", (e) => {
+          console.log(e.order);
+        });
+        // socket io
+        // let ip_address = "127.0.0.1";
+        // let socket_port = "3000";
+        // let socket = io(ip_address + ":" + socket_port);
+        // socket.on("connection");
+        // if (this.inputMessage !== null) {
+        //   console.log("Me: " + this.inputMessage);
+        //   // 觸發事件，把訊息傳到server.js
+        //   socket.emit("sendChatToServer", this.inputMessage);
+        //   // 清空
+        //   this.inputMessage = "";
+        // }
+        // // receive
+        // socket.on("sendChatToClient", function (message) {
+        //   // $(".rightChatContent ul").append(`<li>${message}</li>`);
+        //   console.log("Other:" + message);
+        //   // this.chats = message;
+        // });
       }
-
-      // let ip_address = "127.0.0.1";
-      // let socket_port = "3000";
-      // let socket = io(ip_address + ":" + socket_port);
-      // socket.on("connection");
-
-      // if (this.inputMessage !== null) {
-      //   console.log("Me: " + this.inputMessage);
-
-      //   // 觸發事件，把訊息傳到server.js
-      //   socket.emit("sendChatToServer", this.inputMessage);
-      //   // 清空
-      //   this.inputMessage = "";
-      // }
-      // // receive
-      // socket.on("sendChatToClient", function (message) {
-      //   // $(".rightChatContent ul").append(`<li>${message}</li>`);
-      //   console.log("Other:" + message);
-      //   // this.chats = message;
-      // });
     },
     /**
      * 聯絡人

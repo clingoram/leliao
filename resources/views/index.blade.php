@@ -66,9 +66,7 @@
 <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
 <script>
   // client side
-  // window.Echo.channel('notification').listen('.NewMessage', (e) => {
-  //   console.log(e.notification);
-  // });
+
   // $(function() {
   //   let ip_address = "127.0.0.1";
   //   let socket_port = "3000";
