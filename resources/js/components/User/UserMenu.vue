@@ -1,6 +1,11 @@
 <template>
   <!-- 使用者資訊(登出、登入、註冊) -->
   <!-- 判斷是否有登入，依據狀況在dropdown顯示不同頁面連結 -->
+  <span v-if="isLoggedIn === true">
+    <router-link v-bind:to="{ name: 'message' }"
+      ><i class="fa-regular fa-envelope"></i
+    ></router-link>
+  </span>
   <div class="dropdown">
     <div v-if="isLoggedIn === true">
       <button
@@ -11,10 +16,14 @@
       >
         {{ this.name }}
       </button>
+
       <ul class="dropdown-menu">
         <li>
           <router-link v-bind:to="{ name: 'about' }">關於了聊</router-link>
         </li>
+        <!-- <li>
+          <router-link v-bind:to="{ name: 'message' }">訊息</router-link>
+        </li> -->
         <li>
           <router-link v-bind:to="{ name: 'management' }">帳號資訊</router-link>
         </li>
@@ -39,12 +48,13 @@
         <li>
           <router-link v-bind:to="{ name: 'about' }">關於了聊</router-link>
         </li>
+
         <li v-if="!isLoggedIn">
           <router-link v-bind:to="{ name: 'login-page' }">登入</router-link>
         </li>
-        <!-- <li v-if="!isLoggedIn">
+        <li v-if="!isLoggedIn">
           <router-link v-bind:to="{ name: 'register-page' }">註冊</router-link>
-        </li> -->
+        </li>
       </ul>
     </div>
   </div>
@@ -71,6 +81,15 @@ export default {
     } else {
       this.isLoggedIn = false;
     }
+    // let token = document.head.querySelector('meta[name="csrf_token"]');
+    // if (token) {
+    //   // JSON.parse(sessionStorage.getItem("branch")) !== null
+    //   this.name = sessionStorage.getItem("name");
+    //   this.isLoggedIn = true;
+    //   this.checkExpiresTime(sessionStorage.getItem("expires"));
+    // } else {
+    //   this.isLoggedIn = false;
+    // }
   },
   methods: {
     /**

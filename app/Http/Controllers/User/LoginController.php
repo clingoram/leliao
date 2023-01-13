@@ -55,7 +55,7 @@ class LoginController extends UserController
                     ->update(['updated_at' => date('Y/m/d H:i:s', time())]);
 
                 $createToken = new ApiAuthController();
-                return $createToken->createToken($user, 200);
+                return $createToken->createToken($user, 201);
             } else {
                 return;
             }

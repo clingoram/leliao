@@ -1,13 +1,12 @@
 import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router';
 
-
 import LoginComponent from "../components/User/LoginComponent.vue";
-// import RegisterComponent from "../components/User/RegisterComponent.vue";
+import RegisterComponent from "../components/User/RegisterComponent.vue";
 import Management from "../components/Management/ManagementComponent.vue";
 import Info from "../components/Info/InfoComponent.vue";
-
 import AddArticleComponent from "../components/Post/AddArticleComponent.vue";
 import MainComponent from "../components/Content/MainContentComponent.vue";
+import Chat from "../components/Chat/MessageComponent.vue";
 
 // Route 設定
 export const routes = [
@@ -23,16 +22,22 @@ export const routes = [
     name: "about",
     component: Info,
   },
-  // {
-  //   // 註冊，暫時註解
-  //   path: '/register',
-  //   name: "register-page",
-  //   component: RegisterComponent,
-  //   meta: {
-  //     middleware: "guest",
-  //     title: 'Register'
-  //   }
-  // },
+  {
+    // 聊天(需登入)
+    path: '/message',
+    name: "message",
+    component: Chat,
+  },
+  {
+    // 註冊，暫時註解
+    path: '/register',
+    name: "register-page",
+    component: RegisterComponent,
+    meta: {
+      middleware: "guest",
+      title: 'Register'
+    }
+  },
   {
     // 登入
     path: '/login',

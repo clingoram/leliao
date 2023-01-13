@@ -12,6 +12,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Sanctum\NewAccessToken;
 use Illuminate\Support\Str;
 
+use App\Models\PrivateMessage;
+use App\Models\Conversation;
+
 class Auth extends Authenticatable
 {
     use HasFactory;
@@ -54,6 +57,16 @@ class Auth extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function message()
+    {
+        return $this->hasMany(PrivateMessage::class);
+    }
+
+    public function conversation()
+    {
+        return $this->hasMany(Conversation::class);
+    }
 
     // 複寫HasAccessToken createToken
     public function createToken(string $name, $abilities = ['*'], $expires_at = null)

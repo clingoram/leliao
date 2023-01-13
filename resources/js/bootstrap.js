@@ -18,8 +18,17 @@ window.axios = axios;
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 // 把token加到header內
+// let api_token = document.head.querySelector('meta[name="csrf_token"]');
+
+// if (api_token) {
+//   window.axios.defaults.headers.common['X-CSRF-TOKEN'] = `Bearer ${api_token.content}`;
+// } else {
+//   console.log('error');
+// }
+
 window.axios.defaults.headers.common['Authorization'] = `Bearer ${sessionStorage.getItem("identity")}`;
 // window.axios.defaults.headers.common['Authorization'] = this.JSON.parse(sessionStorage.getItem("branch")) !== null ? `Bearer ${this.JSON.parse(sessionStorage.getItem("branch"))}` : null;
+window.axios.defaults.headers.common["Accept"] = "application/json";
 window.axios.defaults.withCredentials = true;
 
 /**
@@ -42,3 +51,13 @@ window.axios.defaults.withCredentials = true;
 //   forceTLS: (import.meta.env.VITE_PUSHER_SCHEME ?? 'https') === 'https',
 //   enabledTransports: ['ws', 'wss'],
 // });
+
+// client side
+import Echo from 'laravel-echo';
+import socket from 'socket.io-client';
+
+window.io = socket;
+window.Echo = new Echo({
+  broadcaster: 'socket.io',
+  host: window.location.hostname + ':6001'
+});
