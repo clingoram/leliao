@@ -374,6 +374,7 @@ export default {
      * 關閉modal時清除modal內留言、該文章所有內容
      * */
     clearModal() {
+      console.log("clear");
       this.replyData = [];
       this.specificPostData.id = "";
       this.specificPostData.title = "";

@@ -1,5 +1,6 @@
 <?php
 
+use App\Events\MessagePublic;
 use App\Http\Controllers\User\RegisterController;
 use App\Http\Controllers\User\LoginController;
 use App\Http\Controllers\User\LogoutController;
@@ -8,7 +9,12 @@ use App\Http\Controllers\User\ManagementController;
 use App\Http\Controllers\Forum\ForumController;
 use App\Http\Controllers\Post\PostController;
 use App\Http\Controllers\Comment\CommentController;
+use App\Http\Controllers\Chat\ChatController;
+use App\Http\Controllers\Chat\PrivateMessageController;
+use App\Http\Controllers\Chat\PublicMessageController;
 
+// use App\Models\Auth;
+// use App\Models\PrivateMessage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -42,12 +48,23 @@ Route::prefix('/lel')->group(function () {
     Route::get('/f/{category_id}/post/c/{post_id}', [CommentController::class, 'show']);
 
     // 註冊，功能OK，但先暫時註解(相關檔案:router.js、UserMenu router)
-    // Route::post('/user/register', [RegisterController::class, 'create']);
+    Route::post('/user/register', [RegisterController::class, 'create']);
     // 登入
     Route::post('/user/login', [LoginController::class, 'login']);
 
+
     // Protected routes
     Route::group(['middleware' => ['auth:sanctum']], function () {
+
+        // Realtime Chat:
+        // contact list
+        Route::get('/messages/contact/{id}/{name}', [ChatController::class, 'check']);
+        // private chat
+        Route::post('/messages/privatechat', [PrivateMessageController::class, 'sendMessage']);
+        // Route::post('/messages/privatechat', [PrivateMessageController::class, 'index']);
+
+        // public chat
+        Route::get('/messages/publicchat', [PublicMessageController::class, 'sendMessage']);
 
         // 新增文章
         Route::post('/add_post', [PostController::class, 'create']);

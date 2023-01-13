@@ -194,9 +194,12 @@ return [
          */
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
-        // App\Providers\BroadcastServiceProvider::class,
+        App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+
+        // add
+        // Illuminate\Support\Facades\Redis::class
 
     ],
 
@@ -213,5 +216,9 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
+        // add
+        'Redis' => Illuminate\Support\Facades\Redis::class,
+        // 'PHPRedis' => Illuminate\Support\Facades\Redis::class,
+
     ])->toArray()
 ];

@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Events\MessagePublic;
+use App\Events\Notification;
+use App\Listeners\SendPublicMessage;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -27,7 +30,11 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        // add
+        // Event::listen(
+        //     MessagePublic::class,
+        //     [SendPublicMessage::class, 'handle']
+        // );
     }
 
     /**

@@ -99,3 +99,159 @@ hr {
 .warning {
   color: red;
 }
+
+/*聊天*/
+.chatarea {
+  padding-top: 10px;
+  justify-content: center;
+  margin: auto;
+  width: 800px;
+  height: 600px;
+}
+
+.col-2 {
+  background: rgba(185, 187, 164, 0.712);
+}
+
+.chatTable {
+  width: 100%;
+}
+
+.chatTable td {
+  height: 40px;
+  padding: 15px;
+  line-height: 200%;
+  color: #fff;
+  font-size: 0.5rem;
+  position: relative;
+}
+
+.col-2 tr:hover {
+  cursor: pointer;
+  background: rgba(200, 200, 200, 0.5);
+}
+
+.col-2 .fa-search {
+  position: absolute;
+  top: 40%;
+  right: 20%;
+}
+
+.box {
+  display: flex;
+}
+
+.box p {
+  margin-bottom: 0;
+}
+
+.box p:nth-child(1) {
+  margin-bottom: 0;
+  color: #fff;
+}
+
+.notice {
+  background: green;
+  border-radius: 50%;
+  padding: 2px 5px;
+  color: #fff;
+}
+
+/* right */
+.col-8 {
+  background: #f6f6f6;
+  overflow-y: auto;
+}
+
+.col-8 tr:nth-child(1) {
+  box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important;
+}
+
+.name {
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+}
+
+.col-8 i {
+  padding: 10px;
+}
+
+.col-8 tr:nth-child(2) {
+  border-bottom: 1px solid #ccc;
+}
+
+.rightChatContent {
+  height: 400px;
+  overflow-y: auto;
+}
+
+.rightChatContent img {
+  width: 40px;
+  height: 40px;
+  margin-right: 20px;
+}
+
+.dialog {
+  padding: 3%;
+  margin-right: 10px;
+  max-width: 250px;
+  border-radius: 0.5rem;
+  position: relative;
+  background: #ccc;
+  color: black;
+}
+
+.dialog::before {
+  content: "";
+  position: absolute;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+}
+
+.other,
+.self {
+  margin-bottom: 20px;
+  display: flex;
+}
+
+.other .dialog::before {
+  left: -5%;
+  border-right: 15px solid #ccc;
+}
+
+.self .dialog::before {
+  right: -5%;
+  border-left: 15px solid #9eea9e;
+}
+
+.self {
+  flex-direction: row-reverse;
+}
+
+.self .dialog {
+  background: #9eea9e;
+  margin: 0 15px;
+}
+
+.rightChatContent p {
+  align-self: flex-end;
+  margin-bottom: 0;
+}
+
+.read {
+  transform: translate(30px, 30px);
+}
+
+.msg {
+  height: 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.msg input {
+  background-color: #f6f6f6 !important;
+  border: 0 !important;
+  font-size: 0.2rem;
+}

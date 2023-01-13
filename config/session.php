@@ -157,6 +157,8 @@ return [
     */
 
     'domain' => env('SESSION_DOMAIN'),
+    // 'domain' => ['http://leliao.herokuapp.com/', 'http://leliao/'],
+
 
     /*
     |--------------------------------------------------------------------------

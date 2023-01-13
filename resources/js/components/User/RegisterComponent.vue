@@ -111,15 +111,14 @@ export default {
           form: this.form,
         })
         .then((response) => {
-          confirm("註冊成功");
-          console.log(response);
+          confirm("註冊成功，請重新登入。");
+          // console.log(response);
           // sessionStorage.setItem("branch", JSON.stringify(response.data));
 
-          sessionStorage.setItem("identity", response.data.identity);
-          sessionStorage.setItem("expires", response.data.expires_at);
-
-          sessionStorage.setItem("id", response.data.udata.uid);
-          sessionStorage.setItem("name", this.form.name);
+          // sessionStorage.setItem("identity", response.data.identity);
+          // sessionStorage.setItem("expires", response.data.expires_at);
+          // sessionStorage.setItem("id", response.data.udata.uid);
+          // sessionStorage.setItem("name", this.form.name);
           document.location.href = "/";
         })
         .catch((error) => {
