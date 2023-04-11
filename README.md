@@ -20,25 +20,15 @@
 - [Laravel-echo-server](https://github.com/tlaverdure/laravel-echo-server).
 
 <hr>
-2022-9-23 更新:<br>
-目前功能:<br>
-註冊、登入、登出、發表文章、回應、按LIKE(愛心)。<br>
-為方便管理，註冊功能暫時關閉，僅提供預設3組測試帳號。<br>
-測試帳號:
+2023-1-13 更新<br>
+由於Heroku Postgres (SQL) 到2022-11月左右便無法免費使用，因此目前該網站已暫停發布在Heroku<br>
 
-1. 第一組<br>
-account: guestOne<br>
-email: guestOne_test@gamil.com<br>
-pwd: cap5bjst<br>
-
-2. 第二組<br>
-account:guestTwo<br>
-email:guestTwo_test@gamil.com<br>
-pwd: kg27strp8<br>
-
-3. 第三組<br>
-account: guestThree<br>
-email: guestThree_test@gamil.com<br>
-pwd: d3r7ayjw<br>
-
-<hr>
+以下為網站圖片<br>
+![image](https://github.com/clingoram/leliao/blob/master/images/leliao%201.jpg)
+![image](https://github.com/clingoram/leliao/blob/master/images/leliao%202.jpg)
+![image](https://github.com/clingoram/leliao/blob/master/images/leliao%203.jpg)
+![image](https://github.com/clingoram/leliao/blob/master/images/leliao%204.jpg)
+![image](https://github.com/clingoram/leliao/blob/master/images/leliao%205.jpg)
+![image](https://github.com/clingoram/leliao/blob/master/images/leliao%206.jpg)
+![image](https://github.com/clingoram/leliao/blob/master/images/leliao%207-login.jpg)
+![image](https://github.com/clingoram/leliao/blob/master/images/leliao%207-register.jpg)
