@@ -22,13 +22,3 @@
 <hr>
 2023-1-13 更新<br>
 由於Heroku Postgres (SQL) 到2022-11月左右便無法免費使用，因此目前該網站已暫停發布在Heroku<br>
-
-以下為網站圖片<br>
-![image](https://github.com/clingoram/leliao/blob/master/images/leliao%201.jpg)
-![image](https://github.com/clingoram/leliao/blob/master/images/leliao%202.jpg)
-![image](https://github.com/clingoram/leliao/blob/master/images/leliao%203.jpg)
-![image](https://github.com/clingoram/leliao/blob/master/images/leliao%204.jpg)
-![image](https://github.com/clingoram/leliao/blob/master/images/leliao%205.jpg)
-![image](https://github.com/clingoram/leliao/blob/master/images/leliao%206.jpg)
-![image](https://github.com/clingoram/leliao/blob/master/images/leliao%207-login.jpg)
-![image](https://github.com/clingoram/leliao/blob/master/images/leliao%207-register.jpg)
